@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt')
 const randomstring = require('randomstring')
 const config = require('../config/config')
 const nodemailer = require('nodemailer')
-const accountSid = 'AC907f228b5ab0107739ba05f73674f14e';
-const authToken = 'cda4bb2c379d8176d16431393071cbc6';
+const accountSid = process.env.SID;
+const authToken = process.env.AUTHTOKEN;
 const client = require('twilio')(accountSid, authToken);
 
 const register = async (req, res) => {
@@ -76,12 +76,12 @@ const register = async (req, res) => {
 //adding user using signup
 const sendOtp = async (req, res) => {
     client.messages
-      .create({
-        body: 'Hello from twilio-node',
-        to: '+917510208562', // Text your number
-        from: '+17409001094', // From a valid Twilio number
-      })
-      .then((message) => console.log(message.sid));
+        .create({
+            body: 'Hello from twilio-node',
+            to: '+917510208562', // Text your number
+            from: '+17409001094', // From a valid Twilio number
+        })
+        .then((message) => console.log(message.sid));
 }
 
 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="flex flex-col items-center">
+      <div>
+        <h2>
+          <span class="font-bold text-black-500">flat</span>
+          <span class="font-bold text-violet-500">Unity</span>
+        </h2>
+      </div>
+      <div class="flex items-center">
+        <div class="h-1/2">
+          <img
+            src="../assets/images/usersStanding.png"
+            alt="jhbhgcdgxdfsasSDz"
+            class="h-72"
+          />
+        </div>
+
+        <div
+          class="bg-white p-8 shadow-md rounded-lg w-96 flex flex-col items-center"
+        >
+          <h2 class="text-2xl font-semibold text-gray-500 mb-4">Login</h2>
+
+          <form class="w-full">
+            <div class="mb-4">
+              <label
+                class="block text-gray-700 text-sm font-bold mb-2"
+                for="mobilenumber"
+                >Mobile Number</label
+              >
+              <input
+                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="username"
+                type="text"
+                placeholder="Mobile Number"
+              />
+            </div>
+
+            <div class="flex items-center justify-between">
+              <button
+                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline "
+                type="button"
+              >
+                Send OTP
+              </button>
+            </div>
+            
+            <div class="p-2">
+              <asl-google-signin-button type="icon" size="medium">
+              </asl-google-signin-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

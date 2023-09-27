@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="flex flex-col items-center">
+      <div>
+        <h2>
+          <span class="font-bold text-black-500">flat</span>
+          <span class="font-bold text-violet-500">Unity</span>
+        </h2>
+      </div>
+      <div class="flex items-center">
+        <div class="h-1/2">
+          <img
+            src="../assets/images/usersStanding.png"
+            alt="jhbhgcdgxdfsasSDz"
+            class="h-72"
+          />
+        </div>
+
+        <div
+          class="bg-white p-8 shadow-md rounded-lg w-96 flex flex-col items-center"
+        >
+          <h2 class="text-2xl font-semibold text-gray-500 mb-4">Admin Login</h2>
+
+          <form class="w-full">
+            <div class="mb-4">
+              <label
+                class="block text-gray-700 text-sm font-bold mb-2"
+                for="username"
+                >Username</label
+              >
+              <input
+                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="username"
+                type="text"
+                placeholder="Username"
+              />
+            </div>
+            <div class="mb-6">
+              <label
+                class="block text-gray-700 text-sm font-bold mb-2"
+                for="password"
+                >Password</label
+              >
+              <div class="relative">
+                <input
+                  class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="password"
+                  type="{{ hidePassword ? 'password' : 'text' }}"
+                  placeholder="Password"
+                  [(ngModel)]="password"
+                />
+                <div
+                  class="absolute right-0 top-0 mt-2 mr-3 text-cyan-700 text-sm font-bold"
+                >
+                  <button (click)="togglePasswordVisibility()">
+                    {{ hidePassword ? "Show" : "Hide" }}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <button
+                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
+              >
+                Login
+              </button>
+              <a
+                class="inline-block align-baseline font-bold text-sm text-green-500 hover:text-green-600"
+                href="#"
+                >Forgot Password?</a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

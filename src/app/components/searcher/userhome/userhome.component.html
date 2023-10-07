@@ -1,0 +1,37 @@
+<app-userheader></app-userheader>
+<div class="flex">
+  <div class="p-4 ml-6">
+    <button
+      type="button"
+      class="relative flex text-sm"
+      id="flatmate-button"
+      (click)="flatmateClicked = true"
+      [routerLink]="['/flatmatepost']"
+    >
+      <span class="absolute -inset-1.5"></span>
+      <span class="sr-only">Open user menu</span>
+      <img class="h-8 w-8" src="../assets/images/buddy.png" alt="" />
+      <div
+        *ngIf="flatmateClicked"
+        class="absolute left-0 bottom-0 w-full h-1 mt-0.5 rounded-lg bg-green-500 group-hover:scale-x-100"
+      ></div>
+    </button>
+  </div>
+  <div class="p-4">
+    <button
+      type="button"
+      class="relative flex text-sm"
+      id="flat-button"
+      (click)="flatClicked = true"
+      [routerLink]="['/flatpost']"
+    >
+      <span class="absolute -inset-1.5"></span>
+      <span class="sr-only">Open user menu</span>
+      <img class="h-8 w-8" src="../assets/images/buildings.png" alt="" />
+      <div
+        *ngIf="flatClicked"
+        class="absolute left-0 bottom-0 w-full h-1 mt-0.5 rounded-lg bg-green-500 group-hover:scale-x-100"
+      ></div>
+    </button>
+  </div>
+</div>

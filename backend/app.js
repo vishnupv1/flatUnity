@@ -1,13 +1,18 @@
 const express = require('express')
 const user_route = require('./routes/userRoute')
-const path = require('path')
 const admin_route = require('./routes/adminRoute')
+const path = require('path')
 const myEnv = require('dotenv').config()
 const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.use(bodyParser.json());
+const cors = require('cors')
+
+app.use(cors({
+  origin: 'http://localhost:4200',
+}))
 
 
 mongoose.connect('mongodb+srv://vishnupv:yTveNZfmyI5Sd0KO@cluster0.oclzgxu.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -15,6 +20,7 @@ mongoose.connect('mongodb+srv://vishnupv:yTveNZfmyI5Sd0KO@cluster0.oclzgxu.mongo
   .catch(err => console.error(err));
 
 app.use('/', user_route)
+app.use('/admin', admin_route)
 //app.use('/admin', admin_route)
 app.use('/public', express.static(path.join(__dirname, 'public')));
 

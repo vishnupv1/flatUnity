@@ -1,1 +1,218 @@
-<p>user-register works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="flex flex-col items-center w-full md:w-full lg:w-full">
+      <div class="text-center m-6 w-1/2 content-right	">
+        <h2>
+          <span class="font-bold text-black-500">flat</span>
+          <span class="font-bold text-violet-500">Unity</span>
+        </h2>
+      </div>
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 p-4 md:p-10">
+          <img
+            src="../assets/images/purple user.png"
+            alt="User"
+            class="h-72 mx-auto"
+          />
+        </div>
+
+        <div
+          class="bg-white p-6 shadow-md rounded-lg w-full md:w-1/2 flex flex-col items-center"
+        >
+          <h2 class="text-2xl font-semibold text-gray-500 mb-4">Register</h2>
+
+          <!-- Your form content goes here (unchanged) -->
+
+          <form
+            [formGroup]="registerForm"
+            (ngSubmit)="onSubmit()"
+            class="w-full"
+          >
+            <div class="md:flex md:items-center mb-6">
+              <div class="md:w-1/3">
+                <label
+                  class="block text-gray-500 md:text-right mb-1 md:mb-0 pr-4 font-semibold"
+                  for="inline-full-name"
+                >
+                  <span>Your Name</span>
+                  <span class="text-red-500">*</span>
+                  <span> :</span>
+                </label>
+              </div>
+              <div class="md:w-2/3">
+                <input
+                  class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                  id="inline-full-name"
+                  type="text"
+                  placeholder="Enter your Name"
+                  formControlName="name"
+                />
+              </div>
+            </div>
+            <div class="md:flex md:items-center mb-6">
+              <div class="md:w-1/3">
+                <label
+                  class="block text-gray-500 md:text-right mb-1 md:mb-0 pr-4 font-semibold"
+                  for="inline-full-name"
+                >
+                  <span>Your Email</span>
+                  <span class="text-red-500">*</span>
+                  <span> :</span>
+                </label>
+              </div>
+              <div class="md:w-2/3">
+                <input
+                  class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                  id="inline-full-name"
+                  type="text"
+                  formControlName="email"
+                  placeholder="Enter your Name"
+                />
+              </div>
+            </div>
+            <div class="md:flex md:items-center mb-6">
+              <div class="md:w-1/3">
+                <label
+                  class="block text-gray-500 md:text-right mb-1 md:mb-0 pr-4 font-semibold"
+                  for="inline-full-name"
+                >
+                  <span>Your Mobile</span>
+                  <span class="text-red-500">*</span>
+                  <span> :</span>
+                </label>
+              </div>
+              <div class="md:w-2/3">
+                <input
+                  class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                  id="inline-full-name"
+                  type="text"
+                  formControlName="mobile"
+                  placeholder="Enter your Mobile Number"
+                />
+              </div>
+            </div>
+            <div class="md:flex md:items-center mb-6">
+              <div class="md:w-1/3">
+                <label
+                  class="block text-gray-500 md:text-right mb-1 md:mb-0 pr-4 font-semibold"
+                  for="inline-full-name"
+                >
+                  <span>What you are</span>
+                  <span class="text-red-500">*</span>
+                  <span> :</span>
+                </label>
+              </div>
+              <div class="md:w-2/3">
+                <select
+                  class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                  id="userType"
+                  formControlName="userType"
+                >
+                  <option value="searcher">Looking for a flat/flatmate</option>
+                  <option value="flatOwner">Flat owner</option>
+                </select>
+              </div>
+            </div>
+            <div class="md:flex md:items-center mb-6">
+              <div class="md:w-1/3">
+                <label
+                  class="block text-gray-500 md:text-right mb-1 md:mb-0 pr-4 font-semibold"
+                  for="inline-full-name"
+                >
+                  <span>Your Gender</span>
+                  <span class="text-red-500">*</span>
+                  <span> :</span>
+                </label>
+              </div>
+              <div class="md:w-2/3">
+                <div class="flex">
+                  <label class="inline-flex items-center mr-4 p-2">
+                    <input
+                      type="radio"
+                      class="form-radio text-purple-500"
+                      formControlName="gender"
+                      value="male"
+                    />
+                    <span class="ml-2">Male</span>
+                  </label>
+                  <label class="inline-flex items-center p-2">
+                    <input
+                      type="radio"
+                      class="form-radio text-purple-500"
+                      formControlName="gender"
+                      value="female"
+                    />
+                    <span class="ml-2">Female</span>
+                  </label>
+                  <label class="inline-flex items-center p-2">
+                    <input
+                      type="radio"
+                      class="form-radio text-purple-500"
+                      formControlName="gender"
+                      value="other"
+                    />
+                    <span class="ml-2">Other</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="md:flex md:items-center mb-6">
+              <div class="md:w-1/3">
+                <label
+                  class="block text-gray-500 md:text-right mb-1 md:mb-0 pr-4 font-semibold"
+                  for="inline-full-name"
+                >
+                  <span>Please select the city where you are searching</span>
+                  <span class="text-red-500">*</span>
+                  <span> :</span>
+                </label>
+              </div>
+              <div class="md:w-2/3">
+                <select
+                  class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                  id="inline-full-name"
+                  formControlName="city"
+                >
+                  <option value="Kochi">Kochi</option>
+                  <option value="Calicut">Calicut</option>
+                  <option value="Trivandrum">Trivandrum</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="md:flex md:items-center">
+              <div class="md:w-1/3"></div>
+              <div class="md:w-2/3">
+                <button
+                  class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                  type="submit"
+                >
+                  Sign Up
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="flex flex-row mt-4">
+            <p style="font-family: 'p';">
+              <span>You already have an account ? </span>
+              <span><a href="" class="text-blue-500">Sign In</a></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="m-10">
+      <h1 class="h-10"></h1>
+    </div>
+  </body>
+</html>

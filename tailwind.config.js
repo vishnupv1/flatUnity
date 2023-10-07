@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        '96': '33rem', // Change the width of w-96 to 33rem
+      },
+    },
   },
   plugins: [],
 }

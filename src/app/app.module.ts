@@ -1,6 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserLoginComponent } from './components/searcher/user-login/user-login.component';
@@ -14,14 +13,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MaterialModule } from './material.components';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
-import {
-  GoogleSigninButtonDirective,
-  GoogleSigninButtonModule,
-} from '@abacritt/angularx-social-login';
 import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
 import { UserRegisterComponent } from './components/searcher/user-register/user-register.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { OtploginComponent } from './components/searcher/otplogin/otplogin.component';
+import { UserhomeComponent } from './components/searcher/userhome/userhome.component';
+import { UserheaderComponent } from './components/searcher/userheader/userheader.component';
+import { FlatpostComponent } from './components/searcher/flatpost/flatpost.component';
+import { FlatmatepostComponent } from './components/searcher/flatmatepost/flatmatepost.component';
+import { UsermanagementComponent } from './components/admin/usermanagement/usermanagement.component';
 
 
 @NgModule({
@@ -32,7 +33,13 @@ import { UserRegisterComponent } from './components/searcher/user-register/user-
     AppComponent,
     UserLoginComponent,
     AdminHomeComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    OtploginComponent,
+    UserhomeComponent,
+    UserheaderComponent,
+    FlatpostComponent,
+    FlatmatepostComponent,
+    UsermanagementComponent
   ],
   imports: [
     BrowserModule,
@@ -40,33 +47,20 @@ import { UserRegisterComponent } from './components/searcher/user-register/user-
     BrowserAnimationsModule,
     FormsModule,
     MaterialModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      preventDuplicates: true,
+    }),
     // MatFormFieldModule, 
     // MatInputModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    SocialLoginModule,
-    GoogleSigninButtonModule
+    HttpClientModule
     // MatFormFieldModule
   ],
-  providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '1054362202802-vgqtj7lqv6t09amee57nkj40quvnoqvo.apps.googleusercontent.com'
-            )
-          }
-        ],
-        onError: (err) => {
-          console.error(err);
-        }
-      } as SocialAuthServiceConfig,
-    },GoogleSigninButtonDirective
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

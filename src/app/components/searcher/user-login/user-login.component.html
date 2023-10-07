@@ -9,29 +9,30 @@
       rel="stylesheet"
     />
   </head>
-  <body class="bg-gray-100 flex items-center justify-center h-screen">
-    <div class="flex flex-col items-center">
-      <div>
-        <h2>
-          <span class="font-bold text-black-500">flat</span>
-          <span class="font-bold text-violet-500">Unity</span>
+  <body>
+    <div class="flex flex-col items-center w-full">
+      <div class="p-10">
+        <h2 class="text-4xl font-bold text-black-500">
+          <span class="text-violet-500">flat</span>Unity
         </h2>
       </div>
-      <div class="flex items-center">
-        <div class="h-1/2">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="lg:w-96 md:w-3/12">
           <img
             src="../assets/images/usersStanding.png"
             alt="jhbhgcdgxdfsasSDz"
-            class="h-72"
+            class="w-full"
           />
         </div>
 
         <div
-          class="bg-white p-8 shadow-md rounded-lg w-96 flex flex-col items-center"
+          class="bg-white p-8 shadow-md rounded-lg w-full md:w-96 mx-4 mt-4 md:mt-0"
         >
           <h2 class="text-2xl font-semibold text-gray-500 mb-4">Login</h2>
+          
+          <app-otp-login [mobileNumber]="userMobileNumber"></app-otp-login>
 
-          <form class="w-full">
+          <form class="w-full" [formGroup]="otpForm" (ngSubmit)="onSubmit()">
             <div class="mb-4">
               <label
                 class="block text-gray-700 text-sm font-bold mb-2"
@@ -42,24 +43,26 @@
                 class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="username"
                 type="text"
+                formControlName="mobile"
                 placeholder="Mobile Number"
               />
             </div>
 
             <div class="flex items-center justify-between">
               <button
-                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline "
-                type="button"
+                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
               >
                 Send OTP
               </button>
             </div>
-            
-            <div class="p-2">
-              <asl-google-signin-button type="icon" size="medium">
-              </asl-google-signin-button>
-            </div>
           </form>
+          <div class="flex flex-row mt-4">
+            <p>
+              <span>You don't have an account? </span>
+              <span><a href="/register" class="text-blue-500">Sign Up</a></span>
+            </p>
+          </div>
         </div>
       </div>
     </div>

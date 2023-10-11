@@ -10,7 +10,11 @@ import { adminloginAuthGuard } from '../Auth/adminlogin-auth.guard';
 const routes: Routes = [
   { path: 'login', component: AdminLoginComponent, canActivate: [adminAuthGuard] },
   { path: 'adminhome', component: AdminHomeComponent, canActivate: [adminloginAuthGuard] },
-  { path: 'users', component: UsermanagementComponent }
+  { path: 'users', component: AdminHomeComponent },
+  { path: 'flatfeed', component: AdminHomeComponent },
+  { path: 'flatMatefeed', component: AdminHomeComponent },
+  { path: 'plans', component: AdminHomeComponent },
+
 ];
 
 

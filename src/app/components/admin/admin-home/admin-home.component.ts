@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AdminServiceService } from 'src/app/services/adminServices/admin-service.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -7,18 +8,27 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./admin-home.component.css']
 })
 export class AdminHomeComponent {
-  isActive: boolean = true
-  constructor(private router: Router) {
-    // Subscribe to the router events to track navigation
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // Check if the current route is the dashboard route
-        this.isActive = event.url === '/admin/dashboard'; // Adjust the route as needed
-      }
+  showUserManagement: boolean = false;
+  showFlatfeed: boolean = false;
+  showFlatmatefeed: boolean = false;
+  showsales: boolean = false;
+  showPref: boolean = false;
+  showPlans: boolean = false;
+
+  constructor(private router: ActivatedRoute, private adminService: AdminServiceService) {
+
+  }
+  ngOnInit() {
+    this.router.url.subscribe(segments => {
+      this.showUserManagement = segments.some(segment => segment.path === 'users');
+      this.showFlatfeed = segments.some(segment => segment.path === 'flatfeed');
+      this.showFlatmatefeed = segments.some(segment => segment.path === 'flatMatefeed');
+      this.showPlans = segments.some(segment => segment.path === 'plans');
     });
   }
+
   logOutAdmin() {
-    // this.router.navigate(['/'])
     localStorage.removeItem('adminToken')
   }
+
 }

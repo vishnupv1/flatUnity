@@ -23,6 +23,9 @@ import { UserheaderComponent } from './components/searcher/userheader/userheader
 import { FlatpostComponent } from './components/searcher/flatpost/flatpost.component';
 import { FlatmatepostComponent } from './components/searcher/flatmatepost/flatmatepost.component';
 import { UsermanagementComponent } from './components/admin/usermanagement/usermanagement.component';
+import { FlatfeedsComponent } from './components/admin/flatfeeds/flatfeeds.component';
+import { FlatMatefeedsComponent } from './components/admin/flat-matefeeds/flat-matefeeds.component';
+import { PlansComponent } from './components/admin/plans/plans.component';
 
 
 @NgModule({
@@ -39,7 +42,10 @@ import { UsermanagementComponent } from './components/admin/usermanagement/userm
     UserheaderComponent,
     FlatpostComponent,
     FlatmatepostComponent,
-    UsermanagementComponent
+    UsermanagementComponent,
+    FlatfeedsComponent,
+    FlatMatefeedsComponent,
+    PlansComponent
   ],
   imports: [
     BrowserModule,

@@ -14,10 +14,10 @@ const register = async (req, res) => {
         const exist = await User.findOne({ mobile: req.body.mobile });
         const mailexist = await User.findOne({ email: req.body.email });
         if (mailexist) {
-            res.status(409).json({ message: 'Email id already registered' });
+            return res.status(409).json({ message: 'Email id already registered' });
         }
         else if (exist) {
-            res.status(409).json({ message: 'Mobile already registered' });
+            return res.status(409).json({ message: 'Mobile already registered' });
         } else {
             const user = new User({
                 name: req.body.name,
@@ -28,18 +28,22 @@ const register = async (req, res) => {
                 city: req.body.city
             });
             const userData = await user.save();
-            res.status(201).json({ message: 'Registration successful' });
+            return res.status(201).json({ message: 'Registration successful' });
         }
     } catch (error) {
         console.error(error.message);
-        res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 //sending otp to user mobile using random number module and twilio
 const loginWithOtp = async (req, res) => {
     try {
         const user = await User.findOne({ mobile: req.body.mobile })
-        userMobile = user.mobile
+        if (user) {
+            userMobile = user.mobile
+        } else {
+            return res.status(404).json({ message: 'Mobile number not registered' });
+        }
         if (userMobile) {
             let OTP = ""
             let digits = '0123456789'
@@ -48,14 +52,14 @@ const loginWithOtp = async (req, res) => {
             }
             await User.updateOne({ mobile: req.body.mobile }, { $set: { otp: OTP } })
             sendOtp(userMobile, OTP)
-            res.status(200).json({ message: 'otp sent successfully' });
+            return res.status(200).json({ message: 'otp sent successfully' });
         }
         else {
-            res.status(404).json({ message: 'Mobile number not registered' });
+            return res.status(404).json({ message: 'Mobile number not registered' });
         }
     }
     catch (error) {
-        res.status(500).json({ message: 'Server error' })
+        return res.status(500).json({ message: 'internal server error' })
     }
 }
 //verifying otp
@@ -71,11 +75,11 @@ const verifyOtp = async (req, res) => {
                 expiresIn: '1h'
             };
             const token = jwt.sign(req.body, 'mysecretkey', options);
-            res.status(200).json({ message: 'otp validation successfull', userToken: token, mobile: userData.mobile });
+            return res.status(200).json({ message: 'otp validation successfull', userToken: token, mobile: userData.mobile });
 
         }
         else {
-            res.status(404).json({ message: 'otp invalid' });
+            return res.status(404).json({ message: 'otp invalid' });
         }
     }
     catch (error) {

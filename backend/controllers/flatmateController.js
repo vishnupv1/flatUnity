@@ -11,8 +11,10 @@ const jwt = require('jsonwebtoken')
 //registering user
 const register = async (req, res) => {
     try {
-        const exist = await User.findOne({ mobile: req.body.mobile });
-        const mailexist = await User.findOne({ email: req.body.email });
+        const email = req.body.email
+        const mobile = req.body.mobile
+        const exist = await User.findOne({ mobile: mobile });
+        const mailexist = await User.findOne({ email: email });
         if (mailexist) {
             return res.status(409).json({ message: 'Email id already registered' });
         }
@@ -40,7 +42,12 @@ const loginWithOtp = async (req, res) => {
     try {
         const user = await User.findOne({ mobile: req.body.mobile })
         if (user) {
-            userMobile = user.mobile
+            if (!user.is_blocked) {
+                userMobile = user.mobile
+            }
+            else {
+                return res.status(404).json({ message: 'User Blocked' });
+            }
         } else {
             return res.status(404).json({ message: 'Mobile number not registered' });
         }
@@ -65,12 +72,12 @@ const loginWithOtp = async (req, res) => {
 //verifying otp
 const verifyOtp = async (req, res) => {
     try {
-        let body = req.body
-        const otpString = Object.values(body).join('');
+        let otpData = req.body
+        const otpString = otpData.otp1 + otpData.otp2 + otpData.otp3 + otpData.otp4 + otpData.otp5 + otpData.otp6;
         const OTP = Number(otpString)
         const mobile = req.body.mobile
         let userData = await User.findOne({ mobile: mobile })
-        if (userData) {
+        if (userData.otp == OTP) {
             const options = {
                 expiresIn: '1h'
             };

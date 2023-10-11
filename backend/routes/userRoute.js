@@ -6,6 +6,7 @@ user_route.use(bodyParser.json())
 user_route.use(bodyParser.urlencoded({ extended: true }))
 const multer = require('multer')
 const path = require('path')
+const userAuth = require('../middleware/auth')
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, path.join('./public/userImages'))
@@ -25,13 +26,6 @@ user_route.post('/register', userController.register)
 user_route.post('/sendOtp', userController.sendOtp)
 user_route.post('/loginWithOtp', userController.loginWithOtp)
 user_route.post('/verifyOtp', userController.verifyOtp)
-
-
-
-
-
-
-
 
 
 

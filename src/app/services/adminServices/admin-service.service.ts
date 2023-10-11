@@ -12,4 +12,13 @@ export class AdminServiceService {
   adminLogin(adminData: any): Observable<any> {
     return this.http.post<any>(`${apiUrl}/admin/login`, adminData);
   }
+  loadUser() {
+    return this.http.get(`${apiUrl}/admin/loadUsers`)
+  }
+  blockUser(id: any) {
+    return this.http.get(`${apiUrl}/admin/blockUser?id=${id}`)
+  }
+  unBlockUser(id: any) {
+    return this.http.patch(`${apiUrl}/admin/unBlocOrBlockkUser?id=${id}`, {});
+  }
 }

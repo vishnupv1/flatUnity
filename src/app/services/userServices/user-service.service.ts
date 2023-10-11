@@ -21,7 +21,6 @@ export class UserServiceService {
   otpVerify(otpData: any) {
     return this.http.post<any>(`${apiUrl}/verifyOtp`, otpData)
   }
-
   private mobileNumberSource = new BehaviorSubject<string>('');
 
   mobileNumber$ = this.mobileNumberSource.asObservable();
@@ -29,4 +28,8 @@ export class UserServiceService {
   setMobileNumber(mobileNumber: any) {
     this.mobileNumberSource.next(mobileNumber);
   }
+
+ 
+
+
 }

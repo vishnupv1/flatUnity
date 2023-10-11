@@ -26,6 +26,13 @@ import { UsermanagementComponent } from './components/admin/usermanagement/userm
 import { FlatfeedsComponent } from './components/admin/flatfeeds/flatfeeds.component';
 import { FlatMatefeedsComponent } from './components/admin/flat-matefeeds/flat-matefeeds.component';
 import { PlansComponent } from './components/admin/plans/plans.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+// import { profileReducer } from './modules/store/user.reducer';
+import { userEffects } from './store/effect';
+import { userReducer } from './store/reducer';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptor';
 
 
 @NgModule({
@@ -63,10 +70,16 @@ import { PlansComponent } from './components/admin/plans/plans.component';
     // MatInputModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    HttpClientModule
+    HttpClientModule,
+    EffectsModule.forRoot([userEffects]),
+    StoreModule.forRoot({ users: userReducer }),
     // MatFormFieldModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

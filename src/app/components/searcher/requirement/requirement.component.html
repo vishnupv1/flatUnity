@@ -1,0 +1,26 @@
+<app-userheader></app-userheader>
+<div class="mx-auto w-3/4">
+  <div class="flex flex-col sm:flex-row">
+    <div class="w-full sm:w-1/2 flex items-center justify-center">
+      <img src="../assets/images/2775158.jpg" alt="" class="w-3/4" />
+    </div>
+    <div class="flex flex-col w-full sm:w-1/2 items-center justify-center">
+      <div
+        class="cursor-pointer bg-lime-700 hover:bg-green-600 w-3/4 sm:w-1/2 text-white px-4 py-2 m-2 sm:m-10 rounded flex flex-col text-center"
+        style="height: 15vh"
+        (click)="navigateTo('roommate')"
+      >
+        <span class="font-bold text-lg mt-1">Roommate</span>
+        <span class="text-xs">Have a flat and looking for flat mates</span>
+      </div>
+      <div
+        class="cursor-pointer bg-lime-700 hover:bg-green-600 w-3/4 sm:w-1/2 text-white px-4 py-2 m-2 sm:m-10 rounded flex flex-col text-center"
+        style="height: 15vh"
+        (click)="navigateTo('roomflat')"
+      >
+        <span class="font-bold text-lg mt-1">Room/Flat</span>
+        <span class="text-xs">Looking for a room or flat</span>
+      </div>
+    </div>
+  </div>
+</div>

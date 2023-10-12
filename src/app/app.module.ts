@@ -7,8 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
 import { FormsModule } from '@angular/forms';
 import { } from '@angular/material/input'
-import { MatInputModule } from '@angular/material/input'
-// import { MaterialModule } from './material.components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MaterialModule } from './material.components';
@@ -28,11 +26,13 @@ import { FlatMatefeedsComponent } from './components/admin/flat-matefeeds/flat-m
 import { PlansComponent } from './components/admin/plans/plans.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-// import { profileReducer } from './modules/store/user.reducer';
 import { userEffects } from './store/effect';
 import { userReducer } from './store/reducer';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor';
+import { RequirementComponent } from './components/searcher/requirement/requirement.component';
+import { RoomreqComponent } from './components/searcher/roomreq/roomreq.component';
+import { RoommatereqComponent } from './components/searcher/roommatereq/roommatereq.component';
 
 
 @NgModule({
@@ -52,7 +52,11 @@ import { AuthInterceptor } from './interceptor';
     UsermanagementComponent,
     FlatfeedsComponent,
     FlatMatefeedsComponent,
-    PlansComponent
+    PlansComponent,
+    RequirementComponent,
+    RoomreqComponent,
+    RoommatereqComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -66,14 +70,11 @@ import { AuthInterceptor } from './interceptor';
       progressAnimation: 'increasing',
       preventDuplicates: true,
     }),
-    // MatFormFieldModule, 
-    // MatInputModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     HttpClientModule,
     EffectsModule.forRoot([userEffects]),
     StoreModule.forRoot({ users: userReducer }),
-    // MatFormFieldModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

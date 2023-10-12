@@ -75,7 +75,7 @@ export class OtploginComponent {
         localStorage.setItem('userToken', response.userToken);
         localStorage.setItem('userNum', response.mobile)
         // this.router.navigate(['/'])
-        this.router.navigate(['/home'])
+        this.router.navigate(['/flatmatepost'])
       }, (error) => {
         this.toastr.error(error.error.message, 'Error', {
           timeOut: 2000,

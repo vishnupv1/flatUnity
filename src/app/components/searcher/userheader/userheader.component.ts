@@ -19,4 +19,7 @@ export class UserheaderComponent {
     localStorage.removeItem('userNum')
     this.router.navigate([''])
   }
+  navigateTo(route: string) {
+    this.router.navigate([route]);
+  }
 }

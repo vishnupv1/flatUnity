@@ -8,16 +8,22 @@ import { authGuard } from './Auth/user-auth.guard';
 import { userhomeAuthGuard } from './Auth/userhome-auth.guard';
 import { FlatpostComponent } from './components/searcher/flatpost/flatpost.component';
 import { FlatmatepostComponent } from './components/searcher/flatmatepost/flatmatepost.component';
+import { RequirementComponent } from './components/searcher/requirement/requirement.component';
+import { RoomreqComponent } from './components/searcher/roomreq/roomreq.component';
+import { RoommatereqComponent } from './components/searcher/roommatereq/roommatereq.component';
 
 const routes: Routes =
   [
     { component: UserLoginComponent, path: '', canActivate: [authGuard] },
     { component: UserRegisterComponent, path: 'register' },
     { component: OtploginComponent, path: 'otplogin' },
+    { component: RequirementComponent, path: 'requirement' },
     { component: FlatpostComponent, path: 'flatpost' },
-    { component: FlatmatepostComponent, path: 'flatmatepost' },
+    { component: RoomreqComponent, path: 'roomflat' },
+    { component: RoommatereqComponent, path: 'roommate' },
+    { component: FlatmatepostComponent, path: 'flatmatepost', canActivate: [userhomeAuthGuard] },
     {
-      component: UserhomeComponent, path: 'home', canActivate: [userhomeAuthGuard],
+      component: UserhomeComponent, path: 'home',
     },
     { path: 'admin', loadChildren: () => import('./admin-routing/admin.module').then((m) => m.AdminModule) },
   ];

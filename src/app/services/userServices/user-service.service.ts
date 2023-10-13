@@ -28,8 +28,12 @@ export class UserServiceService {
   setMobileNumber(mobileNumber: any) {
     this.mobileNumberSource.next(mobileNumber);
   }
+  roomMatepost(postData: any) {
+    console.log('postData');
+    
+    return this.http.post<any>(`${apiUrl}/roommateReqPost`, postData)
+  }
 
- 
 
 
 }

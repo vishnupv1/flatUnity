@@ -3,7 +3,11 @@
   <div>
     <h2 class="font-bold">Need a Roommate</h2>
   </div>
-  <form [formGroup]="rommateForm" (ngSubmit)="onSubmit()">
+  <form
+    [formGroup]="roommateForm"
+    (ngSubmit)="onSubmit()"
+    enctype="multipart/form-data"
+  >
     <div class="mb-4">
       <label for="location" class="block text-gray-700 text-sm font-medium mb-2"
         >Location</label
@@ -122,7 +126,7 @@
               SVG, PNG, JPG or GIF
             </p>
           </div>
-          <input id="dropzone-file" type="file" class="hidden" />
+          <input id="dropzone-file" type="file" multiple class="hidden" />
         </label>
       </div>
     </div>
@@ -171,7 +175,6 @@
               value=""
               class="hidden peer"
               formControlName="ac"
-
             />
             <label
               for="ac-option"
@@ -189,7 +192,6 @@
               value=""
               class="hidden peer"
               formControlName="fridge"
-
             />
             <label
               for="fridge-option"
@@ -207,7 +209,6 @@
               value="washing"
               class="hidden peer"
               formControlName="washing"
-
             />
             <label
               for="washing-option"
@@ -225,7 +226,6 @@
               value=""
               class="hidden peer"
               formControlName="inverter"
-
             />
             <label
               for="inverter-option"

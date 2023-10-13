@@ -33,6 +33,8 @@ import { AuthInterceptor } from './interceptor';
 import { RequirementComponent } from './components/searcher/requirement/requirement.component';
 import { RoomreqComponent } from './components/searcher/roomreq/roomreq.component';
 import { RoommatereqComponent } from './components/searcher/roommatereq/roommatereq.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
 
 
 @NgModule({
@@ -75,6 +77,7 @@ import { RoommatereqComponent } from './components/searcher/roommatereq/roommate
     HttpClientModule,
     EffectsModule.forRoot([userEffects]),
     StoreModule.forRoot({ users: userReducer }),
+    NgxDropzoneModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -26,6 +26,7 @@ user_route.post('/register', userController.register)
 user_route.post('/sendOtp', userController.sendOtp)
 user_route.post('/loginWithOtp', userController.loginWithOtp)
 user_route.post('/verifyOtp', userController.verifyOtp)
+user_route.post('/roommateReqPost', upload.array('image'), userController.roommateReqPost)
 
 
 

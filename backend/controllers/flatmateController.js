@@ -103,10 +103,14 @@ async function sendOtp(userMobile, otp) {
         })
         .then((message) => console.log(message.sid));
 }
+const roommateReqPost = async (req, res) => {
+    console.log(req.body);
+}
 
 module.exports = {
     register,
     sendOtp,
     loginWithOtp,
-    verifyOtp
+    verifyOtp,
+    roommateReqPost
 }

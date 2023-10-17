@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        const authToken = localStorage.getItem('adminToken')
+        const authToken = localStorage.getItem('userToken')
         const authRequest = request.clone({
             setHeaders: {
                 Authorization: `Bearer ${authToken}`,

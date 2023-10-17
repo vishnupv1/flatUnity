@@ -7,4 +7,11 @@ export const fetchUserSuccess = createAction(
     '[User API Success] fetch user API Success',
     props<{ allUser: any[] }>()
 )
+export const fetchRoommateReq = createAction(
+    '[RoommateReq API] RoommateReq API'
+)
+export const fetchRoommateReqSuccess = createAction(
+    '[RoommateReq API Success] RoommateReq API Success',
+    props<{ posts: any[] }>()
+)
 

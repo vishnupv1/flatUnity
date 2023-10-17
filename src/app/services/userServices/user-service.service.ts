@@ -29,9 +29,11 @@ export class UserServiceService {
     this.mobileNumberSource.next(mobileNumber);
   }
   roomMatepost(postData: any) {
-    console.log('postData');
-    
-    return this.http.post<any>(`${apiUrl}/roommateReqPost`, postData)
+    let mobNum = localStorage.getItem('userNum')
+    return this.http.post<any>(`${apiUrl}/roommateReqPost?mobile=${mobNum}`, postData)
+  }
+  loadposts() {
+    return this.http.get(`${apiUrl}/loadposts`)
   }
 
 

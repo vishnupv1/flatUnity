@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const Post = require('../models/roomMateReqModel')
 const bcrypt = require('bcrypt')
 const randomstring = require('randomstring')
 const config = require('../config/config')
@@ -104,7 +105,87 @@ async function sendOtp(userMobile, otp) {
         .then((message) => console.log(message.sid));
 }
 const roommateReqPost = async (req, res) => {
-    console.log(req.body);
+    try {
+        console.log('ddddddddd');
+        const formData = req.body;
+        console.log(formData);
+        const images = req.file.filename
+        const userNum = req.query.mobile;
+        user = await User.findOne({ mobile: userNum })
+        UserId = user._id
+
+        const amenities = []
+        if (formData.ac === 'true') {
+            amenities.push('ac');
+        }
+        if (formData.parking === 'true') {
+            amenities.push('parking');
+        }
+        if (formData.wifi === 'true') {
+            amenities.push('wifi');
+        }
+        if (formData.fridge === 'true') {
+            amenities.push('fridge');
+        }
+        if (formData.washing === 'true') {
+            amenities.push('washing');
+        }
+        if (formData.inverter === 'true') {
+            amenities.push('inverter');
+        }
+        const post = new Post({
+            userId: UserId,
+            location: formData.location,
+            gender: formData.gender,
+            rent: formData.rent,
+            contactNumber: formData.contact,
+            amenities: amenities,
+            description: formData.description,
+            images: images
+        })
+        const postData = await post.save();
+        return res.status(200).json({ message: 'Requirement posted' });
+    }
+    catch (err) {
+        return res.status(404).json({ message: 'error' });
+    }
+
+
+
+}
+const loadposts = async (req, res) => {
+    const posts = await Post.find({})
+
+
+
+
+    const username = await Post.aggregate([
+        {
+            $lookup: {
+                from: "users",
+                localField: "userId",
+                foreignField: "_id",
+                as: "user",
+            },
+        },
+        {
+            $unwind: "$user",
+        },
+        {
+            $project: {
+                _id: 0, // Exclude _id field
+                name: "$user.name",
+            },
+        },
+    ]);
+    // const posts = {
+    //     name: username,
+    //     gender: postData.gender,
+    //     images: postData.images,
+    //     location: postData.location
+    // }
+
+    return res.status(200).json({ posts: posts })
 }
 
 module.exports = {
@@ -112,5 +193,6 @@ module.exports = {
     sendOtp,
     loginWithOtp,
     verifyOtp,
-    roommateReqPost
+    roommateReqPost,
+    loadposts
 }

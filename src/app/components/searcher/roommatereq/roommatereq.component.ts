@@ -11,6 +11,8 @@ import { UserServiceService } from 'src/app/services/userServices/user-service.s
 
 export class RoommatereqComponent {
   submit: boolean = false
+  file: any
+  formData: any
   constructor(private fb: FormBuilder, private UserService: UserServiceService, private router: Router, private toastr: ToastrService) {
   }
   roommateForm = this.fb.group({
@@ -19,16 +21,13 @@ export class RoommatereqComponent {
     rent: ['', [Validators.required]],
     image: '',
     contact: ['', [Validators.required]],
-    amenities: this.fb.group({
-      parking: false,
-      ac: false,
-      fridge: false,
-      washing: false,
-      inverter: false,
-      wifi: false,
-    }),
+    parking: false,
+    ac: false,
+    fridge: false,
+    washing: false,
+    inverter: false,
+    wifi: false,
     description: ''
-
   })
   onSubmit() {
     if (!this.roommateForm.valid) {
@@ -68,7 +67,21 @@ export class RoommatereqComponent {
     }
     else {
       this.submit = true
+      this.formData = new FormData();
+      this.formData.append('location', this.roommateForm.get('location')!.value!);
+      this.formData.append('gender', this.roommateForm.get('gender')!.value!);
+      this.formData.append('rent', this.roommateForm.get('rent')!.value!);
+      this.formData.append('image', this.file);
+      this.formData.append('contact', this.roommateForm.get('contact')!.value!);
+      this.formData.append('ac', this.roommateForm.get('ac')!.value!.toString());
+      this.formData.append('parking', this.roommateForm.get('parking')!.value!.toString());
+      this.formData.append('wifi', this.roommateForm.get('wifi')!.value!.toString());
+      this.formData.append('fridge', this.roommateForm.get('fridge')!.value!.toString());
+      this.formData.append('washing', this.roommateForm.get('washing')!.value!.toString());
+      this.formData.append('inverter', this.roommateForm.get('inverter')!.value!.toString());
+      this.formData.append('description', this.roommateForm.get('description')!.value!);
       this.roomMatepost()
+      this.router.navigate(['roommate'])
     }
 
 
@@ -127,7 +140,7 @@ export class RoommatereqComponent {
     return
   }
   roomMatepost() {
-    this.UserService.roomMatepost(this.roommateForm.value).subscribe(
+    this.UserService.roomMatepost(this.formData).subscribe(
       (response) => {
         this.toastr.success(response.message, 'Success', {
           timeOut: 1000,
@@ -145,7 +158,11 @@ export class RoommatereqComponent {
         })
       })
   }
-
-
+  onFileSelected(event: any) {
+    const files: FileList = event.target.files;
+    if (files.length > 0) {
+      this.file = files[0]; // Assuming you only allow a single file upload
+    }
+  }
 }
 

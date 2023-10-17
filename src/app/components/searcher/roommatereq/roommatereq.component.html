@@ -47,7 +47,7 @@
           <input
             type="radio"
             id="male"
-            name="gender"
+            formControlName="gender"
             value="male"
             class="hidden peer"
           />
@@ -64,7 +64,7 @@
           <input
             type="radio"
             id="any"
-            name="gender"
+            formControlName="gender"
             value="any"
             class="hidden peer"
           />
@@ -126,7 +126,13 @@
               SVG, PNG, JPG or GIF
             </p>
           </div>
-          <input id="dropzone-file" type="file" multiple class="hidden" />
+          <input
+            id="dropzone-file"
+            type="file"
+            multiple
+            class="hidden"
+            (change)="onFileSelected($event)"
+          />
         </label>
       </div>
     </div>
@@ -265,7 +271,7 @@
       >
       <textarea
         id="description"
-        name="description"
+        formControlName="description"
         class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-200"
         rows="4"
         placeholder="Add descriptions if any"

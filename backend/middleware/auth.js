@@ -6,8 +6,8 @@ const userAuth = async (req, res, next) => {
     const token = headerArr[1];
     const decoded = jwt.decode(token);
     if (decoded) {
-        const userId = decoded.userId;
-        const VerifiedUser = await Admin.findOne({ _id: userId })
+        const userNum = decoded.userNum;
+        const VerifiedUser = await Admin.findOne({ mobile: userNum })
         if (VerifiedUser) {
             next()
         } else {

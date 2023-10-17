@@ -28,6 +28,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { userEffects } from './store/effect';
 import { userReducer } from './store/reducer';
+import { postsReducer } from './store/reducer';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor';
 import { RequirementComponent } from './components/searcher/requirement/requirement.component';
@@ -77,6 +78,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     HttpClientModule,
     EffectsModule.forRoot([userEffects]),
     StoreModule.forRoot({ users: userReducer }),
+    StoreModule.forRoot({ posts: postsReducer }),
     NgxDropzoneModule
   ],
   providers: [{

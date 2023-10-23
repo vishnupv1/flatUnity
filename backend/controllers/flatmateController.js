@@ -9,30 +9,66 @@ const authToken = 'ee335f2d885b3ade2f6ad07f6d1d52e3';
 const client = require('twilio')(accountSid, authToken);
 const jwt = require('jsonwebtoken')
 
+
+const sendVerifyMail = async (username, email) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
+            auth: {
+                user: config.emailUser,
+                pass: config.passwordUser
+            }
+        })
+        const mailOptions = {
+            from: config.emailUser,
+            to: email,
+            subject: 'FlatUnity User verification',
+            html: '<p>Hi ' + username + ' , Plese click here to verify your flatUnity account <a href = "http://localhost:4200/verify?id=' + email + '">Verify</a></p>'
+        }
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                console.log('email has been sent:-', info.response);
+            }
+        })
+    }
+    catch (error) {
+        console.log(error.message);
+    }
+}
 //registering user
 const register = async (req, res) => {
     try {
-        const email = req.body.email
-        const mobile = req.body.mobile
-        const exist = await User.findOne({ mobile: mobile });
-        const mailexist = await User.findOne({ email: email });
-        if (mailexist) {
-            return res.status(409).json({ message: 'Email id already registered' });
-        }
-        else if (exist) {
+        const { name, email, mobile, gender, userType, city } = req.body;
+        const emailExists = await User.findOne({ email });
+        const mobileExists = await User.findOne({ mobile });
+
+        if (emailExists) {
+            return res.status(409).json({ message: 'Email ID already registered' });
+        } else if (mobileExists) {
             return res.status(409).json({ message: 'Mobile already registered' });
-        } else {
-            const user = new User({
-                name: req.body.name,
-                email: req.body.email,
-                mobile: req.body.mobile,
-                gender: req.body.gender,
-                userType: req.body.userType,
-                city: req.body.city
-            });
-            const userData = await user.save();
-            return res.status(201).json({ message: 'Registration successful' });
         }
+
+        // Create a new user
+        const newUser = new User({
+            name,
+            email,
+            mobile,
+            gender,
+            userType,
+            city
+        });
+
+        // Save the user to the database
+        const userData = await newUser.save();
+        sendVerifyMail(name, email)
+
+        return res.status(201).json({ message: 'Registration successful verification mail sent to mail Id , please verify' });
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({ message: 'Internal server error' });
@@ -154,38 +190,47 @@ const roommateReqPost = async (req, res) => {
 
 }
 const loadposts = async (req, res) => {
-    const posts = await Post.find({})
-
-
-
-
-    const username = await Post.aggregate([
-        {
-            $lookup: {
-                from: "users",
-                localField: "userId",
-                foreignField: "_id",
-                as: "user",
+    try {
+        const posts = await Post.find({})
+        const username = await Post.aggregate([
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userId",
+                    foreignField: "_id",
+                    as: "user",
+                },
             },
-        },
-        {
-            $unwind: "$user",
-        },
-        {
-            $project: {
-                _id: 0, // Exclude _id field
-                name: "$user.name",
+            {
+                $unwind: "$user",
             },
-        },
-    ]);
-    // const posts = {
-    //     name: username,
-    //     gender: postData.gender,
-    //     images: postData.images,
-    //     location: postData.location
-    // }
+            {
+                $project: {
+                    _id: 0, // Exclude _id field
+                    name: "$user.name",
+                },
+            },
+        ]);
 
-    return res.status(200).json({ posts: posts })
+        return res.status(200).json({ posts: posts })
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+const verifyUser = async (req, res) => {
+    try {
+        const userMail = req.body.email
+        const userData = await User.findOne({ email: userMail })
+        if (userData) {
+            await User.updateOne({ email: userMail }, { $set: { is_verified: true } });
+        } else {
+            res.status(404).json("invalid request")
+        }
+    }
+    catch (error) {
+        res.status(400).json("internal error")
+    }
+
 }
 
 module.exports = {
@@ -194,5 +239,6 @@ module.exports = {
     loginWithOtp,
     verifyOtp,
     roommateReqPost,
-    loadposts
+    loadposts,
+    verifyUser
 }

@@ -32,6 +32,10 @@ const userSchema = mongoose.Schema({
         type: String,
         default: ''
     },
+    is_verified: {
+        type: Boolean,
+        default: false
+    },
     is_blocked: {
         type: Boolean,
         default: false

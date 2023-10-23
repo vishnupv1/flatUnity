@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserServiceService } from 'src/app/services/userServices/user-service.service';
 import { Router } from '@angular/router';
@@ -15,10 +15,11 @@ export class UserRegisterComponent {
   // inCorrect: boolean = false
   // emailUsed!: string;
 
-  user: User = {} as User;
 
+  user: User = {} as User;
   constructor(private fb: FormBuilder, private UserService: UserServiceService, private router: Router, private toastr: ToastrService) {
   }
+  ngOnInit(): void { }
   //form decleration and validation criterias
   registerForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2)]],
@@ -77,11 +78,11 @@ export class UserRegisterComponent {
     this.UserService.registerUser(this.registerForm.value).subscribe(
       (response) => {
         this.toastr.success(response.message, 'Success', {
-          timeOut: 1000,
+          timeOut: 3000,
           progressAnimation: 'increasing',
           progressBar: true
         })
-        // this.router.navigate([''])
+        this.ngOnInit()
       }, (error) => {
         console.log(error);
 

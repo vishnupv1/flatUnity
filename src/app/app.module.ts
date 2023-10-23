@@ -35,6 +35,7 @@ import { RequirementComponent } from './components/searcher/requirement/requirem
 import { RoomreqComponent } from './components/searcher/roomreq/roomreq.component';
 import { RoommatereqComponent } from './components/searcher/roommatereq/roommatereq.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { VerifyUserComponent } from './components/searcher/verify-user/verify-user.component';
 
 
 
@@ -59,6 +60,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     RequirementComponent,
     RoomreqComponent,
     RoommatereqComponent,
+    VerifyUserComponent,
 
   ],
   imports: [
@@ -76,9 +78,11 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     ReactiveFormsModule,
     FlexLayoutModule,
     HttpClientModule,
+    StoreModule.forRoot({
+      users: userReducer,
+      posts: postsReducer,
+    }),
     EffectsModule.forRoot([userEffects]),
-    StoreModule.forRoot({ users: userReducer }),
-    StoreModule.forRoot({ posts: postsReducer }),
     NgxDropzoneModule
   ],
   providers: [{

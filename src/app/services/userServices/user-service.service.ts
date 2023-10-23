@@ -35,7 +35,10 @@ export class UserServiceService {
   loadposts() {
     return this.http.get(`${apiUrl}/loadposts`)
   }
-
+  verifyUser(mail: string) {
+    const data = { email: mail }
+    return this.http.patch(`${apiUrl}/verify`, data)
+  }
 
 
 }

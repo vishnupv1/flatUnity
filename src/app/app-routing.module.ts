@@ -11,6 +11,7 @@ import { FlatmatepostComponent } from './components/searcher/flatmatepost/flatma
 import { RequirementComponent } from './components/searcher/requirement/requirement.component';
 import { RoomreqComponent } from './components/searcher/roomreq/roomreq.component';
 import { RoommatereqComponent } from './components/searcher/roommatereq/roommatereq.component';
+import { VerifyUserComponent } from './components/searcher/verify-user/verify-user.component';
 
 const routes: Routes =
   [
@@ -20,6 +21,7 @@ const routes: Routes =
     { component: RequirementComponent, path: 'requirement' },
     { component: FlatpostComponent, path: 'flatpost' },
     { component: RoomreqComponent, path: 'roomflat' },
+    { component: VerifyUserComponent, path: 'verify' },
     { component: RoommatereqComponent, path: 'roommate' },
     { component: FlatmatepostComponent, path: 'flatmatepost', canActivate: [userhomeAuthGuard] },
     {

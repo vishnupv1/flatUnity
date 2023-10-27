@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { fetchRoommateReqSuccess, fetchUserSuccess } from "./action";
+import { fetchRoommateReqSuccess, fetchUserSuccess, fetchRoomReqSuccess } from "./action";
 
 let initalState: any[] = []
 let postInitalState: any[] = []
@@ -22,4 +22,13 @@ const _postsReducer = createReducer(postInitalState,
 )
 export function postsReducer(state: any, action: any) {
     return _postsReducer(state, action);
+}
+
+const _roompostsReducer = createReducer(postInitalState,
+    on(fetchRoomReqSuccess, (_state, { roomposts }) => {
+        return Object.values(roomposts[0])
+    })
+)
+export function roompostReducer(state: any, action: any) {
+    return _roompostsReducer(state, action);
 }

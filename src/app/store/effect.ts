@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ofType, Actions, createEffect } from "@ngrx/effects";
-import { fetchRoommateReq, fetchRoommateReqSuccess, fetchUser, fetchUserSuccess } from "./action";
+import { fetchRoommateReq, fetchRoommateReqSuccess, fetchUser, fetchUserSuccess,fetchRoomReq,fetchRoomReqSuccess } from "./action";
 import { AdminServiceService } from "../services/adminServices/admin-service.service";
 import { map, switchMap } from "rxjs";
 import { UserServiceService } from "../services/userServices/user-service.service";
@@ -19,5 +19,10 @@ export class userEffects {
         this.action$.pipe(ofType(fetchRoommateReq), switchMap(() => {
             return this.userService.loadposts().pipe(map((data) =>
                 fetchRoommateReqSuccess({ posts: Object.values(data) })))
+        })))
+    loadAllRoomReq$ = createEffect(() =>
+        this.action$.pipe(ofType(fetchRoomReq), switchMap(() => {
+            return this.userService.loadroomposts().pipe(map((data) =>
+                fetchRoomReqSuccess({ roomposts: Object.values(data) })))
         })))
 }

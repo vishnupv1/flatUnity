@@ -23,6 +23,7 @@ const routes: Routes =
     { component: RoomreqComponent, path: 'roomflat' },
     { component: VerifyUserComponent, path: 'verify' },
     { component: RoommatereqComponent, path: 'roommate' },
+    { component: RoomreqComponent, path: 'roomreq' },
     { component: FlatmatepostComponent, path: 'flatmatepost', canActivate: [userhomeAuthGuard] },
     {
       component: UserhomeComponent, path: 'home',

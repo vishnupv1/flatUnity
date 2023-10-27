@@ -27,7 +27,7 @@ import { PlansComponent } from './components/admin/plans/plans.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { userEffects } from './store/effect';
-import { userReducer } from './store/reducer';
+import { roompostReducer, userReducer } from './store/reducer';
 import { postsReducer } from './store/reducer';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor';
@@ -81,6 +81,7 @@ import { VerifyUserComponent } from './components/searcher/verify-user/verify-us
     StoreModule.forRoot({
       users: userReducer,
       posts: postsReducer,
+      roomposts: roompostReducer
     }),
     EffectsModule.forRoot([userEffects]),
     NgxDropzoneModule

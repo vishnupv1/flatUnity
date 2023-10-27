@@ -61,5 +61,5 @@ const unBlockOrBlockUser = async (req, res) => {
 module.exports = {
     login,
     loadUsers,
-    unBlockOrBlockUser
+    unBlockOrBlockUser,
 }

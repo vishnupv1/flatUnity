@@ -32,8 +32,18 @@ export class UserServiceService {
     let mobNum = localStorage.getItem('userNum')
     return this.http.post<any>(`${apiUrl}/roommateReqPost?mobile=${mobNum}`, postData)
   }
+  roomPost(roompostData: any) {
+    console.log(roompostData);
+
+    let mobNum = localStorage.getItem('userNum')
+    return this.http.post<any>(`${apiUrl}/roomReqPost?mobile=${mobNum}`, roompostData)
+  }
   loadposts() {
     return this.http.get(`${apiUrl}/loadposts`)
+  }
+  loadroomposts() {
+    return this.http.get(`${apiUrl}/loadroomposts`)
+
   }
   verifyUser(mail: string) {
     const data = { email: mail }

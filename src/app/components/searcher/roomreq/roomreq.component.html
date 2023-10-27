@@ -1,1 +1,140 @@
-<p>roomreq works!</p>
+<app-userheader class="sticky top-0"></app-userheader>
+<div class="max-w-md mx-auto bg-white p-8 rounded shadow-md">
+  <div>
+    <h2 class="font-bold">Need a Room/flat</h2>
+  </div>
+  <form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+    <div class="mb-4">
+      <label for="location" class="block text-gray-700 text-sm font-medium mb-2"
+        >Location</label
+      >
+      <input
+        type="text"
+        id="location"
+        formControlName="location"
+        class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-200"
+        placeholder="Add your flat's location with proper landmarks"
+        appLocationApiDirective
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-medium mb-2"
+        >Looking for?</label
+      >
+      <ul class="w-full gap-6 md:grid-cols-2 flex">
+        <li class="w-full">
+          <input
+            type="radio"
+            id="female"
+            formControlName="gender"
+            value="female"
+            class="hidden peer"
+          />
+          <label
+            for="female"
+            class="w-full inline-flex items-center justify-center p-2 text-gray-500 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-500 hover:text-white peer-checked:text-white peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500"
+          >
+            <div class="block">
+              <div>Female</div>
+            </div>
+          </label>
+        </li>
+        <li class="w-full">
+          <input
+            type="radio"
+            id="male"
+            formControlName="gender"
+            value="male"
+            class="hidden peer"
+          />
+          <label
+            for="male"
+            class="w-full inline-flex items-center justify-center p-2 text-gray-500 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-500 hover:text-white peer-checked:text-white peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500"
+          >
+            <div class="block">
+              <div>Male</div>
+            </div>
+          </label>
+        </li>
+        <li class="w-full">
+          <input
+            type="radio"
+            id="any"
+            formControlName="gender"
+            value="any"
+            class="hidden peer"
+          />
+          <label
+            for="any"
+            class="w-full inline-flex items-center justify-center p-2 text-gray-500 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-500 hover:text-white peer-checked:text-white peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500"
+          >
+            <div class="block">
+              <div class=" ">Any</div>
+            </div>
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <div class="mb-4">
+      <label for="rent" class="block text-gray-700 text-sm font-medium mb-2"
+        >Rent</label
+      >
+      <input
+        type="text"
+        id="rent"
+        formControlName="rent"
+        class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-200"
+        placeholder="Rent in figures"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="contact" class="block text-gray-700 text-sm font-medium mb-2"
+        >Contact number</label
+      >
+      <input
+        type="text"
+        id="contact"
+        formControlName="contact"
+        class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-200"
+        placeholder="Add your immediate contact number"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="contact" class="block text-gray-700 text-sm font-medium mb-2"
+        >Date to shift</label
+      >
+      <input
+        type="date"
+        id="contact"
+        formControlName="date"
+        class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-200"
+        placeholder="Add your immediate contact number"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label
+        for="description"
+        class="block text-gray-700 text-sm font-medium mb-2"
+        >Description</label
+      >
+      <textarea
+        id="description"
+        formControlName="description"
+        class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-200"
+        rows="4"
+        placeholder="Add descriptions if any"
+      ></textarea>
+    </div>
+    <div class="text-center">
+      <button
+        type="submit"
+        class="bg-green-500 text-center text-white p-2 rounded hover:bg-green-600"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

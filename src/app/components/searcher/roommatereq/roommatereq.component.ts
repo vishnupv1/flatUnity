@@ -31,7 +31,6 @@ export class RoommatereqComponent {
   })
   onSubmit() {
     if (!this.roommateForm.valid) {
-
       if (this.locationError()) {
         this.toastr.warning(this.locationError(), '', {
           timeOut: 1000,

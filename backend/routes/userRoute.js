@@ -27,7 +27,9 @@ user_route.post('/sendOtp', userController.sendOtp)
 user_route.post('/loginWithOtp', userController.loginWithOtp)
 user_route.post('/verifyOtp', userController.verifyOtp)
 user_route.post('/roommateReqPost', upload.single('image'), userController.roommateReqPost)
+user_route.post('/roomReqPost', userController.roomReqPost)
 user_route.get('/loadposts', userController.loadposts)
+user_route.get('/loadroomposts', userController.loadroomposts)
 user_route.patch('/verify', userController.verifyUser)
 
 

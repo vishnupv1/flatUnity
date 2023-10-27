@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const Post = require('../models/roomMateReqModel')
+const roomPost = require('../models/roomReqModel')
 const bcrypt = require('bcrypt')
 const randomstring = require('randomstring')
 const config = require('../config/config')
@@ -79,12 +80,17 @@ const loginWithOtp = async (req, res) => {
     try {
         const user = await User.findOne({ mobile: req.body.mobile })
         if (user) {
-            if (!user.is_blocked) {
-                userMobile = user.mobile
+            if (user.is_verified) {
+                if (!user.is_blocked) {
+                    userMobile = user.mobile
+                }
+                else {
+                    return res.status(404).json({ message: 'User Blocked' });
+                }
+            } else {
+                return res.status(404).json({ message: 'User Verification pending please verify' });
             }
-            else {
-                return res.status(404).json({ message: 'User Blocked' });
-            }
+
         } else {
             return res.status(404).json({ message: 'Mobile number not registered' });
         }
@@ -114,17 +120,22 @@ const verifyOtp = async (req, res) => {
         const OTP = Number(otpString)
         const mobile = req.body.mobile
         let userData = await User.findOne({ mobile: mobile })
-        if (userData.otp == OTP) {
-            const options = {
-                expiresIn: '1h'
-            };
-            const token = jwt.sign(req.body, 'mysecretkey', options);
-            return res.status(200).json({ message: 'otp validation successfull', userToken: token, mobile: userData.mobile });
+        if (userData) {
+            if (userData.otp == OTP) {
+                const options = {
+                    expiresIn: '1h'
+                };
+                const token = jwt.sign(req.body, 'mysecretkey', options);
+                return res.status(200).json({ message: 'otp validation successfull', userToken: token, mobile: userData.mobile });
 
+            }
+            else {
+                return res.status(404).json({ message: 'otp invalid' });
+            }
+        } else {
+            return res.status(404).json({ message: 'Invalid User' });
         }
-        else {
-            return res.status(404).json({ message: 'otp invalid' });
-        }
+
     }
     catch (error) {
         console.log(error.message);
@@ -142,45 +153,77 @@ async function sendOtp(userMobile, otp) {
 }
 const roommateReqPost = async (req, res) => {
     try {
-        console.log('ddddddddd');
         const formData = req.body;
-        console.log(formData);
         const images = req.file.filename
         const userNum = req.query.mobile;
-        user = await User.findOne({ mobile: userNum })
-        UserId = user._id
+        const user = await User.findOne({ mobile: userNum })
+        const UserId = user._id
+        if (user) {
+            const amenities = []
+            if (formData.ac === 'true') {
+                amenities.push('ac');
+            }
+            if (formData.parking === 'true') {
+                amenities.push('parking');
+            }
+            if (formData.wifi === 'true') {
+                amenities.push('wifi');
+            }
+            if (formData.fridge === 'true') {
+                amenities.push('fridge');
+            }
+            if (formData.washing === 'true') {
+                amenities.push('washing');
+            }
+            if (formData.inverter === 'true') {
+                amenities.push('inverter');
+            }
+            const post = new Post({
+                userId: UserId,
+                location: formData.location,
+                gender: formData.gender,
+                rent: formData.rent,
+                contactNumber: formData.contact,
+                amenities: amenities,
+                description: formData.description,
+                images: images
+            })
+            const postData = await post.save();
+            return res.status(200).json({ message: 'Requirement posted' });
+        } else {
+            return res.status(404).json({ message: 'Invalid user' });
+        }
+    }
+    catch (err) {
+        return res.status(404).json({ message: 'error' });
+    }
 
-        const amenities = []
-        if (formData.ac === 'true') {
-            amenities.push('ac');
+
+
+}
+const roomReqPost = async (req, res) => {
+    try {
+        console.log(req.body);
+        const formData = req.body;
+        const userNum = req.query.mobile;
+        console.log(userNum);
+        const user = await User.findOne({ mobile: userNum })
+        if (user) {
+            const UserId = user._id
+            const post = new roomPost({
+                userId: UserId,
+                location: formData.location,
+                gender: formData.gender,
+                rent: formData.rent,
+                contactNumber: formData.contact,
+                date: formData.date,
+                description: formData.description,
+            })
+            const postData = await post.save();
+            return res.status(200).json({ message: 'Requirement posted' });
+        } else {
+            return res.status(404).json({ message: 'Invalid user' });
         }
-        if (formData.parking === 'true') {
-            amenities.push('parking');
-        }
-        if (formData.wifi === 'true') {
-            amenities.push('wifi');
-        }
-        if (formData.fridge === 'true') {
-            amenities.push('fridge');
-        }
-        if (formData.washing === 'true') {
-            amenities.push('washing');
-        }
-        if (formData.inverter === 'true') {
-            amenities.push('inverter');
-        }
-        const post = new Post({
-            userId: UserId,
-            location: formData.location,
-            gender: formData.gender,
-            rent: formData.rent,
-            contactNumber: formData.contact,
-            amenities: amenities,
-            description: formData.description,
-            images: images
-        })
-        const postData = await post.save();
-        return res.status(200).json({ message: 'Requirement posted' });
     }
     catch (err) {
         return res.status(404).json({ message: 'error' });
@@ -191,28 +234,50 @@ const roommateReqPost = async (req, res) => {
 }
 const loadposts = async (req, res) => {
     try {
-        const posts = await Post.find({})
-        const username = await Post.aggregate([
+        const posts = await Post.aggregate([
             {
                 $lookup: {
-                    from: "users",
-                    localField: "userId",
-                    foreignField: "_id",
-                    as: "user",
+                    from: 'users',
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'userDetails',
                 },
             },
             {
-                $unwind: "$user",
+                $unwind: '$userDetails',
             },
             {
-                $project: {
-                    _id: 0, // Exclude _id field
-                    name: "$user.name",
+                $addFields: {
+                    ownerName: '$userDetails.name',
                 },
             },
         ]);
-
-        return res.status(200).json({ posts: posts })
+        return res.status(200).json({ posts });
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+const loadroomposts = async (req, res) => {
+    try {
+        const posts = await roomPost.aggregate([
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'userDetails',
+                },
+            },
+            {
+                $unwind: '$userDetails',
+            },
+            {
+                $addFields: {
+                    ownerName: '$userDetails.name',
+                },
+            },
+        ]);
+        return res.status(200).json({ posts });
     } catch (error) {
         res.status(400).json(error.message)
     }
@@ -240,5 +305,7 @@ module.exports = {
     verifyOtp,
     roommateReqPost,
     loadposts,
-    verifyUser
+    verifyUser,
+    roomReqPost,
+    loadroomposts
 }

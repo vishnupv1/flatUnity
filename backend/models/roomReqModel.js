@@ -16,12 +16,13 @@ const roomMatereqSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    date: {
+        type: Date,
+        required: true
+    },
     contactNumber: {
         type: String,
         required: true
-    },
-    amenities: {
-        type: Array,
     },
     description: {
         type: String,
@@ -53,10 +54,7 @@ const roomMatereqSchema = mongoose.Schema({
             }
         }
     ],
-    images: {
-        type: String,
-        required: true
-    }
+
 })
 
-module.exports = mongoose.model("roomMatereq", roomMatereqSchema)
+module.exports = mongoose.model("roomReq", roomMatereqSchema)

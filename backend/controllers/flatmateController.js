@@ -121,12 +121,15 @@ const verifyOtp = async (req, res) => {
         const mobile = req.body.mobile
         let userData = await User.findOne({ mobile: mobile })
         if (userData) {
+
+            const UserId = { userId: userData._id }
             if (userData.otp == OTP) {
                 const options = {
                     expiresIn: '1h'
                 };
-                const token = jwt.sign(req.body, 'mysecretkey', options);
-                return res.status(200).json({ message: 'otp validation successfull', userToken: token, mobile: userData.mobile });
+                const token = jwt.sign(UserId, 'mysecretkey', options);
+                const userNum = userData.mobile
+                return res.status(200).json({ message: 'otp validation successfull', userToken: token, mobile: userNum });
 
             }
             else {
@@ -203,10 +206,8 @@ const roommateReqPost = async (req, res) => {
 }
 const roomReqPost = async (req, res) => {
     try {
-        console.log(req.body);
         const formData = req.body;
         const userNum = req.query.mobile;
-        console.log(userNum);
         const user = await User.findOne({ mobile: userNum })
         if (user) {
             const UserId = user._id
@@ -249,6 +250,7 @@ const loadposts = async (req, res) => {
             {
                 $addFields: {
                     ownerName: '$userDetails.name',
+                    mobile: '$userDetails.mobile',
                 },
             },
         ]);
@@ -274,6 +276,7 @@ const loadroomposts = async (req, res) => {
             {
                 $addFields: {
                     ownerName: '$userDetails.name',
+                    mobile: '$userDetails.mobile',
                 },
             },
         ]);
@@ -297,7 +300,69 @@ const verifyUser = async (req, res) => {
     }
 
 }
-
+const loadProfile = async (req, res) => {
+    try {
+        const userNum = req.query.userNum
+        const userData = await User.findOne({ mobile: userNum })
+        if (userData) {
+            return res.status(200).json({ userData });
+        } else {
+            res.status(404).json('invalid user')
+        }
+    } catch (err) {
+        res.status(400).json(err.message)
+    }
+}
+const updateProfile = async (req, res) => {
+    try {
+        const userNum = req.query.userNum
+        const { name, email, mobile } = req.body
+        const userData = await User.findOne({ mobile: userNum })
+        if (userData) {
+            await User.updateOne({ _id: userData._id }, {
+                $set: {
+                    name: name,
+                    email: email,
+                    mobile: mobile
+                }
+            })
+            return res.status(200).json('User Updated');
+        } else {
+            res.status(404).json('invalid user')
+        }
+    } catch (err) {
+        res.status(400).json(err.message)
+    }
+}
+const deletePost = async (req, res) => {
+    try {
+        const postId = req.query.id
+        const post = await Post.findOne({ _id: postId })
+        if (post) {
+            await Post.deleteOne({ _id: postId })
+            res.status(200).json('Post deleted')
+        } else {
+            res.status(404).json('Post not found')
+        }
+    } catch (err) {
+        res.status(404).json(err)
+    }
+}
+const deleteRoomPost = async (req, res) => {
+    try {
+        const postId = req.query.id
+        console.log(postId);
+        const post = await roomPost.findOne({ _id: postId })
+        if (post) {
+            await roomPost.deleteOne({ _id: postId })
+            res.status(200).json('Post deleted')
+        } else {
+            res.status(404).json('Post not found')
+        }
+    } catch (err) {
+        res.status(404).json(err)
+    }
+}
 module.exports = {
     register,
     sendOtp,
@@ -307,5 +372,9 @@ module.exports = {
     loadposts,
     verifyUser,
     roomReqPost,
-    loadroomposts
+    loadroomposts,
+    loadProfile,
+    updateProfile,
+    deletePost,
+    deleteRoomPost
 }

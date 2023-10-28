@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken')
 const Admin = require('../models/adminModel')
-
 const userAuth = async (req, res, next) => {
     const header = req.headers['authorization']
     const headerArr = header.split(' ')

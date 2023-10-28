@@ -1,0 +1,28 @@
+<app-userheader
+  style="position: sticky; top: 0; z-index: 100; background-color: white"
+></app-userheader>
+<div class="flex">
+  <div
+    class="p-4 ml-6 mr-1 flex"
+    [ngClass]="{ 'rounded-grey-bg': addGreyBackgroundflatmate }"
+  >
+    <button
+      type="button"
+      class="relative flex text-sm font-semibold uniform-button"
+      id="flatmate-button"
+      [routerLink]="['/flatmatepostMod']"
+    >
+      Room Mate
+    </button>
+  </div>
+  <div class="p-4" [ngClass]="{ 'rounded-grey-bg': addGreyBackgroundflat }">
+    <button
+      type="button"
+      class="relative flex text-sm font-semibold uniform-button"
+      id="flat-button"
+      [routerLink]="['/flatpostMod']"
+    >
+      Room
+    </button>
+  </div>
+</div>

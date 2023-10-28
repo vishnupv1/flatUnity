@@ -12,6 +12,10 @@ import { RequirementComponent } from './components/searcher/requirement/requirem
 import { RoomreqComponent } from './components/searcher/roomreq/roomreq.component';
 import { RoommatereqComponent } from './components/searcher/roommatereq/roommatereq.component';
 import { VerifyUserComponent } from './components/searcher/verify-user/verify-user.component';
+import { ActivitylogComponent } from './components/searcher/activitylog/activitylog.component';
+import { ProfileComponent } from './components/searcher/profile/profile.component';
+import { ManagePostComponent } from './components/searcher/manage-post/manage-post.component';
+import { ActivitylogRoomComponent } from './components/searcher/activitylog-room/activitylog-room.component';
 
 const routes: Routes =
   [
@@ -24,6 +28,10 @@ const routes: Routes =
     { component: VerifyUserComponent, path: 'verify' },
     { component: RoommatereqComponent, path: 'roommate' },
     { component: RoomreqComponent, path: 'roomreq' },
+    { component: ManagePostComponent, path: 'activity' },
+    { component: ActivitylogComponent, path: 'flatmatepostMod' },
+    { component: ActivitylogRoomComponent, path: 'flatpostMod' },
+    { component: ProfileComponent, path: 'profile' },
     { component: FlatmatepostComponent, path: 'flatmatepost', canActivate: [userhomeAuthGuard] },
     {
       component: UserhomeComponent, path: 'home',

@@ -1,15 +1,22 @@
 import { Injectable } from "@angular/core";
 import { ofType, Actions, createEffect } from "@ngrx/effects";
-import { fetchRoommateReq, fetchRoommateReqSuccess, fetchUser, fetchUserSuccess,fetchRoomReq,fetchRoomReqSuccess } from "./action";
+import { fetchRoommateReq, fetchRoommateReqSuccess, fetchUser, fetchUserSuccess, fetchRoomReq, fetchRoomReqSuccess, fetchProfile, fetchProfileSuccess } from "./action";
 import { AdminServiceService } from "../services/adminServices/admin-service.service";
-import { map, switchMap } from "rxjs";
+import { map, switchMap, tap } from "rxjs";
 import { UserServiceService } from "../services/userServices/user-service.service";
 
 
 
 @Injectable()
 export class userEffects {
+    userNum: string | null = localStorage.getItem('userNum')
     constructor(private action$: Actions, private adminService: AdminServiceService, private userService: UserServiceService) { }
+    loadProfile$ = createEffect(() =>
+        this.action$.pipe(ofType(fetchProfile), switchMap(() => {
+            return this.userService.loadProfile(this.userNum!).pipe(
+                map((data) =>
+                    fetchProfileSuccess({ profile: Object.values(data) })))
+        })))
     loadAllUsers$ = createEffect(() =>
         this.action$.pipe(ofType(fetchUser), switchMap(() => {
             return this.adminService.loadUser().pipe(map((data) =>

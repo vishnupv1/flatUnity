@@ -27,7 +27,7 @@ import { PlansComponent } from './components/admin/plans/plans.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { userEffects } from './store/effect';
-import { roompostReducer, userReducer } from './store/reducer';
+import { profileReducer, roompostReducer, userReducer } from './store/reducer';
 import { postsReducer } from './store/reducer';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor';
@@ -36,6 +36,12 @@ import { RoomreqComponent } from './components/searcher/roomreq/roomreq.componen
 import { RoommatereqComponent } from './components/searcher/roommatereq/roommatereq.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { VerifyUserComponent } from './components/searcher/verify-user/verify-user.component';
+import { ActivitylogComponent } from './components/searcher/activitylog/activitylog.component';
+import { ProfileComponent } from './components/searcher/profile/profile.component';
+import { DeleteConfirmationComponent } from './components/searcher/delete-confirmation/delete-confirmation.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ManagePostComponent } from './components/searcher/manage-post/manage-post.component';
+import { ActivitylogRoomComponent } from './components/searcher/activitylog-room/activitylog-room.component';
 
 
 
@@ -61,6 +67,11 @@ import { VerifyUserComponent } from './components/searcher/verify-user/verify-us
     RoomreqComponent,
     RoommatereqComponent,
     VerifyUserComponent,
+    ActivitylogComponent,
+    ProfileComponent,
+    DeleteConfirmationComponent,
+    ManagePostComponent,
+    ActivitylogRoomComponent,
 
   ],
   imports: [
@@ -69,6 +80,7 @@ import { VerifyUserComponent } from './components/searcher/verify-user/verify-us
     BrowserAnimationsModule,
     FormsModule,
     MaterialModule,
+    MatDialogModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       progressBar: true,
@@ -81,7 +93,8 @@ import { VerifyUserComponent } from './components/searcher/verify-user/verify-us
     StoreModule.forRoot({
       users: userReducer,
       posts: postsReducer,
-      roomposts: roompostReducer
+      roomposts: roompostReducer,
+      profile: profileReducer
     }),
     EffectsModule.forRoot([userEffects]),
     NgxDropzoneModule

@@ -34,7 +34,6 @@ export class OtploginComponent {
     this.userService.mobileNumber$.subscribe((mobileNumber) => {
       this.mobNUm = mobileNumber;
       this.mobileNumber = this.mobNUm.value;
-      console.log(this.mobileNumber)
     });
   }
   //form model and validation

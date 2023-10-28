@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { Profile } from "./state";
 
 
 
@@ -10,3 +11,6 @@ export const postSelectorData = createSelector(postSelectorState, (state: any[])
 
 export const roompostSelectorState = createFeatureSelector<any[]>('roomposts')
 export const roompostSelectorData = createSelector(roompostSelectorState, (state: any[]) => { return state })
+
+export const profileSelectorState = createFeatureSelector<Profile[]>('profile')
+export const profileSelectorData = createSelector(profileSelectorState, (state: Profile[]) => { return state })

@@ -37,7 +37,7 @@ export class ActivitylogRoomComponent {
   deletePost(id: any) {
     this.userService.deleteRoomPost(id).subscribe(
       (response: any) => {
-        this.toastr.success(response.message, 'Success', {
+        this.toastr.success(response.message, 'Requirement Deleted', {
           timeOut: 1000,
           progressAnimation: 'increasing',
           progressBar: true

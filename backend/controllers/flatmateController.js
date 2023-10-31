@@ -189,7 +189,8 @@ const roommateReqPost = async (req, res) => {
                 contactNumber: formData.contact,
                 amenities: amenities,
                 description: formData.description,
-                images: images
+                images: images,
+                from: user.userType
             })
             const postData = await post.save();
             return res.status(200).json({ message: 'Requirement posted' });

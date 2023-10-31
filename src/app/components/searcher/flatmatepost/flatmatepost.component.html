@@ -4,9 +4,9 @@
 <div class="flex justify-center">
   <div class="flex">
     <div *ngIf="posts$ | async as postData">
-      <div class="grid grid-cols-2 gap-4 ">
+      <div class="grid grid-cols-2 gap-4">
         <div
-          class="bg-white shadow-lg rounded-lg  flex postCard"
+          class="bg-white shadow-lg rounded-lg flex postCard"
           *ngFor="let post of postData; let i = index"
         >
           <div class="p-4">
@@ -25,7 +25,20 @@
                 </span>
               </h2>
             </div>
-            <p class="mt-3 text-purple-700 text-md">Need a Roommate</p>
+            <p *ngIf="post.from !== 'flatOwner'">
+              <span class="text-green-500"> Post from : </span>
+              <span class="font-semibold">Occupier</span>
+            </p>
+            <p *ngIf="post.from === 'flatOwner'">
+              <span class="text-green-500"> Post from : </span>
+              <span class="font-semibold">Flat Owner</span>
+            </p>
+            <p
+              *ngIf="post.from !== 'flatOwner'"
+              class="mt-3 text-purple-700 text-md"
+            >
+              Need a Roommate
+            </p>
             <p class="mt-3 flex">
               <span
                 ><svg

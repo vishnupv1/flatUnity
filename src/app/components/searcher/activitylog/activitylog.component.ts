@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 import { UserServiceService } from 'src/app/services/userServices/user-service.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activitylog',
@@ -17,8 +18,7 @@ export class ActivitylogComponent {
   roomMatepost$!: Observable<any[]>
   userMobile = localStorage.getItem('userNum')
 
-
-  constructor(private store: Store<{ posts: any[] }>, private dialog: MatDialog, private userService: UserServiceService, private toastr: ToastrService) { }
+  constructor(private store: Store<{ posts: any[] }>, private dialog: MatDialog, private userService: UserServiceService, private toastr: ToastrService, private route: Router) { }
   ngOnInit(): void {
     this.store.dispatch(fetchRoommateReq())
     this.roomMatepost$ = this.store.pipe(select(postSelectorData))
@@ -36,7 +36,6 @@ export class ActivitylogComponent {
     });
   }
   deletePost(id: any) {
-
     this.userService.deletePost(id).subscribe(
       (response: any) => {
         this.toastr.success(response.message, 'Requirement Deleted', {
@@ -48,5 +47,11 @@ export class ActivitylogComponent {
         this.store.dispatch(fetchRoomReq())
       }
     )
+  }
+  updatePost(id: string) {
+    const params = {
+      id: id
+    }
+    this.route.navigate([''])
   }
 }

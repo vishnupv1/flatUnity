@@ -42,6 +42,8 @@ import { DeleteConfirmationComponent } from './components/searcher/delete-confir
 import { MatDialogModule } from '@angular/material/dialog';
 import { ManagePostComponent } from './components/searcher/manage-post/manage-post.component';
 import { ActivitylogRoomComponent } from './components/searcher/activitylog-room/activitylog-room.component';
+import { FlatRentReqComponent } from './components/searcher/flat-rent-req/flat-rent-req.component';
+import { PremiumComponent } from './components/searcher/premium/premium.component';
 
 
 
@@ -72,6 +74,8 @@ import { ActivitylogRoomComponent } from './components/searcher/activitylog-room
     DeleteConfirmationComponent,
     ManagePostComponent,
     ActivitylogRoomComponent,
+    FlatRentReqComponent,
+    PremiumComponent,
 
   ],
   imports: [

@@ -1,0 +1,288 @@
+<app-userheader class="sticky top-0"></app-userheader>
+<div class="max-w-md mx-auto bg-white p-8 rounded shadow-md">
+  <div>
+    <h2 class="font-bold">Flat for Rent</h2>
+  </div>
+  <form
+    [formGroup]="roommateForm"
+    (ngSubmit)="onSubmit()"
+    enctype="multipart/form-data"
+  >
+    <div class="mb-4">
+      <label for="location" class="block text-gray-700 text-sm font-medium mb-2"
+        >Location</label
+      >
+      <input
+        type="text"
+        id="location"
+        formControlName="location"
+        class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-200"
+        placeholder="Add your flat's location with proper landmarks"
+        appLocationApiDirective
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-medium mb-2"
+        >Looking for?</label
+      >
+      <ul class="w-full gap-6 md:grid-cols-2 flex">
+        <li class="w-full">
+          <input
+            type="radio"
+            id="female"
+            formControlName="gender"
+            value="female"
+            class="hidden peer"
+          />
+          <label
+            for="female"
+            class="w-full inline-flex items-center justify-center p-2 text-gray-500 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-500 hover:text-white peer-checked:text-white peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500"
+          >
+            <div class="block">
+              <div>Female</div>
+            </div>
+          </label>
+        </li>
+        <li class="w-full">
+          <input
+            type="radio"
+            id="male"
+            formControlName="gender"
+            value="male"
+            class="hidden peer"
+          />
+          <label
+            for="male"
+            class="w-full inline-flex items-center justify-center p-2 text-gray-500 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-500 hover:text-white peer-checked:text-white peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500"
+          >
+            <div class="block">
+              <div>Male</div>
+            </div>
+          </label>
+        </li>
+        <li class="w-full">
+          <input
+            type="radio"
+            id="any"
+            formControlName="gender"
+            value="any"
+            class="hidden peer"
+          />
+          <label
+            for="any"
+            class="w-full inline-flex items-center justify-center p-2 text-gray-500 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-500 hover:text-white peer-checked:text-white peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500"
+          >
+            <div class="block">
+              <div class=" ">Any</div>
+            </div>
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <div class="mb-4">
+      <label for="rent" class="block text-gray-700 text-sm font-medium mb-2"
+        >Rent</label
+      >
+      <input
+        type="text"
+        id="rent"
+        formControlName="rent"
+        class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-200"
+        placeholder="Rent in figures"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="rent" class="block text-gray-700 text-sm font-medium mb-2"
+        >Upload images</label
+      >
+      <div class="flex items-center justify-center w-full">
+        <label
+          for="dropzone-file"
+          class="flex flex-col items-center justify-center w-full h-28 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        >
+          <div class="flex flex-col items-center justify-center pt-6">
+            <svg
+              class="w-8 h-8 mb-3 text-gray-100 dark:text-gray-100"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 16"
+            >
+              <path
+                stroke="grey"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+              />
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <span class="font-semibold">Click to upload</span> or drag and
+              drop
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              SVG, PNG, JPG or GIF
+            </p>
+          </div>
+          <input
+            id="dropzone-file"
+            type="file"
+            multiple
+            class="hidden"
+            (change)="onFileSelected($event)"
+          />
+        </label>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="contact" class="block text-gray-700 text-sm font-medium mb-2"
+        >Contact number</label
+      >
+      <input
+        type="text"
+        id="contact"
+        formControlName="contact"
+        class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-200"
+        placeholder="Add your immediate contact number"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-medium mb-2"
+        >Amenities</label
+      >
+      <div class="space-x-4">
+        <ul class="grid w-full gap-6 md:grid-cols-3">
+          <li>
+            <input
+              type="checkbox"
+              id="parking-option"
+              value=""
+              class="hidden peer"
+              formControlName="parking"
+            />
+            <label
+              for="parking-option"
+              class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500 hover:bg-green-500 hover:text-white"
+            >
+              <div class="block">
+                <div class="w-full text-sm">Parking</div>
+              </div>
+            </label>
+          </li>
+          <li>
+            <input
+              type="checkbox"
+              id="ac-option"
+              value=""
+              class="hidden peer"
+              formControlName="ac"
+            />
+            <label
+              for="ac-option"
+              class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500 hover:bg-green-500 hover:text-white"
+            >
+              <div class="block">
+                <div class="w-full font-sm">AC</div>
+              </div>
+            </label>
+          </li>
+          <li>
+            <input
+              type="checkbox"
+              id="fridge-option"
+              value=""
+              class="hidden peer"
+              formControlName="fridge"
+            />
+            <label
+              for="fridge-option"
+              class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500 hover:bg-green-500 hover:text-white"
+            >
+              <div class="block">
+                <div class="w-full font-sm">Fridge</div>
+              </div>
+            </label>
+          </li>
+          <li>
+            <input
+              type="checkbox"
+              id="washing-option"
+              value="washing"
+              class="hidden peer"
+              formControlName="washing"
+            />
+            <label
+              for="washing-option"
+              class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500 hover:bg-green-500 hover:text-white"
+            >
+              <div class="block">
+                <div class="w-full font-sm">Machine</div>
+              </div>
+            </label>
+          </li>
+          <li>
+            <input
+              type="checkbox"
+              id="inverter-option"
+              value=""
+              class="hidden peer"
+              formControlName="inverter"
+            />
+            <label
+              for="inverter-option"
+              class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500 hover:bg-green-500 hover:text-white"
+            >
+              <div class="block">
+                <div class="w-full font-sm">Inverter</div>
+              </div>
+            </label>
+          </li>
+          <li>
+            <input
+              type="checkbox"
+              id="wifi-option"
+              value=""
+              class="hidden peer"
+              formControlName="wifi"
+            />
+            <label
+              for="wifi-option"
+              class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-grey-600 peer-checked:text-white peer-checked:bg-green-500 hover:bg-green-500 hover:text-white"
+            >
+              <div class="block">
+                <div class="w-full font-sm">Wi-fi</div>
+              </div>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label
+        for="description"
+        class="block text-gray-700 text-sm font-medium mb-2"
+        >Description</label
+      >
+      <textarea
+        id="description"
+        formControlName="description"
+        class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-200"
+        rows="4"
+        placeholder="Add descriptions if any"
+      ></textarea>
+    </div>
+    <div class="text-center">
+      <button
+        type="submit"
+        class="bg-green-500 text-center text-white p-2 rounded hover:bg-green-600"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

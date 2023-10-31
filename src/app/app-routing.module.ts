@@ -16,6 +16,8 @@ import { ActivitylogComponent } from './components/searcher/activitylog/activity
 import { ProfileComponent } from './components/searcher/profile/profile.component';
 import { ManagePostComponent } from './components/searcher/manage-post/manage-post.component';
 import { ActivitylogRoomComponent } from './components/searcher/activitylog-room/activitylog-room.component';
+import { FlatRentReqComponent } from './components/searcher/flat-rent-req/flat-rent-req.component';
+import { PremiumComponent } from './components/searcher/premium/premium.component';
 
 const routes: Routes =
   [
@@ -28,7 +30,9 @@ const routes: Routes =
     { component: VerifyUserComponent, path: 'verify' },
     { component: RoommatereqComponent, path: 'roommate' },
     { component: RoomreqComponent, path: 'roomreq' },
+    { component: FlatRentReqComponent, path: 'flatrent' },
     { component: ManagePostComponent, path: 'activity' },
+    { component: PremiumComponent, path: 'premium' },
     { component: ActivitylogComponent, path: 'flatmatepostMod' },
     { component: ActivitylogRoomComponent, path: 'flatpostMod' },
     { component: ProfileComponent, path: 'profile' },

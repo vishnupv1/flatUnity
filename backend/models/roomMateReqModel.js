@@ -56,6 +56,10 @@ const roomMatereqSchema = mongoose.Schema({
     images: {
         type: String,
         required: true
+    },
+    from: {
+        type: String,
+        required: true
     }
 })
 

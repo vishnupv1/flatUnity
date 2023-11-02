@@ -31,6 +31,5 @@ export class AdminHomeComponent {
     localStorage.removeItem('adminToken')
   }
 
-  
 
 }

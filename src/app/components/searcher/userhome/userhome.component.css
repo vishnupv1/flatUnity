@@ -3,6 +3,6 @@
 }
 .rounded-grey-bg {
   background-color: rgba(124, 66, 216, 0.322);
-  border-radius: 50px; /* Adjust the border-radius value as needed */
+  border-radius: 20px; /* Adjust the border-radius value as needed */
   padding: 1rem; /* Add padding to make it look better */
 }

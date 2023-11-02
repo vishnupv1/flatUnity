@@ -18,6 +18,7 @@ import { ManagePostComponent } from './components/searcher/manage-post/manage-po
 import { ActivitylogRoomComponent } from './components/searcher/activitylog-room/activitylog-room.component';
 import { FlatRentReqComponent } from './components/searcher/flat-rent-req/flat-rent-req.component';
 import { PremiumComponent } from './components/searcher/premium/premium.component';
+import { EditPostComponent } from './components/searcher/edit-post/edit-post.component';
 
 const routes: Routes =
   [
@@ -33,6 +34,7 @@ const routes: Routes =
     { component: FlatRentReqComponent, path: 'flatrent' },
     { component: ManagePostComponent, path: 'activity' },
     { component: PremiumComponent, path: 'premium' },
+    { component: EditPostComponent, path: 'editpost/:id' },
     { component: ActivitylogComponent, path: 'flatmatepostMod' },
     { component: ActivitylogRoomComponent, path: 'flatpostMod' },
     { component: ProfileComponent, path: 'profile' },

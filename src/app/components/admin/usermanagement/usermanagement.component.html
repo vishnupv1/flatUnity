@@ -30,8 +30,10 @@
                   <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4">{{ user.email }}</td>
                   <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4" *ngIf="user.userType === 'flatOwner'">Flat Owner</td>
                   <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4" *ngIf="user.userType === 'searcher'">Looking for flat/flatmate</td>
-                  <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4">12/09/2023</td>
-                  <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4">12/10/2023</td>
+                  <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"*ngIf="user.is_premium">12/09/2023</td>
+                  <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"*ngIf="!user.is_premium">Not Subscribed</td>
+                  <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"*ngIf="user.is_premium">12/09/2023</td>
+                  <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"*ngIf="!user.is_premium">Not Subscribed</td>
                   <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4">
                     <div (click)="unBlockUser(user._id)" class="flex justify-center items-center">
                       <button onclick="" class="bg-red-500 rounded-lg text-sm px-4 py-2 font-bold"*ngIf="user.is_blocked === false ">Block</button>

@@ -49,9 +49,6 @@ export class ActivitylogComponent {
     )
   }
   updatePost(id: string) {
-    const params = {
-      id: id
-    }
-    this.route.navigate([''])
+    this.route.navigate([`/editpost/${id}`])
   }
 }

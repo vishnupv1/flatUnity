@@ -7,6 +7,7 @@ admin_route.use(bodyParser.urlencoded({ extended: true }))
 const multer = require('multer')
 const path = require('path')
 const auth = require('../middleware/auth')
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, path.join('./public/userImages'))
@@ -23,8 +24,8 @@ const adminController = require('../controllers/adminController')
 admin_route.use(express.static('public'));
 
 admin_route.post('/login', adminController.login)
-admin_route.get('/loadUsers', adminController.loadUsers)
-admin_route.patch('/unBlocOrBlockkUser', adminController.unBlockOrBlockUser)
+admin_route.get('/loadUsers', auth, adminController.loadUsers)
+admin_route.patch('/unBlocOrBlockkUser', auth, adminController.unBlockOrBlockUser)
 
 
 module.exports = admin_route

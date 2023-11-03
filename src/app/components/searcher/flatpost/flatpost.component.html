@@ -4,7 +4,7 @@
 <div class="flex justify-center">
   <div class="flex">
     <div *ngIf="roomposts$ | async as postData">
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-2 gap-4" *ngIf="postData.length; else elseBlock">
         <div
           class="bg-white shadow-lg rounded-lg flex postCard"
           *ngFor="let post of postData; let i = index"
@@ -105,3 +105,16 @@
     </div>
   </div>
 </div>
+<ng-template #elseBlock>
+  <div class="text-center">
+    <p class="font-semibold">No Requirements</p>
+    <div
+      class="cursor-pointer bg-purple-700 hover:bg-purple-500 text-white rounded flex flex-col"
+      style="width: 30vh; height: 10vh"
+      (click)="navigateTo('requirement')"
+    >
+      <span class="font-bold text-lg mt-1">Add your own</span>
+      <span class="text-xs">New requirement</span>
+    </div>
+  </div>
+</ng-template>

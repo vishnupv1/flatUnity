@@ -7,21 +7,35 @@ import {
     HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    constructor() { }
-
+    constructor(private route: ActivatedRoute) { }
+    user = localStorage.getItem('userToken')
+    admin = localStorage.getItem('adminToken')
     intercept(
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        const authToken = localStorage.getItem('userToken')
-        const authRequest = request.clone({
-            setHeaders: {
-                Authorization: `Bearer ${authToken}`,
-            },
-        });
-        return next.handle(authRequest);
+        if (window.location.pathname.includes('/admin') && this.admin) {
+            const authToken = this.admin
+            const authRequest = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+            return next.handle(authRequest);
+        }
+        else {
+            const authToken = this.user
+            const authRequest = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+            return next.handle(authRequest);
+        }
+
     }
 }

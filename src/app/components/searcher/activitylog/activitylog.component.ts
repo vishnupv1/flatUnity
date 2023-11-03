@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { fetchRoomReq, fetchRoommateReq } from 'src/app/store/action';
 import { postSelectorData, roompostSelectorData } from 'src/app/store/selector';
@@ -22,6 +22,9 @@ export class ActivitylogComponent {
   ngOnInit(): void {
     this.store.dispatch(fetchRoommateReq())
     this.roomMatepost$ = this.store.pipe(select(postSelectorData))
+    this.roomMatepost$ = this.roomMatepost$.pipe(
+      map((posts) => posts.filter((post) => post.mobile == this.userMobile))
+    );
   }
 
   openDeleteConfirmation(id: any): void {

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const Admin = require('../models/adminModel')
+const User = require('../models/userModel')
 
 const userAuth = async (req, res, next) => {
     const header = req.headers['authorization']
@@ -7,9 +8,10 @@ const userAuth = async (req, res, next) => {
     const token = headerArr[1];
     const decoded = jwt.decode(token);
     if (decoded) {
-        const userNum = decoded.userNum;
-        const VerifiedUser = await Admin.findOne({ mobile: userNum })
-        if (VerifiedUser) {
+        const userId = decoded.userId;
+        const VerifiedUser = await User.findOne({ _id: userId })
+        const VerifiedAdmin = await Admin.findOne({ _id: userId })
+        if (VerifiedUser || VerifiedAdmin) {
             next()
         } else {
             return res.status(404).json({ message: 'Un Authorised access' })

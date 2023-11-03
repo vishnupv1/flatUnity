@@ -8,3 +8,6 @@ export interface Profile {
     name: string,
     email: string,
 }
+export interface AppState {
+    data: any[];
+}

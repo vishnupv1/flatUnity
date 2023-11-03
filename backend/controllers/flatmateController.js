@@ -100,7 +100,13 @@ const loginWithOtp = async (req, res) => {
             for (let i = 0; i < 6; i++) {
                 OTP += digits[Math.floor(Math.random() * 10)]
             }
+            function generateExpirationTime() {
+                const currentTime = new Date();
+                const expirationTime = new Date(currentTime.getTime() + 60000);
+                return expirationTime;
+            }
             await User.updateOne({ mobile: req.body.mobile }, { $set: { otp: OTP } })
+            await User.updateOne({ mobile: req.body.mobile }, { $set: { otpExpires: generateExpirationTime() } })
             sendOtp(userMobile, OTP)
             return res.status(200).json({ message: 'otp sent successfully' });
         }
@@ -121,9 +127,17 @@ const verifyOtp = async (req, res) => {
         const mobile = req.body.mobile
         let userData = await User.findOne({ mobile: mobile })
         if (userData) {
+            function hasOTPOrExpired() {
+                const currentTime = new Date();
+                const expirationTime = userData.otpExpires
+                return currentTime >= expirationTime;
+            }
 
             const UserId = { userId: userData._id }
-            if (userData.otp == OTP) {
+            if (hasOTPOrExpired()) {
+                return res.status(400).json({ message: 'OTP Expired' });
+            }
+            else if (userData.otp == OTP) {
                 const options = {
                     expiresIn: '1h'
                 };
@@ -364,6 +378,20 @@ const deleteRoomPost = async (req, res) => {
         res.status(404).json(err)
     }
 }
+const loadOtp = async (req, res) => {
+    try {
+        const userNum = req.query.userNum
+        const user = await User.findOne({ mobile: userNum })
+        if (user) {
+            const otpExpires = await user.otpExpires
+            res.status(200).json(otpExpires)
+        }else{
+            res.status(400).json('user invalid')
+        }
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
 module.exports = {
     register,
     sendOtp,
@@ -377,5 +405,6 @@ module.exports = {
     loadProfile,
     updateProfile,
     deletePost,
-    deleteRoomPost
+    deleteRoomPost,
+    loadOtp
 }

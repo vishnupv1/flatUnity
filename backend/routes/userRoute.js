@@ -35,6 +35,9 @@ user_route.patch('/verify', userController.verifyUser)
 user_route.patch('/updateProfile', userAuth, userController.updateProfile)
 user_route.delete('/deletePost', userAuth, userController.deletePost)
 user_route.delete('/deleteRoomPost', userAuth, userController.deleteRoomPost)
+user_route.get('/loadOtp',userController.loadOtp)
+
+
 
 
 

@@ -19,18 +19,32 @@ export class OtploginComponent {
   submit: boolean = false
   userToken!: string
   mobNUm: any
+  timeLeft!: Date;
+  interval: any;
 
   constructor(private fb: FormBuilder,
     private userService: UserServiceService,
     private router: Router,
-    private toastr: ToastrService) {
-
-  }
+    private toastr: ToastrService) { }
 
   //passing mobile number from parent
   @Input() mobileNumber: any;
   //subscribing the mobile number from login component
+  startTimer() {
+    this.interval = setInterval(() => {
+      if (this.timeLeft > new Date()) {
+        console.log('yessss');
+
+      }
+    }, 1000)
+  }
   ngOnInit() {
+    this.userService.loadOtp(this.mobNUm).subscribe(
+      (response: any) => {
+        this.timeLeft = response.otpExpires
+      })
+    // this.timeLeft =
+    this.startTimer()
     this.userService.mobileNumber$.subscribe((mobileNumber) => {
       this.mobNUm = mobileNumber;
       this.mobileNumber = this.mobNUm.value;
@@ -97,5 +111,6 @@ export class OtploginComponent {
       return null;
     };
   }
+
 }
 

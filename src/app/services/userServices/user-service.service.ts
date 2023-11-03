@@ -62,4 +62,7 @@ export class UserServiceService {
     let mobNum = this.mobNum
     return this.http.patch(`${apiUrl}/updateProfile?userNum=${mobNum}`, formData)
   }
+  loadOtp(mobNum: number) {
+    return this.http.get(`${apiUrl}/loadOtp?userNum=${mobNum}`)
+  }
 }

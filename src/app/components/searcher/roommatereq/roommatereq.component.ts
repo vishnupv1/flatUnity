@@ -55,6 +55,14 @@ export class RoommatereqComponent {
         })
         return
       }
+      if (this.imageError()) {
+        this.toastr.warning(this.imageError(), '', {
+          timeOut: 1000,
+          progressAnimation: 'increasing',
+          progressBar: true,
+        })
+        return
+      }
       if (this.mobileError()) {
         this.toastr.warning(this.mobileError(), '', {
           timeOut: 1000,
@@ -70,7 +78,7 @@ export class RoommatereqComponent {
       this.formData.append('location', this.roommateForm.get('location')!.value!);
       this.formData.append('gender', this.roommateForm.get('gender')!.value!);
       this.formData.append('rent', this.roommateForm.get('rent')!.value!);
-      this.formData.append('image', this.file);
+      // this.formData.append('image', this.selectedImages);
       this.formData.append('contact', this.roommateForm.get('contact')!.value!);
       this.formData.append('ac', this.roommateForm.get('ac')!.value!.toString());
       this.formData.append('parking', this.roommateForm.get('parking')!.value!.toString());
@@ -79,6 +87,9 @@ export class RoommatereqComponent {
       this.formData.append('washing', this.roommateForm.get('washing')!.value!.toString());
       this.formData.append('inverter', this.roommateForm.get('inverter')!.value!.toString());
       this.formData.append('description', this.roommateForm.get('description')!.value!);
+      for (let i = 0; i < this.selectedImages.length; i++) {
+        this.formData.append('image', this.selectedImages[i].file);
+      }
       this.roomMatepost()
       this.router.navigate(['roommate'])
     }
@@ -102,6 +113,14 @@ export class RoommatereqComponent {
       else if (location?.hasError('minlength')) {
         return 'Minimum length of location should be fice'
       }
+    }
+
+    return
+  }
+  imageError(): any {
+    const image = this.roommateForm.get('image')
+    if (this.selectedImages.length == 0) {
+      return 'Select atleast one image of your flat/room'
     }
 
     return
@@ -157,11 +176,43 @@ export class RoommatereqComponent {
         })
       })
   }
+  selectedImages: any[] = [];
+  validateFileType(file: File): boolean {
+    const allowedTypes = ['image/png', 'image/jpeg'];
+    return allowedTypes.includes(file.type);
+  }
   onFileSelected(event: any) {
     const files: FileList = event.target.files;
-    if (files.length > 0) {
-      this.file = files[0]; // Assuming you only allow a single file upload
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      if (this.validateFileType(file)) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.selectedImages.push({
+            file: file,
+            url: e.target.result
+          });
+        };
+        reader.readAsDataURL(file);
+      } else {
+        this.toastr.warning('Only JPEG/PNG file allowed', '', {
+          timeOut: 2000,
+          progressAnimation: 'increasing',
+          progressBar: true,
+        })
+      }
     }
+  }
+
+  // const files: FileList = event.target.files;
+  // if (files.length > 0) {
+  //   this.file = files[0]; 
+  // }
+
+  onDeleteImage(index: number) {
+    this.selectedImages.splice(index, 1);
   }
 }
 

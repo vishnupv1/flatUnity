@@ -42,7 +42,6 @@
                 id="username"
                 type="text"
                 formControlName="mobile"
-                [(ngModel)]="mobileNumber"
               />
             </div>
             <div class="mb-4">
@@ -104,7 +103,17 @@
               >
                 Submit
               </button>
-              <p>{{ timeLeft }} Seconds Left....</p>
+              <p *ngIf="showResendButton === false; else elseBlock">
+                {{ timeLeft }} Seconds Left....
+              </p>
+              <ng-template #elseBlock>
+                <a
+                  class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  (click)="resendOtp()"
+                >
+                  Resend Otp
+                </a>
+              </ng-template>
             </div>
           </form>
           <div class="flex flex-row mt-4">
@@ -116,5 +125,6 @@
         </div>
       </div>
     </div>
+    <app-user-footer></app-user-footer>
   </body>
 </html>

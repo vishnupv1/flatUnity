@@ -5,11 +5,12 @@ const bcrypt = require('bcrypt')
 const randomstring = require('randomstring')
 const config = require('../config/config')
 const nodemailer = require('nodemailer')
-const accountSid = 'AC907f228b5ab0107739ba05f73674f14e';
-const authToken = 'ee335f2d885b3ade2f6ad07f6d1d52e3';
+const myEnv = require('dotenv').config()
+
+const accountSid = process.env.SID;
+const authToken = process.env.AUTHTOKEN;
 const client = require('twilio')(accountSid, authToken);
 const jwt = require('jsonwebtoken')
-
 
 const sendVerifyMail = async (username, email) => {
     try {
@@ -102,11 +103,10 @@ const loginWithOtp = async (req, res) => {
             }
             function generateExpirationTime() {
                 const currentTime = new Date();
-                const expirationTime = new Date(currentTime.getTime() + 60000);
+                const expirationTime = new Date(currentTime.getTime() + 65000);
                 return expirationTime;
             }
-            await User.updateOne({ mobile: req.body.mobile }, { $set: { otp: OTP } })
-            await User.updateOne({ mobile: req.body.mobile }, { $set: { otpExpires: generateExpirationTime() } })
+            await User.updateOne({ mobile: req.body.mobile }, { $set: { otp: OTP, otpExpires: generateExpirationTime() } })
             sendOtp(userMobile, OTP)
             return res.status(200).json({ message: 'otp sent successfully' });
         }
@@ -160,18 +160,22 @@ const verifyOtp = async (req, res) => {
 }
 //sending OTP to user's mobile number
 async function sendOtp(userMobile, otp) {
-    await client.messages
-        .create({
-            body: `your flatmate login otp is ${otp}`,
-            to: `+91${userMobile}`, // Text your number
-            from: '+17409001094', // From a valid Twilio number
-        })
-        .then((message) => console.log(message.sid));
+    // await client.messages
+    //     .create({
+    //         body: `your flatmate login otp is ${otp}`,
+    //         to: `+91${userMobile}`, // Text your number
+    //         from: '+17409001094', // From a valid Twilio number
+    //     })
+    //     .then((message) => console.log(message.sid));
+    console.log('ffffffffff');
 }
 const roommateReqPost = async (req, res) => {
     try {
         const formData = req.body;
-        const images = req.file.filename
+        const arrayimage = []
+        for (let i = 0; i < req.files.length; i++) {
+            arrayimage[i] = req.files[i].filename
+        }
         const userNum = req.query.mobile;
         const user = await User.findOne({ mobile: userNum })
         const UserId = user._id
@@ -203,7 +207,7 @@ const roommateReqPost = async (req, res) => {
                 contactNumber: formData.contact,
                 amenities: amenities,
                 description: formData.description,
-                images: images,
+                images: arrayimage,
                 from: user.userType
             })
             const postData = await post.save();
@@ -292,6 +296,7 @@ const loadroomposts = async (req, res) => {
                 $addFields: {
                     ownerName: '$userDetails.name',
                     mobile: '$userDetails.mobile',
+                    ownerGender: '$userDetails.gender',
                 },
             },
         ]);
@@ -378,18 +383,59 @@ const deleteRoomPost = async (req, res) => {
         res.status(404).json(err)
     }
 }
-const loadOtp = async (req, res) => {
+const loadOtpexpiry = async (req, res) => {
     try {
         const userNum = req.query.userNum
         const user = await User.findOne({ mobile: userNum })
         if (user) {
             const otpExpires = await user.otpExpires
             res.status(200).json(otpExpires)
-        }else{
+        } else {
             res.status(400).json('user invalid')
         }
     } catch (error) {
         res.status(400).json(error.message)
+    }
+}
+const resendOtp = async (req, res) => {
+    try {
+        const user = await User.findOne({ mobile: req.body.mobile })
+        if (user) {
+            if (user.is_verified) {
+                if (!user.is_blocked) {
+                    userMobile = user.mobile
+                }
+                else {
+                    return res.status(404).json({ message: 'User Blocked' });
+                }
+            } else {
+                return res.status(404).json({ message: 'User Verification pending please verify' });
+            }
+
+        } else {
+            return res.status(404).json({ message: 'Mobile number not registered' });
+        }
+        if (userMobile) {
+            let OTP = ""
+            let digits = '0123456789'
+            for (let i = 0; i < 6; i++) {
+                OTP += digits[Math.floor(Math.random() * 10)]
+            }
+            function generateExpirationTime() {
+                const currentTime = new Date();
+                const expirationTime = new Date(currentTime.getTime() + 65000);
+                return expirationTime;
+            }
+            await User.updateOne({ mobile: req.body.mobile }, { $set: { otp: OTP, otpExpires: generateExpirationTime() } })
+            sendOtp(userMobile, OTP)
+            return res.status(200).json({ message: 'otp sent successfully' });
+        }
+        else {
+            return res.status(404).json({ message: 'Mobile number not registered' });
+        }
+    }
+    catch (error) {
+        return res.status(500).json({ message: 'internal server error' })
     }
 }
 module.exports = {
@@ -406,5 +452,6 @@ module.exports = {
     updateProfile,
     deletePost,
     deleteRoomPost,
-    loadOtp
+    loadOtpexpiry,
+    resendOtp
 }

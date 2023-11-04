@@ -66,7 +66,7 @@ export class UserLoginComponent implements OnInit {
       this.submit = true
       this.setUserMobileNumber(phone)
       this.otpSend()
-      this.router.navigate(['optlogin'])
+      this.router.navigate(['otplogin'])
     }
 
 

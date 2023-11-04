@@ -4,16 +4,24 @@
 <div class="flex justify-center">
   <div class="flex">
     <div *ngIf="roomposts$ | async as postData">
-      <div class="grid grid-cols-2 gap-4" *ngIf="postData.length; else elseBlock">
+      <div
+        class="grid grid-cols-2 gap-4"
+        *ngIf="postData.length; else elseBlock"
+      >
         <div
           class="bg-white shadow-lg rounded-lg flex postCard"
           *ngFor="let post of postData; let i = index"
         >
-          <div class="p-4">
+          <div class="p-4" *ngIf="post.ownerGender == 'female'">
             <img
-              [src]="
-                'http://localhost:3000/public/userImages/1697446566844-SÃ©parer une petite chambre en deux _ 14 astuces et idÃ©es.jpg'
-              "
+              [src]="'http://localhost:3000/public/userImages/girl.png'"
+              alt="image"
+              class="w-32 h-32 object-cover rounded-lg"
+            />
+          </div>
+          <div class="p-4" *ngIf="post.ownerGender == 'male'">
+            <img
+              [src]="'http://localhost:3000/public/userImages/boy.png'"
               alt="image"
               class="w-32 h-32 object-cover rounded-lg"
             />
@@ -118,3 +126,4 @@
     </div>
   </div>
 </ng-template>
+<app-user-footer></app-user-footer>

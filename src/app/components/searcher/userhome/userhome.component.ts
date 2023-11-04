@@ -1,5 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { UrlSegment } from '@angular/router';
 
 @Component({
   selector: 'app-userhome',
@@ -7,16 +8,19 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./userhome.component.css']
 })
 export class UserhomeComponent {
-  constructor(private cdRef: ChangeDetectorRef, private router: Router) {
+  isHomeRoute!: boolean;
+
+  constructor(private cdRef: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Check the route and set the booleans accordingly
         const currentRoute = this.router.url;
         this.updateBackgroundFlags(currentRoute);
       }
     });
   }
-
+  ngOnInit(): void {
+    this.routeFinder()
+  }
   addGreyBackgroundflat: boolean = false;
   addGreyBackgroundflatmate: boolean = false;
   private updateBackgroundFlags(currentRoute: string) {
@@ -31,4 +35,11 @@ export class UserhomeComponent {
       this.addGreyBackgroundflatmate = false;
     }
   }
+  routeFinder() {
+    this.route.url.subscribe((segments: UrlSegment[]) => {
+      this.isHomeRoute = segments.length > 0 && segments[0].path === 'home';
+    });
+  }
+
+
 }

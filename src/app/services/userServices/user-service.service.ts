@@ -17,10 +17,10 @@ export class UserServiceService {
   registerUser(userData: any): Observable<any> {
     return this.http.post<any>(`${apiUrl}/register`, userData);
   }
-  otpSend(userLoginData: any) {
+  otpSend(userLoginData: any): Observable<any> {
     return this.http.post<any>(`${apiUrl}/loginWithOtp`, userLoginData)
   }
-  otpVerify(otpData: any) {
+  otpVerify(otpData: any): Observable<any> {
     return this.http.post<any>(`${apiUrl}/verifyOtp`, otpData)
   }
   private mobileNumberSource = new BehaviorSubject<string>('');
@@ -30,39 +30,42 @@ export class UserServiceService {
   setMobileNumber(mobileNumber: any) {
     this.mobileNumberSource.next(mobileNumber);
   }
-  roomMatepost(postData: any) {
+  roomMatepost(postData: any): Observable<any> {
     let mobNum = this.mobNum
     return this.http.post<any>(`${apiUrl}/roommateReqPost?mobile=${mobNum}`, postData)
   }
-  roomPost(roompostData: any) {
-    console.log(roompostData);
+  roomPost(roompostData: any): Observable<any> {
     let mobNum = this.mobNum
     return this.http.post<any>(`${apiUrl}/roomReqPost?mobile=${mobNum}`, roompostData)
   }
-  loadposts() {
-    return this.http.get(`${apiUrl}/loadposts`)
+  loadposts(): Observable<any> {
+    return this.http.get<any>(`${apiUrl}/loadposts`)
   }
-  loadroomposts() {
-    return this.http.get(`${apiUrl}/loadroomposts`)
+  loadroomposts(): Observable<any> {
+    return this.http.get<any>(`${apiUrl}/loadroomposts`)
   }
-  loadProfile(userNum: string) {
-    return this.http.get(`${apiUrl}/loadProfile?userNum=${userNum}`)
+  loadProfile(userNum: string): Observable<any> {
+    return this.http.get<any>(`${apiUrl}/loadProfile?userNum=${userNum}`)
   }
-  verifyUser(mail: string) {
+  verifyUser(mail: string): Observable<any> {
     const data = { email: mail }
-    return this.http.patch(`${apiUrl}/verify`, data)
+    return this.http.patch<any>(`${apiUrl}/verify`, data)
   }
-  deletePost(id: string) {
-    return this.http.delete(`${apiUrl}/deletePost?id=${id}`)
+  deletePost(id: string): Observable<any> {
+    return this.http.delete<any>(`${apiUrl}/deletePost?id=${id}`)
   }
-  deleteRoomPost(id: string) {
-    return this.http.delete(`${apiUrl}/deleteRoomPost?id=${id}`)
+  deleteRoomPost(id: string): Observable<any> {
+    return this.http.delete<any>(`${apiUrl}/deleteRoomPost?id=${id}`)
   }
-  updateProfile(formData: any) {
+  updateProfile(formData: any): Observable<any> {
     let mobNum = this.mobNum
-    return this.http.patch(`${apiUrl}/updateProfile?userNum=${mobNum}`, formData)
+    return this.http.patch<any>(`${apiUrl}/updateProfile?userNum=${mobNum}`, formData)
   }
-  loadOtp(mobNum: number) {
-    return this.http.get(`${apiUrl}/loadOtp?userNum=${mobNum}`)
+  loadOtp(mobNum: number): Observable<any> {
+    return this.http.get<any>(`${apiUrl}/loadOtpexpiry?userNum=${mobNum}`)
+  }
+  resendOtp(mobNum: number): Observable<any> {
+    const data = { mobile: mobNum }
+    return this.http.patch<any>(`${apiUrl}/resendOtp`, data)
   }
 }

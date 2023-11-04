@@ -1,6 +1,6 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, HostListener, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { UserServiceService } from 'src/app/services/userServices/user-service.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -19,8 +19,9 @@ export class OtploginComponent {
   submit: boolean = false
   userToken!: string
   mobNUm: any
-  timeLeft!: Date;
+  timeLeft: number = 60;
   interval: any;
+  showResendButton: boolean = false
 
   constructor(private fb: FormBuilder,
     private userService: UserServiceService,
@@ -28,38 +29,36 @@ export class OtploginComponent {
     private toastr: ToastrService) { }
 
   //passing mobile number from parent
-  @Input() mobileNumber: any;
+  @Input() mobileNumber: any
+  otpForm!: FormGroup
   //subscribing the mobile number from login component
   startTimer() {
     this.interval = setInterval(() => {
-      if (this.timeLeft > new Date()) {
-        console.log('yessss');
-
+      if (this.timeLeft > 0) {
+        this.timeLeft--
+      } else {
+        this.showResendButton = true
       }
     }, 1000)
   }
   ngOnInit() {
-    this.userService.loadOtp(this.mobNUm).subscribe(
-      (response: any) => {
-        this.timeLeft = response.otpExpires
-      })
-    // this.timeLeft =
-    this.startTimer()
     this.userService.mobileNumber$.subscribe((mobileNumber) => {
       this.mobNUm = mobileNumber;
       this.mobileNumber = this.mobNUm.value;
+      this.otpForm = this.fb.group({
+        otp1: ['', [Validators.required, this.SingleDigitValidator]],
+        otp2: ['', [Validators.required, this.SingleDigitValidator]],
+        otp3: ['', [Validators.required, this.SingleDigitValidator]],
+        otp4: ['', [Validators.required, this.SingleDigitValidator]],
+        otp5: ['', [Validators.required, this.SingleDigitValidator]],
+        otp6: ['', [Validators.required, this.SingleDigitValidator]],
+        mobile: [this.mobileNumber, [Validators.required]],
+      })
     });
+    this.startTimer()
   }
   //form model and validation
-  otpForm = this.fb.group({
-    otp1: ['', [Validators.required, this.SingleDigitValidator]],
-    otp2: ['', [Validators.required, this.SingleDigitValidator]],
-    otp3: ['', [Validators.required, this.SingleDigitValidator]],
-    otp4: ['', [Validators.required, this.SingleDigitValidator]],
-    otp5: ['', [Validators.required, this.SingleDigitValidator]],
-    otp6: ['', [Validators.required, this.SingleDigitValidator]],
-    mobile: ['', [Validators.required]],
-  })
+
   //form submission
   onSubmit() {
     if (!this.otpForm.valid) {
@@ -79,16 +78,15 @@ export class OtploginComponent {
   otpVerify() {
     this.userService.otpVerify(this.otpForm.value as any).subscribe(
       (response) => {
+        this.userToken = response.userToken
+        localStorage.setItem('userToken', response.userToken);
+        localStorage.setItem('userNum', response.mobile)
         this.toastr.success(response.message, 'Success', {
           timeOut: 2000,
           progressAnimation: 'increasing',
           progressBar: true
         })
-        this.userToken = response.userToken
-        localStorage.setItem('userToken', response.userToken);
-        localStorage.setItem('userNum', response.mobile)
-        // this.router.navigate(['/'])
-        this.router.navigate(['/flatmatepost'])
+        this.router.navigate(['/home'])
       }, (error) => {
         this.toastr.error(error.error.message, 'Error', {
           timeOut: 2000,
@@ -110,6 +108,30 @@ export class OtploginComponent {
       }
       return null;
     };
+  }
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any): void {
+    if (this.otpForm.dirty) {
+      $event.returnValue = true;
+    }
+  }
+  resendOtp() {
+    this.userService.resendOtp(this.mobileNumber).subscribe(
+      (response) => {
+        this.toastr.success(response.message, 'Success', {
+          timeOut: 2000,
+          progressAnimation: 'increasing',
+          progressBar: true
+        })
+        this.showResendButton = false
+        this.timeLeft = 60
+      }, (error) => {
+        this.toastr.error(error.error.message, 'Error', {
+          timeOut: 2000,
+          progressAnimation: 'increasing',
+          progressBar: true
+        })
+      })
   }
 
 }

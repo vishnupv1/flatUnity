@@ -45,6 +45,7 @@ import { ActivitylogRoomComponent } from './components/searcher/activitylog-room
 import { FlatRentReqComponent } from './components/searcher/flat-rent-req/flat-rent-req.component';
 import { PremiumComponent } from './components/searcher/premium/premium.component';
 import { EditPostComponent } from './components/searcher/edit-post/edit-post.component';
+import { UserFooterComponent } from './components/searcher/user-footer/user-footer.component';
 
 
 
@@ -78,6 +79,7 @@ import { EditPostComponent } from './components/searcher/edit-post/edit-post.com
     FlatRentReqComponent,
     PremiumComponent,
     EditPostComponent,
+    UserFooterComponent,
 
   ],
   imports: [

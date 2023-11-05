@@ -52,6 +52,6 @@ export class ActivitylogComponent {
     )
   }
   updatePost(id: string) {
-    this.route.navigate([`/editpost/${id}`])
+    this.route.navigate([`/editroommatepost/${id}`])
   }
 }

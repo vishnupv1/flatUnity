@@ -11,6 +11,7 @@
         <div
           class="bg-white shadow-lg rounded-lg flex postCard"
           *ngFor="let post of postData; let i = index"
+          (click)="openDetailedView(post._id)"
         >
           <div class="p-4">
             <img

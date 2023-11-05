@@ -46,6 +46,12 @@ import { FlatRentReqComponent } from './components/searcher/flat-rent-req/flat-r
 import { PremiumComponent } from './components/searcher/premium/premium.component';
 import { EditPostComponent } from './components/searcher/edit-post/edit-post.component';
 import { UserFooterComponent } from './components/searcher/user-footer/user-footer.component';
+import { DatePipe } from '@angular/common';
+import { DetailedViewComponent } from './components/searcher/detailed-view/detailed-view.component';
+import { EditPostRoommateComponent } from './components/searcher/edit-post-roommate/edit-post-roommate.component';
+// import { CarouselModule } from 'ngx-owl-carousel-o';
+// import { CarouselModule } from 'ngx-bootstrap/carousel';
+
 
 
 
@@ -80,6 +86,8 @@ import { UserFooterComponent } from './components/searcher/user-footer/user-foot
     PremiumComponent,
     EditPostComponent,
     UserFooterComponent,
+    DetailedViewComponent,
+    EditPostRoommateComponent
 
   ],
   imports: [
@@ -111,7 +119,7 @@ import { UserFooterComponent } from './components/searcher/user-footer/user-foot
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true,
-  }],
+  }, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

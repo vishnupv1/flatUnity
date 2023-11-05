@@ -19,6 +19,8 @@ import { ActivitylogRoomComponent } from './components/searcher/activitylog-room
 import { FlatRentReqComponent } from './components/searcher/flat-rent-req/flat-rent-req.component';
 import { PremiumComponent } from './components/searcher/premium/premium.component';
 import { EditPostComponent } from './components/searcher/edit-post/edit-post.component';
+import { DetailedViewComponent } from './components/searcher/detailed-view/detailed-view.component';
+import { EditPostRoommateComponent } from './components/searcher/edit-post-roommate/edit-post-roommate.component';
 
 const routes: Routes =
   [
@@ -35,9 +37,11 @@ const routes: Routes =
     { component: ManagePostComponent, path: 'activity' },
     { component: PremiumComponent, path: 'premium' },
     { component: EditPostComponent, path: 'editpost/:id' },
+    { component: EditPostRoommateComponent, path: 'editroommatepost/:id' },
     { component: ActivitylogComponent, path: 'flatmatepostMod' },
     { component: ActivitylogRoomComponent, path: 'flatpostMod' },
     { component: ProfileComponent, path: 'profile' },
+    { component: DetailedViewComponent, path: 'detailedPost/:id' },
     { component: FlatmatepostComponent, path: 'flatmatepost', canActivate: [userhomeAuthGuard] },
     {
       component: UserhomeComponent, path: 'home',

@@ -118,7 +118,6 @@ export class RoomreqComponent {
     return
   }
   roomPost() {
-
     this.UserService.roomPost(this.roomForm.value).subscribe(
       (response) => {
         this.toastr.success(response.message, 'Success', {

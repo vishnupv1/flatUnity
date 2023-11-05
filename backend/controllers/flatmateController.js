@@ -11,6 +11,7 @@ const accountSid = process.env.SID;
 const authToken = process.env.AUTHTOKEN;
 const client = require('twilio')(accountSid, authToken);
 const jwt = require('jsonwebtoken')
+const { async } = require('rxjs')
 
 const sendVerifyMail = async (username, email) => {
     try {
@@ -182,22 +183,22 @@ const roommateReqPost = async (req, res) => {
         if (user) {
             const amenities = []
             if (formData.ac === 'true') {
-                amenities.push('ac');
+                amenities.push('A/C');
             }
             if (formData.parking === 'true') {
-                amenities.push('parking');
+                amenities.push('Parking');
             }
             if (formData.wifi === 'true') {
-                amenities.push('wifi');
+                amenities.push('Wi-Fi');
             }
             if (formData.fridge === 'true') {
-                amenities.push('fridge');
+                amenities.push('Fridge');
             }
             if (formData.washing === 'true') {
-                amenities.push('washing');
+                amenities.push('Washing Mechine');
             }
             if (formData.inverter === 'true') {
-                amenities.push('inverter');
+                amenities.push('Inverter');
             }
             const post = new Post({
                 userId: UserId,
@@ -270,6 +271,9 @@ const loadposts = async (req, res) => {
                 $addFields: {
                     ownerName: '$userDetails.name',
                     mobile: '$userDetails.mobile',
+                    ownerGender: '$userDetails.gender',
+                    ownerIs_premium: '$userDetails.is_premium',
+                    ownerType: '$userDetails.userType',
                 },
             },
         ]);
@@ -312,11 +316,11 @@ const verifyUser = async (req, res) => {
         if (userData) {
             await User.updateOne({ email: userMail }, { $set: { is_verified: true } });
         } else {
-            res.status(404).json("invalid request")
+            res.status(404).json({ message: "invalid request" })
         }
     }
     catch (error) {
-        res.status(400).json("internal error")
+        res.status(400).json({ message: "internal error" })
     }
 
 }
@@ -327,7 +331,7 @@ const loadProfile = async (req, res) => {
         if (userData) {
             return res.status(200).json({ userData });
         } else {
-            res.status(404).json('invalid user')
+            res.status(404).json({ message: 'invalid user' })
         }
     } catch (err) {
         res.status(400).json(err.message)
@@ -346,9 +350,9 @@ const updateProfile = async (req, res) => {
                     mobile: mobile
                 }
             })
-            return res.status(200).json('User Updated');
+            return res.status(200).json({ message: 'User Updated' });
         } else {
-            res.status(404).json('invalid user')
+            res.status(404).json({ message: 'invalid request' })
         }
     } catch (err) {
         res.status(400).json(err.message)
@@ -360,12 +364,12 @@ const deletePost = async (req, res) => {
         const post = await Post.findOne({ _id: postId })
         if (post) {
             await Post.deleteOne({ _id: postId })
-            res.status(200).json('Post deleted')
+            res.status(200).json({ message: 'Post deleted' })
         } else {
-            res.status(404).json('Post not found')
+            res.status(404).json({ message: 'Post not found' })
         }
     } catch (err) {
-        res.status(404).json(err)
+        res.status(404).json({ message: err.mesasge })
     }
 }
 const deleteRoomPost = async (req, res) => {
@@ -375,12 +379,12 @@ const deleteRoomPost = async (req, res) => {
         const post = await roomPost.findOne({ _id: postId })
         if (post) {
             await roomPost.deleteOne({ _id: postId })
-            res.status(200).json('Post deleted')
+            res.status(200).json({ message: 'Post deleted' })
         } else {
-            res.status(404).json('Post not found')
+            res.status(404).json({ message: 'Post not found' })
         }
     } catch (err) {
-        res.status(404).json(err)
+        res.status(404).json({ mesasge: err.mesasge })
     }
 }
 const loadOtpexpiry = async (req, res) => {
@@ -391,10 +395,10 @@ const loadOtpexpiry = async (req, res) => {
             const otpExpires = await user.otpExpires
             res.status(200).json(otpExpires)
         } else {
-            res.status(400).json('user invalid')
+            res.status(400).json({ message: 'user invalid' })
         }
     } catch (error) {
-        res.status(400).json(error.message)
+        res.status(400).json({ mesasge: error.message })
     }
 }
 const resendOtp = async (req, res) => {
@@ -438,6 +442,76 @@ const resendOtp = async (req, res) => {
         return res.status(500).json({ message: 'internal server error' })
     }
 }
+const updateRoomPost = async (req, res) => {
+    try {
+        const postId = req.query.postId
+        const { location, gender, rent, mobile, date, description } = req.body
+        const postData = await roomPost.findOne({ _id: postId })
+        if (postData) {
+            await roomPost.updateOne({ _id: postId }, {
+                $set: {
+                    location: location,
+                    gender: gender,
+                    rent: rent,
+                    mobile: mobile,
+                    date: date,
+                    description: description
+                }
+            })
+            return res.status(200).json({ message: 'Requirement Updated' });
+        } else {
+            res.status(404).json({ message: 'invalid request' })
+        }
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+}
+const roomMatepostUpdate = async (req, res) => {
+    try {
+        const postId = req.query.postId
+        const formData = req.body
+        const arrayimage = []
+        for (let i = 0; i < req.files.length; i++) {
+            arrayimage[i] = req.files[i].filename
+        }
+        const amenities = []
+        if (formData.ac === 'true') {
+            amenities.push('A/C');
+        }
+        if (formData.parking === 'true') {
+            amenities.push('Parking');
+        }
+        if (formData.wifi === 'true') {
+            amenities.push('Wi-Fi');
+        }
+        if (formData.fridge === 'true') {
+            amenities.push('Fridge');
+        }
+        if (formData.washing === 'true') {
+            amenities.push('Washing Mechine');
+        }
+        if (formData.inverter === 'true') {
+            amenities.push('Inverter');
+        }
+        const updateData = {
+            location: formData.location,
+            gender: formData.gender,
+            rent: formData.rent,
+            contactNumber: formData.contact,
+            amenities: amenities,
+            description: formData.description,
+            images: arrayimage
+        };
+        try {
+            const upadted = await Post.findByIdAndUpdate(postId, updateData)
+            return res.status(200).json({ message: 'Requirement Updated' });
+        } catch {
+            res.status(404).json({ message: 'invalid request' })
+        }
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+}
 module.exports = {
     register,
     sendOtp,
@@ -453,5 +527,7 @@ module.exports = {
     deletePost,
     deleteRoomPost,
     loadOtpexpiry,
-    resendOtp
+    resendOtp,
+    updateRoomPost,
+    roomMatepostUpdate
 }

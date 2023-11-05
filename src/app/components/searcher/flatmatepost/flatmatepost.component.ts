@@ -23,4 +23,7 @@ export class FlatmatepostComponent {
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
+  openDetailedView(id: string) {
+    this.router.navigate([`/detailedPost/${id}`])
+  }
 }

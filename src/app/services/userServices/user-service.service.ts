@@ -68,4 +68,11 @@ export class UserServiceService {
     const data = { mobile: mobNum }
     return this.http.patch<any>(`${apiUrl}/resendOtp`, data)
   }
+  updateRoomPost(formData: any, id: string): Observable<any> {
+    return this.http.patch<any>(`${apiUrl}/updateRoomPost?postId=${id}`, formData)
+  }
+  roomMatepostUpdate(formData: any, id: string): Observable<any> {
+    return this.http.patch<any>(`${apiUrl}/roomMatepostUpdate?postId=${id}`, formData)
+  }
+
 }

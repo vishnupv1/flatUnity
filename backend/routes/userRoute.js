@@ -37,6 +37,11 @@ user_route.delete('/deletePost', userAuth, userController.deletePost)
 user_route.delete('/deleteRoomPost', userAuth, userController.deleteRoomPost)
 user_route.get('/loadOtpexpiry', userController.loadOtpexpiry)
 user_route.patch('/resendOtp', userController.resendOtp)
+user_route.patch('/updateRoomPost', userAuth, userController.updateRoomPost)
+user_route.patch('/roomMatepostUpdate', userAuth, upload.array('image'), userController.roomMatepostUpdate)
+
+
+
 
 
 

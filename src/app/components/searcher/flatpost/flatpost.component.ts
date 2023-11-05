@@ -17,10 +17,11 @@ export class FlatpostComponent {
   ngOnInit(): void {
     this.store.dispatch(fetchRoomReq())
     this.roomposts$ = this.store.pipe(select(roompostSelectorData))
-    console.log(this.roomposts$+'kkkk');
-    
   }
   navigateTo(route: string) {
     this.router.navigate([route]);
+  }
+  openDetailedView(id: string) {
+    this.router.navigate([`/detailedroomPost/${id}`])
   }
 }

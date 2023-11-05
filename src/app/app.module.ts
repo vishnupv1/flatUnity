@@ -49,6 +49,7 @@ import { UserFooterComponent } from './components/searcher/user-footer/user-foot
 import { DatePipe } from '@angular/common';
 import { DetailedViewComponent } from './components/searcher/detailed-view/detailed-view.component';
 import { EditPostRoommateComponent } from './components/searcher/edit-post-roommate/edit-post-roommate.component';
+import { DetailedViewRoomComponent } from './components/searcher/detailed-view-room/detailed-view-room.component';
 // import { CarouselModule } from 'ngx-owl-carousel-o';
 // import { CarouselModule } from 'ngx-bootstrap/carousel';
 
@@ -87,7 +88,8 @@ import { EditPostRoommateComponent } from './components/searcher/edit-post-roomm
     EditPostComponent,
     UserFooterComponent,
     DetailedViewComponent,
-    EditPostRoommateComponent
+    EditPostRoommateComponent,
+    DetailedViewRoomComponent
 
   ],
   imports: [

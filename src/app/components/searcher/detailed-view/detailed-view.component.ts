@@ -34,16 +34,6 @@ export class DetailedViewComponent {
         map((posts) => posts.filter((post) => post._id == this.postId))
       );
     });
-
-    // interface InitialData { }
-    // this.roomMatePost$.subscribe(data => {
-    //   if (data && data.length > 0) {
-    //     const initialData: InitialData = data[0];
-
-    //     this.postData = { ...initialData };
-    //   }
-    // });
-
   }
 
   prevImage() {

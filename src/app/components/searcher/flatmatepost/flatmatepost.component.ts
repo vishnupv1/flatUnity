@@ -4,7 +4,7 @@ import { fetchRoommateReq } from 'src/app/store/action';
 import { postSelectorData } from 'src/app/store/selector';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-flatmatepost',
@@ -14,11 +14,34 @@ import { Router } from '@angular/router';
 export class FlatmatepostComponent {
   posts$!: Observable<any[]>
   tic: boolean = true
+  addGreyBackgroundflat: boolean = false;
+  addGreyBackgroundflatmate: boolean = false;
 
-  constructor(private store: Store<{ posts: any[] }>, private router: Router) { }
+  constructor(private store: Store<{ posts: any[] }>,
+    private router: Router,
+    private route: ActivatedRoute) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const currentRoute = this.router.url;
+        this.updateBackgroundFlags(currentRoute);
+      }
+    });
+  }
   ngOnInit(): void {
     this.store.dispatch(fetchRoommateReq())
     this.posts$ = this.store.pipe(select(postSelectorData))
+  }
+  private updateBackgroundFlags(currentRoute: string) {
+    if (currentRoute === '/flatpost') {
+      this.addGreyBackgroundflat = true;
+      this.addGreyBackgroundflatmate = false;
+    } else if (currentRoute === '/flatmatepost') {
+      this.addGreyBackgroundflat = false;
+      this.addGreyBackgroundflatmate = true;
+    } else {
+      this.addGreyBackgroundflat = false;
+      this.addGreyBackgroundflatmate = false;
+    }
   }
   navigateTo(route: string) {
     this.router.navigate([route]);

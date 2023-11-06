@@ -1,6 +1,10 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { UrlSegment } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import { Observable, map } from 'rxjs';
+import { fetchRoomReq, fetchRoommateReq } from 'src/app/store/action';
+import { postSelectorData, roompostSelectorData } from 'src/app/store/selector';
 
 @Component({
   selector: 'app-userhome',
@@ -9,8 +13,16 @@ import { UrlSegment } from '@angular/router';
 })
 export class UserhomeComponent {
   isHomeRoute!: boolean;
+  searchValue: string = ''
+  roomposts$!: Observable<any[]>
+  roomMateposts$!: Observable<any[]>
+  addGreyBackgroundflat: boolean = false;
+  addGreyBackgroundflatmate: boolean = false;
 
-  constructor(private cdRef: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) {
+  constructor(private cdRef: ChangeDetectorRef,
+    private router: Router,
+    private route: ActivatedRoute,
+    private store: Store<{ posts: any[] }>) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentRoute = this.router.url;
@@ -18,11 +30,16 @@ export class UserhomeComponent {
       }
     });
   }
+
   ngOnInit(): void {
     this.routeFinder()
+    this.store.dispatch(fetchRoomReq())
+    this.roomposts$ = this.store.pipe(select(roompostSelectorData))
+
+    this.store.dispatch(fetchRoommateReq())
+    this.roomMateposts$ = this.store.pipe(select(postSelectorData))
   }
-  addGreyBackgroundflat: boolean = false;
-  addGreyBackgroundflatmate: boolean = false;
+
   private updateBackgroundFlags(currentRoute: string) {
     if (currentRoute === '/flatpost') {
       this.addGreyBackgroundflat = true;
@@ -41,5 +58,7 @@ export class UserhomeComponent {
     });
   }
 
+  searchTrigger(value: string) {
 
+  }
 }

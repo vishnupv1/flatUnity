@@ -76,10 +76,29 @@ const deletePlan = async (req, res) => {
         return res.status(404).json({ message: err.message })
     }
 }
+const addPlan = async (req, res) => {
+    try {
+        const { planName, amount, duration } = req.body
+        const features = req.body.features.split(',').map((feature) => feature.trim());
+
+        const newPlan = new Plan({
+            planName,
+            amount,
+            duration,
+            features
+        });
+        const userData = await newPlan.save();
+        return res.status(200).json({ message: 'Plan added' });
+    }
+    catch (error) {
+        return res.status(404).json({ message: error.message });
+    }
+}
 module.exports = {
     login,
     loadUsers,
     unBlockOrBlockUser,
     loadPlans,
-    deletePlan
+    deletePlan,
+    addPlan
 }

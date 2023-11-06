@@ -51,6 +51,7 @@ import { DetailedViewComponent } from './components/searcher/detailed-view/detai
 import { EditPostRoommateComponent } from './components/searcher/edit-post-roommate/edit-post-roommate.component';
 import { DetailedViewRoomComponent } from './components/searcher/detailed-view-room/detailed-view-room.component';
 import { PlanDeleteConfirmationComponent } from './components/admin/plan-delete-confirmation/plan-delete-confirmation.component';
+import { AddPlanComponent } from './components/admin/add-plan/add-plan.component';
 // import { CarouselModule } from 'ngx-owl-carousel-o';
 // import { CarouselModule } from 'ngx-bootstrap/carousel';
 
@@ -91,7 +92,8 @@ import { PlanDeleteConfirmationComponent } from './components/admin/plan-delete-
     DetailedViewComponent,
     EditPostRoommateComponent,
     DetailedViewRoomComponent,
-    PlanDeleteConfirmationComponent
+    PlanDeleteConfirmationComponent,
+    AddPlanComponent
 
   ],
   imports: [

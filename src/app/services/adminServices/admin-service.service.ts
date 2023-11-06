@@ -28,4 +28,7 @@ export class AdminServiceService {
   deletePlan(id: string) {
     return this.http.delete<any>(`${apiUrl}/admin/deletePlan?id=${id}`);
   }
+  addPlan(formdata: any): Observable<any> {
+    return this.http.post<any>(`${apiUrl}/admin/addPlan`, formdata);
+  }
 }

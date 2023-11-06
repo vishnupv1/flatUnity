@@ -79,7 +79,7 @@ export class RoomreqComponent {
         return 'Location required'
       }
       else if (location?.hasError('minlength')) {
-        return 'Minimum length of location should be fice'
+        return 'Minimum length of location should be five'
       }
     }
 

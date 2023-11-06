@@ -6,6 +6,7 @@ import { AdminHomeComponent } from '../components/admin/admin-home/admin-home.co
 import { UsermanagementComponent } from '../components/admin/usermanagement/usermanagement.component';
 import { adminAuthGuard } from '../Auth/admin-auth.guard';
 import { adminloginAuthGuard } from '../Auth/adminlogin-auth.guard';
+import { PlansComponent } from '../components/admin/plans/plans.component';
 
 const routes: Routes = [
   { path: 'login', component: AdminLoginComponent, canActivate: [adminAuthGuard] },

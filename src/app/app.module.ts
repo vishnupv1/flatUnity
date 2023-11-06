@@ -50,6 +50,7 @@ import { DatePipe } from '@angular/common';
 import { DetailedViewComponent } from './components/searcher/detailed-view/detailed-view.component';
 import { EditPostRoommateComponent } from './components/searcher/edit-post-roommate/edit-post-roommate.component';
 import { DetailedViewRoomComponent } from './components/searcher/detailed-view-room/detailed-view-room.component';
+import { PlanDeleteConfirmationComponent } from './components/admin/plan-delete-confirmation/plan-delete-confirmation.component';
 // import { CarouselModule } from 'ngx-owl-carousel-o';
 // import { CarouselModule } from 'ngx-bootstrap/carousel';
 
@@ -89,7 +90,8 @@ import { DetailedViewRoomComponent } from './components/searcher/detailed-view-r
     UserFooterComponent,
     DetailedViewComponent,
     EditPostRoommateComponent,
-    DetailedViewRoomComponent
+    DetailedViewRoomComponent,
+    PlanDeleteConfirmationComponent
 
   ],
   imports: [

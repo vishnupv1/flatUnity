@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { fetchRoomReq } from 'src/app/store/action';
 import { roompostSelectorData } from 'src/app/store/selector';
@@ -11,8 +11,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 })
 export class FlatpostComponent {
   roomposts$!: Observable<any[]>
+  searchPosts$!: Observable<any[]>
   addGreyBackgroundflat: boolean = false;
   addGreyBackgroundflatmate: boolean = false;
+  searchValue: string = ''
 
   constructor(
     private store: Store<{ posts: any[] }>,
@@ -29,6 +31,8 @@ export class FlatpostComponent {
   ngOnInit(): void {
     this.store.dispatch(fetchRoomReq())
     this.roomposts$ = this.store.pipe(select(roompostSelectorData))
+    this.searchPosts$ = this.roomposts$
+
   }
   private updateBackgroundFlags(currentRoute: string) {
     if (currentRoute === '/flatpost') {
@@ -47,5 +51,14 @@ export class FlatpostComponent {
   }
   openDetailedView(id: string) {
     this.router.navigate([`/detailedroomPost/${id}`])
+  }
+
+  searchTrigger(value: string) {
+    this.roomposts$ = this.searchPosts$.pipe(
+      map((posts) => posts.filter((post) =>
+        post.ownerName.toLowerCase().includes(value.toLowerCase()) ||
+        post.location.toLowerCase().includes(value.toLowerCase())
+      ))
+    );
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { fetchRoommateReq } from 'src/app/store/action';
 import { postSelectorData } from 'src/app/store/selector';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
@@ -16,6 +16,9 @@ export class FlatmatepostComponent {
   tic: boolean = true
   addGreyBackgroundflat: boolean = false;
   addGreyBackgroundflatmate: boolean = false;
+  searchValue: string = ''
+  searchPosts$ !: Observable<any[]>
+
 
   constructor(private store: Store<{ posts: any[] }>,
     private router: Router,
@@ -30,6 +33,7 @@ export class FlatmatepostComponent {
   ngOnInit(): void {
     this.store.dispatch(fetchRoommateReq())
     this.posts$ = this.store.pipe(select(postSelectorData))
+    this.searchPosts$ = this.posts$
   }
   private updateBackgroundFlags(currentRoute: string) {
     if (currentRoute === '/flatpost') {
@@ -48,5 +52,13 @@ export class FlatmatepostComponent {
   }
   openDetailedView(id: string) {
     this.router.navigate([`/detailedPost/${id}`])
+  }
+  searchTrigger(value: string) {
+    this.posts$ = this.searchPosts$.pipe(
+      map((posts) => posts.filter((post) =>
+        post.ownerName.toLowerCase().includes(value.toLowerCase()) ||
+        post.location.toLowerCase().includes(value.toLowerCase())
+      ))
+    );
   }
 }

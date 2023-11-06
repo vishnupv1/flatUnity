@@ -470,10 +470,12 @@ const roomMatepostUpdate = async (req, res) => {
     try {
         const postId = req.query.postId
         const formData = req.body
+
         const arrayimage = []
         for (let i = 0; i < req.files.length; i++) {
             arrayimage[i] = req.files[i].filename
         }
+
         const amenities = []
         if (formData.ac === 'true') {
             amenities.push('A/C');
@@ -493,23 +495,46 @@ const roomMatepostUpdate = async (req, res) => {
         if (formData.inverter === 'true') {
             amenities.push('Inverter');
         }
-        const updateData = {
-            location: formData.location,
-            gender: formData.gender,
-            rent: formData.rent,
-            contactNumber: formData.contact,
-            amenities: amenities,
-            description: formData.description,
-            images: arrayimage
-        };
+
+        console.log(req.files.length);
+        const data = await Post.findById({ _id: postId })
+        const imagesFromServer = data.images
+
         try {
-            const upadted = await Post.findByIdAndUpdate(postId, updateData)
+            if (req.files.length > 0) {
+                const upadted = await Post.findByIdAndUpdate(postId, {
+                    $set: {
+                        location: formData.location,
+                        gender: formData.gender,
+                        rent: formData.rent,
+                        contactNumber: formData.contact,
+                        amenities: amenities,
+                        description: formData.description,
+                        images: arrayimage
+                    }
+                })
+                return res.status(200).json({ message: 'Requirement Updated' });
+            }
+            else {
+                const upadted = await Post.findByIdAndUpdate(postId, {
+                    $set: {
+                        location: formData.location,
+                        gender: formData.gender,
+                        rent: formData.rent,
+                        contactNumber: formData.contact,
+                        amenities: amenities,
+                        description: formData.description,
+                        images: imagesFromServer
+                    }
+                })
+            }
             return res.status(200).json({ message: 'Requirement Updated' });
         } catch {
-            res.status(404).json({ message: 'invalid request' })
+            res.status(404).json({ message: 'Invalid Request' })
         }
     } catch (err) {
         res.status(400).json({ message: err.message })
+        console.log(err.message);
     }
 }
 module.exports = {

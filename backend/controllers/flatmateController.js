@@ -12,6 +12,15 @@ const authToken = process.env.AUTHTOKEN;
 const client = require('twilio')(accountSid, authToken);
 const jwt = require('jsonwebtoken')
 const { async } = require('rxjs')
+const razorpay = require('razorpay')
+
+const razorID_Key = process.env.RAZOR_ID
+const razorSEC_Key = process.env.RAZOR_SECRET
+
+const razorInstance = new razorpay({
+    key_id: razorID_Key,
+    key_secret: razorSEC_Key
+})
 
 const sendVerifyMail = async (username, email) => {
     try {
@@ -537,6 +546,37 @@ const roomMatepostUpdate = async (req, res) => {
         console.log(err.message);
     }
 }
+const subscribePremium = async (req, res) => {
+    try {
+        const amount = req.body.amount * 100
+        const options = {
+            amount: amount,
+            currency: 'INR',
+            receipt: 'razorUser@gmail.com'
+        }
+
+        razorInstance.orders.create(options,
+            (err, order) => {
+                if (!err) {
+                    res.status(200).send({
+                        success: true,
+                        msg: 'Subscribed',
+                        order_id: order.id,
+                        amount: amount,
+                        key_id: razorID_Key,
+                        plan: req.body.plan,
+                    });
+                }
+                else {
+                    res.status(400).send({ success: false, msg: 'Something went wrong!' });
+                }
+            }
+        );
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 module.exports = {
     register,
     sendOtp,
@@ -554,5 +594,6 @@ module.exports = {
     loadOtpexpiry,
     resendOtp,
     updateRoomPost,
-    roomMatepostUpdate
+    roomMatepostUpdate,
+    subscribePremium
 }

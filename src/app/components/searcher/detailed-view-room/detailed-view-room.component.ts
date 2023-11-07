@@ -25,7 +25,6 @@ export class DetailedViewRoomComponent {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.postId = params['id'];
-      console.log(this.postId);
     })
     this.store.dispatch(fetchRoomReq())
     this.roomPost$ = this.store.pipe(select(roompostSelectorData))

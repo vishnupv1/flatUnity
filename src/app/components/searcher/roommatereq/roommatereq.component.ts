@@ -204,8 +204,6 @@ export class RoommatereqComponent {
         })
       }
     }
-    console.log(this.selectedImages);
-
   }
 
   // const files: FileList = event.target.files;

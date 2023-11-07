@@ -169,7 +169,6 @@ export class EditPostComponent {
           progressAnimation: 'increasing',
           progressBar: true
         })
-        console.log(response);
         this.router.navigate(['flatpostMod'])
       }, (error) => {
         this.toastr.error(error.error.message, 'Error', {

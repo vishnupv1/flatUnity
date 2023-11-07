@@ -47,6 +47,17 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    subscriptionStarts: {
+        type: Date,
+
+    },
+    subscriptionEnds: {
+        type: Date,
+
+    },
+    planName: {
+        type: String
+    }
 })
 
 module.exports = mongoose.model('User', userSchema)

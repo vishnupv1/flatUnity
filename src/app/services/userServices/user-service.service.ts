@@ -74,5 +74,12 @@ export class UserServiceService {
   roomMatepostUpdate(formData: any, id: string): Observable<any> {
     return this.http.patch<any>(`${apiUrl}/roomMatepostUpdate?postId=${id}`, formData)
   }
-
+  SubscribePremium(data: any): Observable<any> {
+    return this.http.post<any>(`${apiUrl}/SubscribePremium`, data);
+  }
+  paymentUpdate(duration: number, planName: string): Observable<any> {
+    const mobile = localStorage.getItem('userNum')
+    const data = { mobile, duration, planName }
+    return this.http.patch<any>(`${apiUrl}/paymentUpdate`, data);
+  }
 }

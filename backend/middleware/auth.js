@@ -17,7 +17,7 @@ const userAuth = async (req, res, next) => {
             return res.status(404).json({ message: 'Un Authorised access' })
         }
     } else {
-        console.log('Invalid JWT token');
+        return res.status(404).json({ message: 'Invalid JWT token' });
     }
 
 }

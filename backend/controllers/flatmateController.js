@@ -1,6 +1,7 @@
 const User = require('../models/userModel')
 const Post = require('../models/roomMateReqModel')
 const roomPost = require('../models/roomReqModel')
+const Plan = require('../models/planModel')
 const bcrypt = require('bcrypt')
 const randomstring = require('randomstring')
 const config = require('../config/config')
@@ -21,7 +22,6 @@ const razorInstance = new razorpay({
     key_id: razorID_Key,
     key_secret: razorSEC_Key
 })
-
 const sendVerifyMail = async (username, email) => {
     try {
         const transporter = nodemailer.createTransport({
@@ -177,7 +177,6 @@ async function sendOtp(userMobile, otp) {
     //         from: '+17409001094', // From a valid Twilio number
     //     })
     //     .then((message) => console.log(message.sid));
-    console.log('ffffffffff');
 }
 const roommateReqPost = async (req, res) => {
     try {
@@ -384,7 +383,6 @@ const deletePost = async (req, res) => {
 const deleteRoomPost = async (req, res) => {
     try {
         const postId = req.query.id
-        console.log(postId);
         const post = await roomPost.findOne({ _id: postId })
         if (post) {
             await roomPost.deleteOne({ _id: postId })
@@ -505,7 +503,6 @@ const roomMatepostUpdate = async (req, res) => {
             amenities.push('Inverter');
         }
 
-        console.log(req.files.length);
         const data = await Post.findById({ _id: postId })
         const imagesFromServer = data.images
 
@@ -546,35 +543,81 @@ const roomMatepostUpdate = async (req, res) => {
         console.log(err.message);
     }
 }
+
 const subscribePremium = async (req, res) => {
     try {
         const amount = req.body.amount * 100
-        const options = {
-            amount: amount,
-            currency: 'INR',
-            receipt: 'razorUser@gmail.com'
-        }
-
-        razorInstance.orders.create(options,
-            (err, order) => {
-                if (!err) {
-                    res.status(200).send({
-                        success: true,
-                        msg: 'Subscribed',
-                        order_id: order.id,
-                        amount: amount,
-                        key_id: razorID_Key,
-                        plan: req.body.plan,
-                    });
-                }
-                else {
-                    res.status(400).send({ success: false, msg: 'Something went wrong!' });
-                }
+        const userMobile = req.body.mobile
+        const duration = req.body.duration
+        const planName = req.body.planName
+        const userData = await User.findOne({ mobile: userMobile })
+        if (userData) {
+            const options = {
+                amount: amount,
+                currency: 'INR',
+                receipt: 'razorUser@gmail.com'
             }
-        );
+
+            razorInstance.orders.create(options,
+                (err, order) => {
+                    if (!err) {
+                        res.status(200).send({
+                            success: true,
+                            msg: 'Subscribed',
+                            order_id: order.id,
+                            amount: amount,
+                            duration: duration,
+                            planName: planName,
+                            key_id: razorID_Key,
+                            plan: req.body.name,
+                            name: userData.name,
+                            email: userData.email,
+                            mobile: userData.mobile,
+                        });
+                    }
+                    else {
+                        res.status(400).send({ success: false, msg: err });
+                    }
+                }
+            );
+        } else {
+            res.status(400).send({ success: false, msg: 'Something went wrong!' });
+
+        }
 
     } catch (error) {
         console.log(error.message);
+    }
+}
+const paymentUpdate = async (req, res) => {
+    try {
+        const { mobile, duration, planName } = req.body
+        const month = Number(duration)
+        const currentDate = new Date();
+
+        const subscriptionEnds = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth() + month,
+            currentDate.getDate(),
+            0, 0, 0, 0
+        );
+        const user = await User.findOne({ mobile: mobile })
+        const updated = await User.findByIdAndUpdate(user._id, {
+            $set: {
+                is_premium: true,
+                subscriptionStarts: new Date(),
+                subscriptionEnds: subscriptionEnds,
+                planName: planName
+            }
+        })
+        if (updated) {
+            return res.status(200).json({ message: 'Premium activated' })
+        }
+        else {
+            return res.status(200).json({ message: 'Activation error' })
+        }
+    } catch (err) {
+        return res.status(400).json({ message: 'Error occured' })
     }
 }
 module.exports = {
@@ -595,5 +638,6 @@ module.exports = {
     resendOtp,
     updateRoomPost,
     roomMatepostUpdate,
-    subscribePremium
+    subscribePremium,
+    paymentUpdate
 }

@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { fetchRoommateReqSuccess, fetchUserSuccess, fetchRoomReqSuccess, fetchProfileSuccess } from "./action";
+import { fetchRoommateReqSuccess, fetchUserSuccess, fetchRoomReqSuccess, fetchProfileSuccess, fetchPlan, fetchPlanSuccess } from "./action";
 import { Profile } from "./state";
 
 let initalState: any[] = []
@@ -44,4 +44,13 @@ const _roompostsReducer = createReducer(postInitalState,
 )
 export function roompostReducer(state: any, action: any) {
     return _roompostsReducer(state, action);
+}
+
+const _planreducer = createReducer(initalState,
+    on(fetchPlanSuccess, (_state, { plans }) => {
+        return Object.values(plans[0])
+    })
+)
+export function plansReducer(state: any, action: any) {
+    return _planreducer(state, action);
 }

@@ -27,7 +27,7 @@ import { PlansComponent } from './components/admin/plans/plans.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { userEffects } from './store/effect';
-import { profileReducer, roompostReducer, userReducer } from './store/reducer';
+import { plansReducer, profileReducer, roompostReducer, userReducer } from './store/reducer';
 import { postsReducer } from './store/reducer';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor';
@@ -52,6 +52,7 @@ import { EditPostRoommateComponent } from './components/searcher/edit-post-roomm
 import { DetailedViewRoomComponent } from './components/searcher/detailed-view-room/detailed-view-room.component';
 import { PlanDeleteConfirmationComponent } from './components/admin/plan-delete-confirmation/plan-delete-confirmation.component';
 import { AddPlanComponent } from './components/admin/add-plan/add-plan.component';
+import { EditPlanComponent } from './components/admin/edit-plan/edit-plan.component';
 // import { CarouselModule } from 'ngx-owl-carousel-o';
 // import { CarouselModule } from 'ngx-bootstrap/carousel';
 
@@ -93,7 +94,8 @@ import { AddPlanComponent } from './components/admin/add-plan/add-plan.component
     EditPostRoommateComponent,
     DetailedViewRoomComponent,
     PlanDeleteConfirmationComponent,
-    AddPlanComponent
+    AddPlanComponent,
+    EditPlanComponent
 
   ],
   imports: [
@@ -116,7 +118,8 @@ import { AddPlanComponent } from './components/admin/add-plan/add-plan.component
       users: userReducer,
       posts: postsReducer,
       roomposts: roompostReducer,
-      profile: profileReducer
+      profile: profileReducer,
+      plans: plansReducer
     }),
     EffectsModule.forRoot([userEffects]),
     NgxDropzoneModule

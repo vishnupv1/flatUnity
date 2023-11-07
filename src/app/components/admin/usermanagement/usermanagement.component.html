@@ -30,9 +30,9 @@
                   <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4">{{ user.email }}</td>
                   <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4" *ngIf="user.userType === 'flatOwner'">Flat Owner</td>
                   <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4" *ngIf="user.userType === 'searcher'">Looking for flat/flatmate</td>
-                  <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"*ngIf="user.is_premium">12/09/2023</td>
+                  <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"*ngIf="user.is_premium">{{user.subscriptionStarts | date : "mediumDate"}}</td>
                   <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"*ngIf="!user.is_premium">Not Subscribed</td>
-                  <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"*ngIf="user.is_premium">12/09/2023</td>
+                  <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"*ngIf="user.is_premium">{{user.subscriptionEnds | date : "mediumDate"}}</td>
                   <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"*ngIf="!user.is_premium">Not Subscribed</td>
                   <td class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4">
                     <div (click)="unBlockUser(user._id)" class="flex justify-center items-center">

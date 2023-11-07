@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { AdminServiceService } from 'src/app/services/adminServices/admin-service.service';
 import { PlanDeleteConfirmationComponent } from '../plan-delete-confirmation/plan-delete-confirmation.component';
 import { AddPlanComponent } from '../add-plan/add-plan.component';
+import { EditPlanComponent } from '../edit-plan/edit-plan.component';
 export interface plan {
   _id: string,
   planName: string,
@@ -53,6 +54,16 @@ export class PlansComponent {
     const dialogRef = this.dialog.open(AddPlanComponent, {
       width: 'auto',
       maxWidth: '95vw',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.ngOnInit()
+    });
+  }
+  openEditScreen(id: string) {
+    const dialogRef = this.dialog.open(EditPlanComponent, {
+      width: 'auto',
+      maxWidth: '95vw',
+      data: { id }
     });
     dialogRef.afterClosed().subscribe((result) => {
       this.ngOnInit()

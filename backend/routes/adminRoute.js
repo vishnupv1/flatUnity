@@ -28,7 +28,11 @@ admin_route.get('/loadUsers', auth, adminController.loadUsers)
 admin_route.patch('/unBlocOrBlockkUser', auth, adminController.unBlockOrBlockUser)
 admin_route.get('/loadPlans', auth, adminController.loadPlans)
 admin_route.delete('/deletePlan', auth, adminController.deletePlan)
-admin_route.post('/addPlan', adminController.addPlan)
+admin_route.post('/addPlan', auth, adminController.addPlan)
+admin_route.patch('/editPlan', auth, adminController.editPlan)
+
+
+
 
 
 

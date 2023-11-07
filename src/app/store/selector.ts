@@ -14,3 +14,6 @@ export const roompostSelectorData = createSelector(roompostSelectorState, (state
 
 export const profileSelectorState = createFeatureSelector<Profile[]>('profile')
 export const profileSelectorData = createSelector(profileSelectorState, (state: Profile[]) => { return state })
+
+export const planSelectorState = createFeatureSelector<any[]>('plans')
+export const planSelectorData = createSelector(planSelectorState, (state: any[]) => { return state })

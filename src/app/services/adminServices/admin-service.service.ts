@@ -31,4 +31,7 @@ export class AdminServiceService {
   addPlan(formdata: any): Observable<any> {
     return this.http.post<any>(`${apiUrl}/admin/addPlan`, formdata);
   }
+  editPlan(formdata: any, id: string): Observable<any> {
+    return this.http.patch<any>(`${apiUrl}/admin/editPlan?id=${id}`, formdata);
+  }
 }

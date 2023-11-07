@@ -1,5 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { Profile } from "./state";
+import { plan } from "../components/admin/plans/plans.component";
 
 
 //fetch userProfile
@@ -36,5 +37,14 @@ export const fetchRoomReq = createAction(
 export const fetchRoomReqSuccess = createAction(
     '[RoomReq API Success] RoomReq API Success',
     props<{ roomposts: any[] }>()
+)
+
+export const fetchPlan = createAction(
+    '[plans API] plans API'
+)
+export const fetchPlanSuccess = createAction(
+    '[plan API Success] plans API Success',
+    props<{ plans: plan[] }>()
+
 )
 

@@ -94,11 +94,38 @@ const addPlan = async (req, res) => {
         return res.status(404).json({ message: error.message });
     }
 }
+const editPlan = async (req, res) => {
+    try {
+        const { planName, amount, duration } = req.body
+        const features = req.body.features
+        const planId = req.query.id
+        const upadted = await Plan.findByIdAndUpdate(planId, {
+            $set: {
+                planName: planName,
+                amount: amount,
+                duration: duration,
+                features: features
+            }
+        })
+        if (upadted) {
+            return res.status(200).json({ message: 'Plan updated' });
+        } else {
+            console.log(res);
+
+            return res.status(404).json({ message: 'Plan not found' });
+        }
+    }
+    catch (error) {
+        return res.status(404).json({ message: error.message });
+    }
+}
+
 module.exports = {
     login,
     loadUsers,
     unBlockOrBlockUser,
     loadPlans,
     deletePlan,
-    addPlan
+    addPlan,
+    editPlan
 }

@@ -57,8 +57,7 @@ export class EditPlanComponent {
         this.planName = selectedData.planName;
         this.duration = selectedData.duration;
         this.amount = selectedData.amount;
-        this.arrayFeature = selectedData.features;
-        this.featuresString = this.arrayFeature.join(',')
+        this.featuresString = selectedData.features.join(',')
         this.planForm.patchValue(selectedData);
       }
     });
@@ -154,7 +153,6 @@ export class EditPlanComponent {
   }
   editPlan() {
     const formData = this.planForm.value;
-    console.log(formData);
 
     this.admin.editPlan(formData, this.planId).subscribe((res) => {
       this.toastr.success(res.message, 'Success', {

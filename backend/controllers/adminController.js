@@ -97,7 +97,7 @@ const addPlan = async (req, res) => {
 const editPlan = async (req, res) => {
     try {
         const { planName, amount, duration } = req.body
-        const features = req.body.features
+        const features = req.body.features.split(',').map((feature) => feature.trim());
         const planId = req.query.id
         const upadted = await Plan.findByIdAndUpdate(planId, {
             $set: {
@@ -110,8 +110,6 @@ const editPlan = async (req, res) => {
         if (upadted) {
             return res.status(200).json({ message: 'Plan updated' });
         } else {
-            console.log(res);
-
             return res.status(404).json({ message: 'Plan not found' });
         }
     }

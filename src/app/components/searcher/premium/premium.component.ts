@@ -95,6 +95,7 @@ export class PremiumComponent {
   }
   paymentSuccess() {
     this.userService.paymentUpdate(this.duration, this.planName).subscribe((res) => {
+
     })
   }
 }

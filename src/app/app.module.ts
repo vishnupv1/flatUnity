@@ -53,6 +53,8 @@ import { DetailedViewRoomComponent } from './components/searcher/detailed-view-r
 import { PlanDeleteConfirmationComponent } from './components/admin/plan-delete-confirmation/plan-delete-confirmation.component';
 import { AddPlanComponent } from './components/admin/add-plan/add-plan.component';
 import { EditPlanComponent } from './components/admin/edit-plan/edit-plan.component';
+import { LoaderComponent } from './components/searcher/loader/loader.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 // import { CarouselModule } from 'ngx-owl-carousel-o';
 // import { CarouselModule } from 'ngx-bootstrap/carousel';
 
@@ -95,7 +97,8 @@ import { EditPlanComponent } from './components/admin/edit-plan/edit-plan.compon
     DetailedViewRoomComponent,
     PlanDeleteConfirmationComponent,
     AddPlanComponent,
-    EditPlanComponent
+    EditPlanComponent,
+    LoaderComponent
 
   ],
   imports: [
@@ -122,7 +125,8 @@ import { EditPlanComponent } from './components/admin/edit-plan/edit-plan.compon
       plans: plansReducer
     }),
     EffectsModule.forRoot([userEffects]),
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    MatTooltipModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -35,9 +35,11 @@
       >
       <div class="flex mt-4 space-x-3 md:mt-6">
         <a
-          *ngIf="post.ownerIs_premium"
-          href="#"
-          class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
+          *ngIf="is_premium"
+          (click)="
+            openChatBox(post.userId, id, post.ownerName, post.ownerGender)
+          "
+          class="inline-flex items-center cursor-pointer px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
           >Message
           <span>
             <svg
@@ -57,7 +59,7 @@
         ></a>
         <a
           matTooltip="Preimum feature"
-          *ngIf="!post.ownerIs_premium"
+          *ngIf="!is_premium"
           class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 cursor-not-allowed dark:hover:border-gray-700 dark:focus:ring-gray-700"
           >Message
           <span>
@@ -77,8 +79,7 @@
             </svg> </span
         ></a>
         <a
-          *ngIf="post.ownerIs_premium"
-          href="#"
+          *ngIf="is_premium"
           class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
           >Call
           <span>
@@ -99,7 +100,7 @@
         ></a>
         <a
           matTooltip="Preimum feature"
-          *ngIf="!post.ownerIs_premium"
+          *ngIf="!is_premium"
           class="inline-flex items-center cursor-not-allowed px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
           >Call
           <span>
@@ -200,11 +201,11 @@
       <p class="text-gray-700 semibold" *ngIf="post.description">
         <span class="font-semibold">Remarks : </span>{{ post.description }}
       </p>
-      <p class="text-gray-700" *ngIf="post.ownerIs_premium">
+      <p class="text-gray-700" *ngIf="is_premium">
         <span class="font-semibold">Contact Number : </span
         >{{ post.contactNumber }}
       </p>
-      <p class="text-gray-700" *ngIf="!post.ownerIs_premium">
+      <p class="text-gray-700" *ngIf="!is_premium">
         <span class="font-semibold">Contact Number : </span>
         <span class="font-semibold text-yellow-600">Subscribtion required</span>
       </p>

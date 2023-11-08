@@ -1,0 +1,67 @@
+<body class="flex items-center justify-center bg-gray-100">
+  <div class="bg-white rounded-lg shadow-lg p-4 max-w-xs">
+    <!-- Avatar and Profile Name -->
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center">
+        <img
+          *ngIf="gender == 'male'"
+          src="../assets/images/requiredBoy.png"
+          alt="Avatar"
+          class="w-8 h-8 rounded-full"
+        />
+        <img
+          *ngIf="gender == 'female'"
+          src="../assets/images/requiredGirl.png"
+          alt="Avatar"
+          class="w-8 h-8 rounded-full"
+        />
+        <div class="ml-2">
+          <div class="text-lg font-semibold">{{ name }}</div>
+          <div class="text-sm text-gray-600">Online</div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="chat-box mb-4"
+      style="overflow-y: auto; max-height: 30vh; min-height: 30vh"
+    >
+      <div
+        class="my-message bg-blue-100 p-2 rounded-r-lg rounded-t-lg mb-2 text-blue-800"
+      >
+        This is my message.
+      </div>
+      <div
+        class="other-message bg-gray-200 p-2 rounded-l-lg rounded-t-lg mb-2 text-gray-800"
+      >
+        This is a reply from someone else.
+      </div>
+    </div>
+    <div class="flex">
+      <input
+        type="text"
+        [(ngModel)]="text"
+        placeholder="Type your message..."
+        class="w-full rounded-l-full p-2 border focus:outline-none"
+      />
+      <button
+        class="bg-white text-white rounded-r-full p-2 border"
+        matTooltip="Send Message"
+        (click)="sendMessage(text)"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="blue"
+          class="w-6 h-6 transition duration-300 ease-in-out fill-current hover:fill-blue-500"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</body>

@@ -5,7 +5,7 @@ import { apiUrl } from 'src/constant';
 import { User } from 'src/user.model';
 import { BehaviorSubject } from 'rxjs';
 import { Profile } from 'src/app/store/state';
-import { flatMatePostsLoadingEP, flatPostDeleteEP, flatPostUpdateEP, flatPostsLoadingEP, flatRequirementEP, flatmatePostDeleteEP, flatmatePostUpdateEP, flatmateRequirementEP, loginWithOtpEP, otpExpiryLoadEP, profileLoadingEP, profileUpdateEP, razorPayEP, resendOtpEP, updatePremiumEP, userRegisterEP, userVerifyEP, verifyOtpEP } from 'src/endpoint';
+import { flatMatePostsLoadingEP, flatPostDeleteEP, flatPostUpdateEP, flatPostsLoadingEP, flatRequirementEP, flatmatePostDeleteEP, flatmatePostUpdateEP, flatmateRequirementEP, loginWithOtpEP, otpExpiryLoadEP, profileLoadingEP, profileUpdateEP, razorPayEP, resendOtpEP, sendMessageEP, updatePremiumEP, userRegisterEP, userVerifyEP, verifyOtpEP } from 'src/endpoint';
 
 @Injectable({
   providedIn: 'root'
@@ -83,4 +83,8 @@ export class UserServiceService {
     const data = { mobile, duration, planName }
     return this.http.patch<any>(`${updatePremiumEP}`, data);
   }
+  sendMessage(data: any): Observable<any> {
+    return this.http.post<any>(sendMessageEP, data);
+  }
+
 }

@@ -41,6 +41,7 @@ user_route.patch('/updateRoomPost', userAuth, userController.updateRoomPost)
 user_route.patch('/roomMatepostUpdate', userAuth, upload.array('image'), userController.roomMatepostUpdate)
 user_route.patch('/paymentUpdate', userController.paymentUpdate)
 user_route.post('/subscribePremium', userController.subscribePremium)
+user_route.post('/sendMessage', userController.sendMessage)
 
 
 

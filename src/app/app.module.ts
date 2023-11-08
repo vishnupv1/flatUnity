@@ -55,6 +55,7 @@ import { AddPlanComponent } from './components/admin/add-plan/add-plan.component
 import { EditPlanComponent } from './components/admin/edit-plan/edit-plan.component';
 import { LoaderComponent } from './components/searcher/loader/loader.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ChatboxInidvidualComponent } from './components/searcher/chatbox-inidvidual/chatbox-inidvidual.component';
 // import { CarouselModule } from 'ngx-owl-carousel-o';
 // import { CarouselModule } from 'ngx-bootstrap/carousel';
 
@@ -98,7 +99,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     PlanDeleteConfirmationComponent,
     AddPlanComponent,
     EditPlanComponent,
-    LoaderComponent
+    LoaderComponent,
+    ChatboxInidvidualComponent
 
   ],
   imports: [

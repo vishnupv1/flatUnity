@@ -29,3 +29,5 @@ export const flatPostUpdateEP = `${apiUrl}/updateRoomPost`
 export const flatmatePostUpdateEP = `${apiUrl}/roomMatepostUpdate`
 export const razorPayEP = `${apiUrl}/SubscribePremium`
 export const updatePremiumEP = `${apiUrl}/paymentUpdate`
+export const sendMessageEP = `${apiUrl}/sendMessage`
+

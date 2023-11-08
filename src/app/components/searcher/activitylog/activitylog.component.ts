@@ -18,7 +18,12 @@ export class ActivitylogComponent {
   roomMatepost$!: Observable<any[]>
   userMobile = localStorage.getItem('userNum')
 
-  constructor(private store: Store<{ posts: any[] }>, private dialog: MatDialog, private userService: UserServiceService, private toastr: ToastrService, private route: Router) { }
+  constructor(private store: Store<{ posts: any[] }>,
+    private dialog: MatDialog,
+    private userService: UserServiceService,
+    private toastr: ToastrService,
+    private route: Router) { }
+    
   ngOnInit(): void {
     this.store.dispatch(fetchRoommateReq())
     this.roomMatepost$ = this.store.pipe(select(postSelectorData))

@@ -2,6 +2,8 @@ const User = require('../models/userModel')
 const Post = require('../models/roomMateReqModel')
 const roomPost = require('../models/roomReqModel')
 const Plan = require('../models/planModel')
+const Chatroom = require('../models/chatRoom')
+const Chat = require('../models/chatModel')
 const bcrypt = require('bcrypt')
 const randomstring = require('randomstring')
 const config = require('../config/config')
@@ -620,6 +622,15 @@ const paymentUpdate = async (req, res) => {
         return res.status(400).json({ message: 'Error occured' })
     }
 }
+const sendMessage = async (req, res) => {
+    try {
+        const { senderId, recieverId, messageContent } = req.body
+        console.log(req.body);
+
+    } catch (err) {
+        res.status(404).json({ message: 'Error occured' })
+    }
+}
 module.exports = {
     register,
     sendOtp,
@@ -639,5 +650,6 @@ module.exports = {
     updateRoomPost,
     roomMatepostUpdate,
     subscribePremium,
-    paymentUpdate
+    paymentUpdate,
+    sendMessage
 }

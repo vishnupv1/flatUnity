@@ -42,7 +42,10 @@
       <div class="flex mt-4 space-x-3 md:mt-6">
         <a
           *ngIf="is_premium && post.userId !== id"
-          class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
+          (click)="
+            openChatBox(post.userId, id, post.ownerName, post.ownerGender)
+          "
+          class="inline-flex cursor-pointer items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
           >Message
           <span>
             <svg
@@ -97,7 +100,7 @@
     />
     <img
       *ngIf="post.gender === 'female'"
-      class="w-1/4 h-1/4"
+      class="w-1/4 h-1/4 m-2"
       src="../assets/images/requiredGirl.png"
       alt=""
     />
@@ -115,7 +118,7 @@
       </p>
       <p class="text-gray-700">
         <span class="font-semibold">Date to shift : </span
-        >{{ post.date | date : 'mediumDate' }}
+        >{{ post.date | date : "mediumDate" }}
       </p>
       <p class="text-gray-700 semibold" *ngIf="post.description">
         <span class="font-semibold">Remarks : </span>{{ post.description }}

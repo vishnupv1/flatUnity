@@ -5,6 +5,8 @@ import { UserServiceService } from 'src/app/services/userServices/user-service.s
 import { fetchProfile, fetchRoomReq } from 'src/app/store/action';
 import { profileSelectorData, roompostSelectorData } from 'src/app/store/selector';
 import { Observable, map } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ChatboxInidvidualComponent } from '../chatbox-inidvidual/chatbox-inidvidual.component';
 
 @Component({
   selector: 'app-detailed-view-room',
@@ -26,6 +28,8 @@ export class DetailedViewRoomComponent {
     private store: Store<{ posts: any[] }>,
     private UserService: UserServiceService,
     private router: Router,
+    private dialog: MatDialog
+
   ) { }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -44,6 +48,16 @@ export class DetailedViewRoomComponent {
         this.id = data[0]._id;
         this.is_premium = data[0].is_premium;
       }
+    });
+  }
+  openChatBox(recieverId: string, senderId: string, recieverName: string, recieverGender: string): void {
+
+    const dialogRef = this.dialog.open(ChatboxInidvidualComponent, {
+      data: { senderId, recieverId, recieverName, recieverGender }
+
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+
     });
   }
 }

@@ -5,7 +5,7 @@ import { apiUrl } from 'src/constant';
 import { User } from 'src/user.model';
 import { BehaviorSubject } from 'rxjs';
 import { Profile } from 'src/app/store/state';
-import { flatMatePostsLoadingEP, flatPostDeleteEP, flatPostUpdateEP, flatPostsLoadingEP, flatRequirementEP, flatmatePostDeleteEP, flatmatePostUpdateEP, flatmateRequirementEP, loginWithOtpEP, otpExpiryLoadEP, profileLoadingEP, profileUpdateEP, razorPayEP, resendOtpEP, sendMessageEP, updatePremiumEP, userRegisterEP, userVerifyEP, verifyOtpEP } from 'src/endpoint';
+import { flatMatePostsLoadingEP, flatPostDeleteEP, flatPostUpdateEP, flatPostsLoadingEP, flatRequirementEP, flatmatePostDeleteEP, flatmatePostUpdateEP, flatmateRequirementEP, loadChatsEP, loginWithOtpEP, otpExpiryLoadEP, profileLoadingEP, profileUpdateEP, razorPayEP, resendOtpEP, sendMessageEP, updatePremiumEP, userRegisterEP, userVerifyEP, verifyOtpEP } from 'src/endpoint';
 
 @Injectable({
   providedIn: 'root'
@@ -86,5 +86,7 @@ export class UserServiceService {
   sendMessage(data: any): Observable<any> {
     return this.http.post<any>(sendMessageEP, data);
   }
-
+  loadChats(sender: string, reciever: string) {
+    return this.http.get<any>(`${loadChatsEP}?sender=${sender}&reciever=${reciever}`)
+  }
 }

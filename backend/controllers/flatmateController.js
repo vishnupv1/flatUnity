@@ -641,7 +641,7 @@ const sendMessage = async (req, res) => {
                 senderId: senderId
             })
             const chatData = await newMessage.save();
-            return req.status(200).json({ message: 'Message sent' })
+            return res.status(200).json({ message: 'Message sent' })
         } else {
             try {
                 // Create the chat room

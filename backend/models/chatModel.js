@@ -11,6 +11,10 @@ const chatSchema = mongoose.Schema({
     chatRoomId: {
         type: mongoose.Schema.Types.ObjectId, ref: 'chatRoom',
         required: true
+    },
+    senderId: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'chatRoom',
+        required: true
     }
 
 })

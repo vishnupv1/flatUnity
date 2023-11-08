@@ -16,6 +16,7 @@ const client = require('twilio')(accountSid, authToken);
 const jwt = require('jsonwebtoken')
 const { async } = require('rxjs')
 const razorpay = require('razorpay')
+const chatRoom = require('../models/chatRoom')
 
 const razorID_Key = process.env.RAZOR_ID
 const razorSEC_Key = process.env.RAZOR_SECRET
@@ -625,9 +626,49 @@ const paymentUpdate = async (req, res) => {
 const sendMessage = async (req, res) => {
     try {
         const { senderId, recieverId, messageContent } = req.body
-        console.log(req.body);
+        const existingChatRoom = await chatRoom.findOne({
+            $or: [
+                { senderId, recieverId },
+                { senderId: recieverId, recieverId: senderId }
+            ]
+        })
+        if (existingChatRoom) {
+            const chatRoomId = existingChatRoom._id
+            const newMessage = new Chat({
+                content: messageContent,
+                date: new Date(),
+                chatRoomId: chatRoomId,
+                senderId: senderId
+            })
+            const chatData = await newMessage.save();
+            return req.status(200).json({ message: 'Message sent' })
+        } else {
+            try {
+                // Create the chat room
+                const newChatRoom = await chatRoom.create({ senderId, recieverId });
 
-    } catch (err) {
+                // Extract the chat room ID
+                const chatRoomId = newChatRoom._id;
+
+                // Create and save the new message
+                const newMessage = new Chat({
+                    content: messageContent,
+                    date: new Date(),
+                    chatRoomId: chatRoomId,
+                    senderId: senderId
+                });
+
+                const chatData = await newMessage.save();
+
+                return res.status(200).json({ message: 'Message sent' });
+            } catch (error) {
+                // Handle any errors that occur during chat room creation or message sending
+                console.error('Error creating chat room and sending message:', error);
+                return res.status(500).json({ error: 'An error occurred' });
+            }
+        }
+    }
+    catch (err) {
         res.status(404).json({ message: 'Error occured' })
     }
 }

@@ -672,6 +672,32 @@ const sendMessage = async (req, res) => {
         res.status(404).json({ message: 'Error occured' })
     }
 }
+const loadChats = async (req, res) => {
+    try {
+        const senderId = req.query.sender
+        const recieverId = req.query.reciever
+        const chatRoom = await Chatroom.findOne({
+            $or: [
+                { senderId, recieverId },
+                { senderId: recieverId, recieverId: senderId }
+            ]
+        })
+        if (chatRoom) {
+            const chats = await Chat.find({ chatRoomId: chatRoom._id })
+            res.status(200).json({ chats })
+
+        } else {
+            console.log('dddd');
+            res.status(400).json({ message: 'No chats' })
+        }
+    }
+    catch (error) {
+        console.log(error);
+        res.status(400).json({ message: error.message })
+
+    }
+
+}
 module.exports = {
     register,
     sendOtp,
@@ -692,5 +718,6 @@ module.exports = {
     roomMatepostUpdate,
     subscribePremium,
     paymentUpdate,
-    sendMessage
+    sendMessage,
+    loadChats
 }

@@ -1,0 +1,21 @@
+/* Stylize the scrollbar track */
+::-webkit-scrollbar {
+    width: 10px; /* Set the width of the scrollbar */
+  }
+  
+  /* Stylize the scrollbar thumb (the draggable part) */
+  ::-webkit-scrollbar-thumb {
+    background: #555; /* Set the color of the thumb */
+    border-radius: 5px; /* Set the border radius for a rounded thumb */
+  }
+  
+  /* Stylize the scrollbar track on hover */
+  ::-webkit-scrollbar:hover {
+    background: #888; /* Set the background color on hover */
+  }
+  
+  /* Stylize the scrollbar thumb on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #333; /* Set the thumb color on hover */
+  }
+  

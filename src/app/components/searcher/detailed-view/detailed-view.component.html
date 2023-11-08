@@ -20,8 +20,17 @@
         [src]="'http://localhost:3000/public/userImages/boy.png'"
         alt="Bonnie image"
       />
-      <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+      <h5
+        *ngIf="post.userId !== id"
+        class="mb-1 text-xl font-medium text-gray-900 dark:text-white"
+      >
         {{ post.ownerName }}
+      </h5>
+      <h5
+        *ngIf="post.userId == id"
+        class="mb-1 text-xl font-medium text-gray-900 dark:text-white"
+      >
+        You
       </h5>
       <span
         *ngIf="post.ownerType == 'searcher'"
@@ -35,7 +44,7 @@
       >
       <div class="flex mt-4 space-x-3 md:mt-6">
         <a
-          *ngIf="is_premium"
+          *ngIf="is_premium && post.userId !== id"
           (click)="
             openChatBox(post.userId, id, post.ownerName, post.ownerGender)
           "
@@ -79,7 +88,7 @@
             </svg> </span
         ></a>
         <a
-          *ngIf="is_premium"
+          *ngIf="is_premium && post.userId !== id"
           class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
           >Call
           <span>
@@ -216,7 +225,7 @@
         >
       </p>
 
-      <div class="mt-4 flex items-center">
+      <!-- <div class="mt-4 flex items-center">
         <div class="flex mr-2 text-gray-700 text-sm mr-3">
           <div class="flex mr-2 text-gray-700 text-sm mr-3">
             <svg
@@ -251,7 +260,7 @@
             <span>{{ post.comments }}</span>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

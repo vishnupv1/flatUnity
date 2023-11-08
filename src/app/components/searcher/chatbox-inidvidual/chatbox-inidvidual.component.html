@@ -22,18 +22,29 @@
       </div>
     </div>
     <div
-      class="chat-box mb-4"
-      style="overflow-y: auto; max-height: 30vh; min-height: 30vh"
+      #scrollMe
+      *ngIf="chats"
+      class="chat-box mb-4 overflow-scroll overflow-x-hidden"
+      style="max-height: 30vh; min-height: 30vh"
     >
-      <div
-        class="my-message bg-blue-100 p-2 rounded-r-lg rounded-t-lg mb-2 text-blue-800"
-      >
-        This is my message.
-      </div>
-      <div
-        class="other-message bg-gray-200 p-2 rounded-l-lg rounded-t-lg mb-2 text-gray-800"
-      >
-        This is a reply from someone else.
+      <div>
+        <div *ngFor="let chat of chats; let i = index" class="w-full">
+          <div class="w-full flex justify-end">
+            <div
+              *ngIf="chat.senderId == senderId"
+              class="my-message flex align-right w-fit bg-blue-100 p-2 rounded-l-xl rounded-t-xl mb-2 text-blue-800"
+            >
+              {{ chat.content }}
+            </div>
+          </div>
+          <div
+            *ngIf="chat.senderId !== senderId"
+            
+            class="other-message text-left bg-gray-200 w-fit p-2 rounded-r-xl rounded-t-xl mb-2 text-gray-800"
+          >
+            {{ chat.content }}
+          </div>
+        </div>
       </div>
     </div>
     <div class="flex">

@@ -7,6 +7,10 @@ const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const PORT = 3000;
+
+
+
+
 app.use(bodyParser.json());
 const cors = require('cors')
 
@@ -24,9 +28,15 @@ app.use('/admin', admin_route)
 //app.use('/admin', admin_route)
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-
-
+const io = require('socket.io')(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: 'http://localhost:4200'
+  }
+})
+io.on("connnection", (socket) => {
+  console.log("io connected");
+})

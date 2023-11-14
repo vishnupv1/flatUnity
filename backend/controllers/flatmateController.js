@@ -625,7 +625,7 @@ const paymentUpdate = async (req, res) => {
 }
 const sendMessage = async (req, res) => {
     try {
-        const { senderId, recieverId, messageContent } = req.body
+        const { senderId, recieverId, content } = req.body
         const existingChatRoom = await chatRoom.findOne({
             $or: [
                 { senderId, recieverId },
@@ -635,7 +635,7 @@ const sendMessage = async (req, res) => {
         if (existingChatRoom) {
             const chatRoomId = existingChatRoom._id
             const newMessage = new Chat({
-                content: messageContent,
+                content: content,
                 date: new Date(),
                 chatRoomId: chatRoomId,
                 senderId: senderId
@@ -652,7 +652,7 @@ const sendMessage = async (req, res) => {
 
                 // Create and save the new message
                 const newMessage = new Chat({
-                    content: messageContent,
+                    content: content,
                     date: new Date(),
                     chatRoomId: chatRoomId,
                     senderId: senderId
@@ -662,7 +662,6 @@ const sendMessage = async (req, res) => {
 
                 return res.status(200).json({ message: 'Message sent' });
             } catch (error) {
-                // Handle any errors that occur during chat room creation or message sending
                 console.error('Error creating chat room and sending message:', error);
                 return res.status(500).json({ error: 'An error occurred' });
             }

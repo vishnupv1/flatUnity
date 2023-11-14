@@ -6,14 +6,19 @@ import { User } from 'src/user.model';
 import { BehaviorSubject } from 'rxjs';
 import { Profile } from 'src/app/store/state';
 import { flatMatePostsLoadingEP, flatPostDeleteEP, flatPostUpdateEP, flatPostsLoadingEP, flatRequirementEP, flatmatePostDeleteEP, flatmatePostUpdateEP, flatmateRequirementEP, loadChatsEP, loginWithOtpEP, otpExpiryLoadEP, profileLoadingEP, profileUpdateEP, razorPayEP, resendOtpEP, sendMessageEP, updatePremiumEP, userRegisterEP, userVerifyEP, verifyOtpEP } from 'src/endpoint';
+import { io } from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserServiceService {
+  private socket: any
   mobNum = localStorage.getItem('userNum')
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.socket = io('http://localhost:3000')
+
+  }
   //api call for
   registerUser(userData: any): Observable<any> {
     return this.http.post<any>(userRegisterEP, userData);
@@ -84,9 +89,18 @@ export class UserServiceService {
     return this.http.patch<any>(`${updatePremiumEP}`, data);
   }
   sendMessage(data: any): Observable<any> {
+    this.socket.emit('chat message', data)
     return this.http.post<any>(sendMessageEP, data);
   }
   loadChats(sender: string, reciever: string) {
     return this.http.get<any>(`${loadChatsEP}?sender=${sender}&reciever=${reciever}`)
   }
+  onNewMessage() {
+    return new Observable<string>((observer) => {
+      this.socket.on('chat message', (message: any) => {
+        observer.next(message);
+      });
+    });
+  }
+
 }

@@ -1,4 +1,5 @@
 const express = require('express')
+const { createServer } = require("http");
 const user_route = require('./routes/userRoute')
 const admin_route = require('./routes/adminRoute')
 const path = require('path')
@@ -7,8 +8,8 @@ const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const PORT = 3000;
-
-
+const httpServer = createServer(app);
+const { Server } = require('socket.io')
 
 
 app.use(bodyParser.json());
@@ -25,18 +26,27 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 app.use('/', user_route)
 app.use('/admin', admin_route)
-//app.use('/admin', admin_route)
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-const io = require('socket.io')(server, {
+
+
+const io = new Server(httpServer, {
   pingTimeout: 60000,
   cors: {
-    origin: 'http://localhost:4200'
+    origin: 'http://localhost:4200',
   }
-})
-io.on("connnection", (socket) => {
-  console.log("io connected");
-})
+});
+httpServer.listen(PORT);
+
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+
+  socket.on('disconnect', () => {
+  });
+});
+
+// const server = app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });

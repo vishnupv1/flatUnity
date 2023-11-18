@@ -56,6 +56,9 @@ import { EditPlanComponent } from './components/admin/edit-plan/edit-plan.compon
 import { LoaderComponent } from './components/searcher/loader/loader.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ChatboxInidvidualComponent } from './components/searcher/chatbox-inidvidual/chatbox-inidvidual.component';
+import { ChatRoomComponent } from './components/searcher/chat-room/chat-room.component';
+import { ViewpostFlatmateComponent } from './components/admin/viewpost-flatmate/viewpost-flatmate.component';
+import { ViewpostFlatComponent } from './components/admin/viewpost-flat/viewpost-flat.component';
 // import { CarouselModule } from 'ngx-owl-carousel-o';
 // import { CarouselModule } from 'ngx-bootstrap/carousel';
 
@@ -100,7 +103,10 @@ import { ChatboxInidvidualComponent } from './components/searcher/chatbox-inidvi
     AddPlanComponent,
     EditPlanComponent,
     LoaderComponent,
-    ChatboxInidvidualComponent
+    ChatboxInidvidualComponent,
+    ChatRoomComponent,
+    ViewpostFlatmateComponent,
+    ViewpostFlatComponent
 
   ],
   imports: [
@@ -119,6 +125,7 @@ import { ChatboxInidvidualComponent } from './components/searcher/chatbox-inidvi
     ReactiveFormsModule,
     FlexLayoutModule,
     HttpClientModule,
+
     StoreModule.forRoot({
       users: userReducer,
       posts: postsReducer,
@@ -126,15 +133,18 @@ import { ChatboxInidvidualComponent } from './components/searcher/chatbox-inidvi
       profile: profileReducer,
       plans: plansReducer
     }),
+
     EffectsModule.forRoot([userEffects]),
     NgxDropzoneModule,
     MatTooltipModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true,
-  }, DatePipe],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

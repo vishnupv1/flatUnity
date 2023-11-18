@@ -43,17 +43,23 @@ export class ChatboxInidvidualComponent {
     })
   }
   sendMessage(text: string) {
-    const data = {
-      senderId: this.senderId,
-      recieverId: this.recieverId,
-      content: text
-    }
-    this.userService.sendMessage(data).subscribe((res) => {
-      this.text = ''
-      this.ngOnInit()
-      this.scrollToBottom();
+    const trimmedText = text.trim();
 
-    })
+    if (trimmedText !== '') {
+      const data = {
+        senderId: this.senderId,
+        recieverId: this.recieverId,
+        content: trimmedText
+      }
+      this.userService.sendMessage(data).subscribe((res) => {
+        this.text = ''
+        this.ngOnInit()
+        this.scrollToBottom();
+
+      })
+    } else {
+      return
+    }
   }
   ngAfterViewChecked() {
     this.scrollToBottom();

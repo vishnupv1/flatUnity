@@ -31,4 +31,5 @@ export const razorPayEP = `${apiUrl}/SubscribePremium`
 export const updatePremiumEP = `${apiUrl}/paymentUpdate`
 export const sendMessageEP = `${apiUrl}/sendMessage`
 export const loadChatsEP = `${apiUrl}/loadChats`
+export const loadChatmatesEP = `${apiUrl}/loadChatmates`
 

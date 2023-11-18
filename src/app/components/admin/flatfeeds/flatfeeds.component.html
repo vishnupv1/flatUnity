@@ -1,1 +1,117 @@
-<h1>ddddddddddddddddddddddddd</h1>
+<div class="flex">
+  <div class=" ">
+    <section class="relative py-16 bg-blueGray-50">
+      <div class="w-full mb-12 px-4">
+        <div
+          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-purple-500 text-white"
+        >
+          <div class="rounded-t mb-0 px-4 py-3 border-0">
+            <div class="flex flex-wrap items-center">
+              <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                <p class="font-semibold text-lg text-white">
+                  flatmate Requirement feeds
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="block w-full overflow-x-auto">
+            <table
+              class="items-center w-full bg-transparent border-collapse"
+              style="table-layout: fixed"
+            >
+              <thead>
+                <tr>
+                  <th
+                    class="px-6 align-middle text-center border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-white"
+                  >
+                    Name
+                  </th>
+                  <th
+                    class="px-6 align-middle text-center border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-white"
+                  >
+                    User type
+                  </th>
+                  <th
+                    class="px-6 align-middle text-center border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-white"
+                  >
+                    post for?
+                  </th>
+                  <th
+                    class="px-6 align-middle text-center border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-white"
+                  >
+                    View
+                  </th>
+                  <th
+                    class="px-6 align-middle text-center border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-white"
+                  >
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="posts$ | async as postData">
+                <tr *ngFor="let post of postData; let i = index">
+                  <td
+                    class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"
+                  >
+                    {{ post.ownerName }}
+                  </td>
+                  <td
+                    class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"
+                  >
+                    {{ post.ownerType }}
+                  </td>
+                  <td
+                    class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"
+                    *ngIf="post.ownerType === 'flatOwner'"
+                  >
+                    Flat Owner
+                  </td>
+                  <td
+                    class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"
+                    *ngIf="post.ownerType === 'searcher'"
+                  >
+                    Looking for flat/flatmate
+                  </td>
+                  <td>
+                    <div class="flex justify-center items-center">
+                      <button
+                        (click)="viewPost(post._id)"
+                        class="bg-blue-500 rounded-lg text-sm px-4 py-2 font-bold"
+                        *ngIf="post.isBlocked === false"
+                      >
+                        View
+                      </button>
+                    </div>
+                  </td>
+                  <td
+                    class="border-t-0 px-6 align-middle text-center border-l-0 border-r-0 text-xs p-4"
+                  >
+                    <div
+                      (click)="unBlockpost(post._id)"
+                      class="flex justify-center items-center"
+                    >
+                      <button
+                        onclick=""
+                        class="bg-red-500 rounded-lg text-sm px-4 py-2 font-bold"
+                        *ngIf="post.isBlocked === false"
+                      >
+                        Block
+                      </button>
+                      <button
+                        onclick=""
+                        class="bg-green-500 rounded-lg text-sm px-4 py-2 font-bold"
+                        *ngIf="post.isBlocked"
+                      >
+                        Unblock
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<app-userheader
+  style="position: sticky; top: 0; z-index: 100; background-color: white"
+></app-userheader>
+<body class="bg-gray-100">
+  <div class="flex h-screen">
+    <div class="w-1/4 bg-white border-r border-gray-300 overflow-y-auto">
+      <div class="p-4" *ngFor="let chatroom of chatRooms">
+        <div
+          class="flex items-center space-x-2 cursor-pointer"
+          (click)="openChatroom(chatroom.userId, userId, chatroom.userName)"
+        >
+          <div class="w-10 h-10 bg-gray-300 rounded-full">
+            <img src="../assets/images/user (2).png" alt="Avatar" />
+          </div>
+          <div>
+            <div class="font-semibold text-gray-800">
+              {{ chatroom.userName }}
+            </div>
+            <div class="text-sm text-gray-500">Online</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 bg-gray-100 p-4" *ngIf="openRoom">
+      <div
+        class="flex items-center justify-between bg-white border rounded p-4"
+      >
+        <div class="w-10 h-10 bg-gray-300 rounded-full">
+          <img src="../assets/images/user (2).png" alt="Avatar" />
+        </div>
+        <div class="flex-1 ml-4">
+          <div class="font-semibold text-gray-800">{{ recieverName }}</div>
+          <div class="text-sm text-gray-500">Online</div>
+        </div>
+      </div>
+
+      <div
+        #scrollMe
+        *ngIf="chats"
+        class="chat-box mb-4 overflow-scroll overflow-x-hidden"
+        style="max-height: 60vh; min-height: 30vh"
+      >
+        <div>
+          <div *ngFor="let chat of chats; let i = index" class="w-full">
+            <div class="w-full flex justify-end">
+              <div
+                *ngIf="chat.senderId == senderId"
+                class="my-message flex align-right w-fit bg-blue-100 p-2 rounded-l-xl rounded-t-xl mb-2 text-blue-800"
+              >
+                {{ chat.content }}
+              </div>
+            </div>
+            <div
+              *ngIf="chat.senderId !== senderId"
+              class="other-message text-left bg-gray-200 w-fit p-2 rounded-r-xl rounded-t-xl mb-2 text-gray-800"
+            >
+              {{ chat.content }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex">
+        <input
+          type="text"
+          [(ngModel)]="text"
+          placeholder="Type your message..."
+          class="w-full rounded-l-full p-2 border focus:outline-none"
+        />
+        <button
+          class="bg-white text-white rounded-r-full p-2 border"
+          matTooltip="Send Message"
+          (click)="sendMessage(text)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="h-6 w-6 ml-2 transform rotate-90 text-green-400"
+          >
+            <path
+              d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>

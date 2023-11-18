@@ -54,23 +54,19 @@
         class="w-full rounded-l-full p-2 border focus:outline-none"
       />
       <button
-        *ngIf="text.length > 0"
         class="bg-white text-white rounded-r-full p-2 border"
         matTooltip="Send Message"
         (click)="sendMessage(text)"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="blue"
-          class="w-6 h-6 transition duration-300 ease-in-out fill-current hover:fill-blue-500"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="h-6 w-6 ml-2 transform rotate-90 text-green-400"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-          />
+            d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+          ></path>
         </svg>
       </button>
     </div>

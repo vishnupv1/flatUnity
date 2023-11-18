@@ -22,6 +22,7 @@ import { EditPostComponent } from './components/searcher/edit-post/edit-post.com
 import { DetailedViewComponent } from './components/searcher/detailed-view/detailed-view.component';
 import { EditPostRoommateComponent } from './components/searcher/edit-post-roommate/edit-post-roommate.component';
 import { DetailedViewRoomComponent } from './components/searcher/detailed-view-room/detailed-view-room.component';
+import { ChatRoomComponent } from './components/searcher/chat-room/chat-room.component';
 
 const routes: Routes =
   [
@@ -40,6 +41,7 @@ const routes: Routes =
     { component: EditPostComponent, path: 'editpost/:id' },
     { component: EditPostRoommateComponent, path: 'editroommatepost/:id' },
     { component: ActivitylogComponent, path: 'flatmatepostMod' },
+    { component: ChatRoomComponent, path: 'chatRoom' },
     { component: ActivitylogRoomComponent, path: 'flatpostMod' },
     { component: ProfileComponent, path: 'profile' },
     { component: DetailedViewComponent, path: 'detailedPost/:id' },

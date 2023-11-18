@@ -1,4 +1,8 @@
-/* Stylize the scrollbar track */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins&family=Ubuntu&display=swap");
+* {
+  font-family: "Poppins", sans-serif;
+}/* Stylize the scrollbar track */
 ::-webkit-scrollbar {
     width: 10px; /* Set the width of the scrollbar */
   }

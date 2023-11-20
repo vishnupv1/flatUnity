@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt')
 const config = require('../config/config')
 const jwt = require('jsonwebtoken')
 const Admin = require('../models/adminModel')
-
+const Post = require('../models/roomMateReqModel')
+const roomPost = require('../models/roomReqModel')
 
 
 //verifying otp
@@ -117,6 +118,42 @@ const editPlan = async (req, res) => {
         return res.status(404).json({ message: error.message });
     }
 }
+const unBlockOrBlockPost = async (req, res) => {
+    try {
+        const id = req.query.id;
+        const post = await Post.findOne({ _id: id })
+        console.log(post);
+        if (post.isBlocked) {
+            const postUnblock = await Post.updateOne({ _id: id }, { $set: { isBlocked: false } });
+            return res.status(200).json({ message: 'Post unblocked' });
+        }
+        if (!post.isBlocked) {
+            const postBlock = await Post.updateOne({ _id: id }, { $set: { isBlocked: true } });
+            return res.status(200).json({ message: 'Post Blocked' });
+        }
+
+    } catch (error) {
+        return res.status(500).json({ error: 'An error occurred' });
+    }
+}
+const unBlockOrBlockRoomPost = async (req, res) => {
+    try {
+        const id = req.query.id;
+        const post = await roomPost.findOne({ _id: id })
+        
+        if (post.isBlocked) {
+            const postUnblock = await roomPost.updateOne({ _id: id }, { $set: { isBlocked: false } });
+            return res.status(200).json({ message: 'Post unblocked' });
+        }
+        if (!post.isBlocked) {
+            const postBlock = await roomPost.updateOne({ _id: id }, { $set: { isBlocked: true } });
+            return res.status(200).json({ message: 'Post Blocked' });
+        }
+
+    } catch (error) {
+        return res.status(500).json({ error: 'An error occurred' });
+    }
+}
 
 module.exports = {
     login,
@@ -125,5 +162,7 @@ module.exports = {
     loadPlans,
     deletePlan,
     addPlan,
-    editPlan
+    editPlan,
+    unBlockOrBlockPost,
+    unBlockOrBlockRoomPost
 }

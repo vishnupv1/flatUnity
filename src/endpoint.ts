@@ -6,6 +6,10 @@ export const adminLoginEP = `${apiUrl}/admin/login`
 export const loadUsersEP = `${apiUrl}/admin/loadUsers`
 export const blockUserEP = `${apiUrl}/admin/blockUser`
 export const unblockOrBlockUserEP = `${apiUrl}/admin/unBlocOrBlockkUser`
+export const unBlockOrBlockPostEp = `${apiUrl}/admin/unBlockOrBlockPost`
+export const unBlockOrBlockRoomPostEp = `${apiUrl}/admin/unBlockOrBlockRoomPost`
+
+
 export const loadPlansEP = `${apiUrl}/admin/loadPlans`
 export const deletePlanEP = `${apiUrl}/admin/deletePlan`
 export const addPlanEP = `${apiUrl}/admin/addPlan`

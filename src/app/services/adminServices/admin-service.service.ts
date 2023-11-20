@@ -3,7 +3,7 @@ import { apiUrl } from 'src/constant';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { plan } from 'src/app/components/admin/plans/plans.component';
-import { addPlanEP, adminLoginEP, blockUserEP, deletePlanEP, editPlanEP, loadPlansEP, loadUsersEP, unblockOrBlockUserEP } from 'src/endpoint';
+import { addPlanEP, adminLoginEP, blockUserEP, deletePlanEP, editPlanEP, loadPlansEP, loadUsersEP, unBlockOrBlockPostEp, unBlockOrBlockRoomPostEp, unblockOrBlockUserEP } from 'src/endpoint';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +34,11 @@ export class AdminServiceService {
   }
   editPlan(formdata: any, id: string): Observable<any> {
     return this.http.patch<any>(`${editPlanEP}?id=${id}`, formdata);
+  }
+  unBlockOrBlockPost(id: any) {
+    return this.http.patch(`${unBlockOrBlockPostEp}?id=${id}`, {});
+  }
+  unBlockOrBlockRoomPost(id: any) {
+    return this.http.patch(`${unBlockOrBlockRoomPostEp}?id=${id}`, {});
   }
 }

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { fetchRoommateReq } from 'src/app/store/action';
 import { postSelectorData } from 'src/app/store/selector';
 import { ViewpostFlatmateComponent } from '../viewpost-flatmate/viewpost-flatmate.component';
+import { AdminServiceService } from 'src/app/services/adminServices/admin-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-flat-matefeeds',
@@ -15,7 +17,10 @@ export class FlatMatefeedsComponent {
   posts$!: Observable<any[]>
 
   constructor(private store: Store<{ posts: any[] }>,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private adminService: AdminServiceService,
+    private toastr: ToastrService
+
 
   ) {
   }
@@ -24,6 +29,16 @@ export class FlatMatefeedsComponent {
     this.posts$ = this.store.pipe(select(postSelectorData))
   }
   unBlockpost(id: string) {
+    this.adminService.unBlockOrBlockPost(id).subscribe(
+      (response: any) => {
+        this.toastr.success(response.message, 'Success', {
+          timeOut: 1000,
+          progressAnimation: 'increasing',
+          progressBar: true
+        })
+        this.store.dispatch(fetchRoommateReq())
+      }
+    )
 
   }
   viewPost(id: string) {

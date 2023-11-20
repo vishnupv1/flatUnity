@@ -7,7 +7,8 @@ admin_route.use(bodyParser.urlencoded({ extended: true }))
 const multer = require('multer')
 const path = require('path')
 const auth = require('../middleware/auth')
-
+const Post = require('../models/roomMateReqModel')
+const roomPost = require('../models/roomReqModel')
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, path.join('./public/userImages'))
@@ -30,6 +31,12 @@ admin_route.get('/loadPlans', auth, adminController.loadPlans)
 admin_route.delete('/deletePlan', auth, adminController.deletePlan)
 admin_route.post('/addPlan', auth, adminController.addPlan)
 admin_route.patch('/editPlan', auth, adminController.editPlan)
+admin_route.patch('/unBlockOrBlockPost', auth, adminController.unBlockOrBlockPost)
+admin_route.patch('/unBlockOrBlockRoomPost', auth, adminController.unBlockOrBlockRoomPost)
+
+
+
+
 
 
 

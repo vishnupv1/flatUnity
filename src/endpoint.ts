@@ -1,39 +1,47 @@
 import { apiUrl } from "./constant"
 
 
-//Admin Side Endpoints
+//ADMIN RELATED ENDPOINTS
 export const adminLoginEP = `${apiUrl}/admin/login`
-export const loadUsersEP = `${apiUrl}/admin/loadUsers`
-export const blockUserEP = `${apiUrl}/admin/blockUser`
-export const unblockOrBlockUserEP = `${apiUrl}/admin/unBlocOrBlockkUser`
-export const unBlockOrBlockPostEp = `${apiUrl}/admin/unBlockOrBlockPost`
-export const unBlockOrBlockRoomPostEp = `${apiUrl}/admin/unBlockOrBlockRoomPost`
 
-
-export const loadPlansEP = `${apiUrl}/admin/loadPlans`
-export const deletePlanEP = `${apiUrl}/admin/deletePlan`
-export const addPlanEP = `${apiUrl}/admin/addPlan`
-export const editPlanEP = `${apiUrl}/admin/editPlan`
-//User Side Endpoints
+//USER RELATED ENDPOINTS
 export const userRegisterEP = `${apiUrl}/register`
 export const loginWithOtpEP = `${apiUrl}/loginWithOtp`
 export const verifyOtpEP = `${apiUrl}/verifyOtp`
-export const flatmateRequirementEP = `${apiUrl}/roommateReqPost`
-export const flatRequirementEP = `${apiUrl}/roomReqPost`
-export const flatMatePostsLoadingEP = `${apiUrl}/loadposts`
-export const flatPostsLoadingEP = `${apiUrl}/loadroomposts`
-export const profileLoadingEP = `${apiUrl}/loadProfile`
-export const userVerifyEP = `${apiUrl}/verify`
-export const flatmatePostDeleteEP = `${apiUrl}/deletePost`
-export const flatPostDeleteEP = `${apiUrl}/deleteRoomPost`
-export const profileUpdateEP = `${apiUrl}/updateProfile`
-export const otpExpiryLoadEP = `${apiUrl}/loadOtpexpiry`
 export const resendOtpEP = `${apiUrl}/resendOtp`
-export const flatPostUpdateEP = `${apiUrl}/updateRoomPost`
-export const flatmatePostUpdateEP = `${apiUrl}/roomMatepostUpdate`
-export const razorPayEP = `${apiUrl}/SubscribePremium`
-export const updatePremiumEP = `${apiUrl}/paymentUpdate`
-export const sendMessageEP = `${apiUrl}/sendMessage`
-export const loadChatsEP = `${apiUrl}/loadChats`
-export const loadChatmatesEP = `${apiUrl}/loadChatmates`
+export const otpExpiryLoadEP = `${apiUrl}/loadOtpexpiry`
+export const userVerifyEP = `${apiUrl}/verify`
+export const profileLoadingEP = `${apiUrl}/loadProfile`
+export const profileUpdateEP = `${apiUrl}/updateProfile`
+export const loadUsersEP = `${apiUrl}/loadUsers`
+export const blockUserEP = `${apiUrl}/blockUser`
+export const unblockOrBlockUserEP = `${apiUrl}/unBlocOrBlockkUser`
 
+//PREMIUM PLANS RELATED ENDPOINTS
+export const razorPayEP = `${apiUrl}/plan/SubscribePremium`
+export const updatePremiumEP = `${apiUrl}/plan/paymentUpdate`
+export const loadPlansEP = `${apiUrl}/plan/loadPlans`
+export const deletePlanEP = `${apiUrl}/plan/deletePlan`
+export const addPlanEP = `${apiUrl}/plan/addPlan`
+export const editPlanEP = `${apiUrl}/plan/editPlan`
+
+//CHATROOM RELATED ENDPOINTS
+export const loadChatmatesEP = `${apiUrl}/chatRoom/loadChatmates`
+
+//CHAT RELATED ENDPOINTS
+export const sendMessageEP = `${apiUrl}/chat/sendMessage`
+export const loadChatsEP = `${apiUrl}/chat/loadChats`
+
+//ROOM REQUIREMENT RELATED ENDPOINTS
+export const flatRequirementEP = `${apiUrl}/roomReq/roomReqPost`
+export const unBlockOrBlockRoomPostEp = `${apiUrl}/roomReq/unBlockOrBlockRoomPost`
+export const flatPostsLoadingEP = `${apiUrl}/roomReq/loadroomposts`
+export const flatPostDeleteEP = `${apiUrl}/roomReq/deleteRoomPost`
+export const flatPostUpdateEP = `${apiUrl}/roomReq/updateRoomPost`
+
+//ROOM MATE REQUIREMENT RELATED ENDPOINTS
+export const flatMatePostsLoadingEP = `${apiUrl}/roomMateReq/loadposts`
+export const flatmatePostUpdateEP = `${apiUrl}/roomMateReq/roomMatepostUpdate`
+export const flatmatePostDeleteEP = `${apiUrl}/roomMateReq/deletePost`
+export const flatmateRequirementEP = `${apiUrl}/roomMateReq/roommateReqPost`
+export const unBlockOrBlockPostEp = `${apiUrl}/roomMateReq/unBlockOrBlockPost`

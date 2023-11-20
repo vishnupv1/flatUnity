@@ -1,7 +1,13 @@
 const express = require('express')
 const { createServer } = require("http");
-const user_route = require('./routes/userRoute')
 const admin_route = require('./routes/adminRoute')
+const user_route = require('./routes/userRoute')
+const chat_route = require('./routes/chatRoute')
+const chatRoom_route = require('./routes/chatRoomRoute')
+const roomReq_route = require('./routes/roomReqRoute')
+const roomMateReq_route = require('./routes/roomMateReqRoute')
+const plan_route = require('./routes/planRoute')
+
 const path = require('path')
 const myEnv = require('dotenv').config()
 const app = express()
@@ -26,6 +32,13 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 app.use('/', user_route)
 app.use('/admin', admin_route)
+app.use('/chat', chat_route)
+app.use('/chatRoom', chatRoom_route)
+app.use('/roomReq', roomReq_route)
+app.use('/roomMateReq', roomMateReq_route)
+app.use('/plan', plan_route)
+
+
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
@@ -46,7 +59,3 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
   });
 });
-
-// const server = app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });

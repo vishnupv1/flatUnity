@@ -1,6 +1,5 @@
 const User = require('../models/userModel')
 const Post = require('../models/roomMateReqModel')
-const { async } = require('rxjs')
 
 const roommateReqPost = async (req, res) => {
     try {

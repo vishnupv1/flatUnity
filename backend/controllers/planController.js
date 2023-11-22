@@ -1,6 +1,5 @@
 const User = require('../models/userModel')
 const Plan = require('../models/planModel')
-const { async } = require('rxjs')
 
 
 const subscribePremium = async (req, res) => {

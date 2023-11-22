@@ -55,7 +55,16 @@ io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
   });
-
-  socket.on('disconnect', () => {
+  socket.on('typing', (data) => {
+    io.emit('typing', data)
   });
+
+  socket.on('stop typing', (data) => {
+    io.emit('stop typing', data);
+  });
+
+
 });
+
+
+

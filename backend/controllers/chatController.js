@@ -1,13 +1,11 @@
 
 const Chatroom = require('../models/chatRoom')
 const Chat = require('../models/chatModel')
-const myEnv = require('dotenv').config()
-const { async } = require('rxjs')
 const chatRoom = require('../models/chatRoom')
 
 const sendMessage = async (req, res) => {
     try {
-        const { senderId, recieverId, content } = req.body
+        const { senderId, recieverId, content, date } = req.body
         const existingChatRoom = await chatRoom.findOne({
             $or: [
                 { senderId, recieverId },
@@ -18,7 +16,7 @@ const sendMessage = async (req, res) => {
             const chatRoomId = existingChatRoom._id
             const newMessage = new Chat({
                 content: content,
-                date: new Date(),
+                date: date,
                 chatRoomId: chatRoomId,
                 senderId: senderId
             })
@@ -35,7 +33,7 @@ const sendMessage = async (req, res) => {
                 // Create and save the new message
                 const newMessage = new Chat({
                     content: content,
-                    date: new Date(),
+                    date: date,
                     chatRoomId: chatRoomId,
                     senderId: senderId
                 });

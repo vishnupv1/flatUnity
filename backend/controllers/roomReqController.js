@@ -1,8 +1,5 @@
 const User = require('../models/userModel')
 const roomPost = require('../models/roomReqModel')
-const config = require('../config/config')
-const myEnv = require('dotenv').config()
-const { async } = require('rxjs')
 
 
 const roomReqPost = async (req, res) => {

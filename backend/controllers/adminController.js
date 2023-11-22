@@ -1,12 +1,5 @@
-const User = require('../models/userModel')
-const Plan = require('../models/planModel')
-const bcrypt = require('bcrypt')
-const config = require('../config/config')
 const jwt = require('jsonwebtoken')
 const Admin = require('../models/adminModel')
-const Post = require('../models/roomMateReqModel')
-const roomPost = require('../models/roomReqModel')
-
 
 const login = async (req, res) => {
     try {
@@ -37,8 +30,6 @@ const login = async (req, res) => {
         console.log(error.message);
     }
 }
-
-
 
 module.exports = {
     login,

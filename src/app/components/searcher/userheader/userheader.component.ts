@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserServiceService } from 'src/app/services/userServices/user-service.service';
+import { Socket } from 'socket.io-client';
 
 
 @Component({
@@ -9,10 +11,12 @@ import { Router } from '@angular/router';
 })
 export class UserheaderComponent {
   menuExpanded: boolean = false
+  isOnline: boolean = false
 
 
+  constructor(private router: Router) {
 
-  constructor(private router: Router) { }
+  }
 
   onMenuClick() {
     this.menuExpanded = true
@@ -25,4 +29,5 @@ export class UserheaderComponent {
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
+
 }

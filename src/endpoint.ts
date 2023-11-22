@@ -34,7 +34,7 @@ export const loadChatsEP = `${apiUrl}/chat/loadChats`
 
 //ROOM REQUIREMENT RELATED ENDPOINTS
 export const flatRequirementEP = `${apiUrl}/roomReq/roomReqPost`
-export const unBlockOrBlockRoomPostEp = `${apiUrl}/roomReq/unBlockOrBlockRoomPost`
+export const unBlockOrBlockRoomPostEP = `${apiUrl}/roomReq/unBlockOrBlockRoomPost`
 export const flatPostsLoadingEP = `${apiUrl}/roomReq/loadroomposts`
 export const flatPostDeleteEP = `${apiUrl}/roomReq/deleteRoomPost`
 export const flatPostUpdateEP = `${apiUrl}/roomReq/updateRoomPost`
@@ -44,4 +44,4 @@ export const flatMatePostsLoadingEP = `${apiUrl}/roomMateReq/loadposts`
 export const flatmatePostUpdateEP = `${apiUrl}/roomMateReq/roomMatepostUpdate`
 export const flatmatePostDeleteEP = `${apiUrl}/roomMateReq/deletePost`
 export const flatmateRequirementEP = `${apiUrl}/roomMateReq/roommateReqPost`
-export const unBlockOrBlockPostEp = `${apiUrl}/roomMateReq/unBlockOrBlockPost`
+export const unBlockOrBlockPostEP = `${apiUrl}/roomMateReq/unBlockOrBlockPost`

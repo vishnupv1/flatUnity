@@ -61,6 +61,7 @@ io.on('connection', (socket) => {
 
   socket.on('stop typing', (data) => {
     io.emit('stop typing', data);
+    console.log('stop emitted');
   });
 
 

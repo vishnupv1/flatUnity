@@ -7,7 +7,14 @@
       <div class="p-4" *ngFor="let chatroom of chatRooms">
         <div
           class="flex items-center space-x-2 cursor-pointer"
-          (click)="openChatroom(chatroom.userId, userId, chatroom.userName)"
+          (click)="
+            openChatroom(
+              chatroom.userId,
+              userId,
+              chatroom.userName,
+              chatroom._id
+            )
+          "
         >
           <div class="w-10 h-10 bg-gray-300 rounded-full">
             <img src="../assets/images/user (2).png" alt="Avatar" />
@@ -74,11 +81,11 @@
             *ngIf="isTyping == true && typingId !== userId"
             class="other-message text-left bg-gray-200 w-fit p-2 rounded-r-xl rounded-t-xl mb-2 text-gray-800"
           >
-          <div class='typing'>
-            <span></span>
-            <span></span>
-            <span></span>
-           </div>
+            <div class="typing">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
         </div>
       </div>

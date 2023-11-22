@@ -1,6 +1,22 @@
 const User = require('../models/userModel')
 const Plan = require('../models/planModel')
+const myEnv = require('dotenv').config()
 
+const accountSid = process.env.SID;
+const authToken = process.env.AUTHTOKEN;
+const client = require('twilio')(accountSid, authToken);
+const jwt = require('jsonwebtoken')
+const { async } = require('rxjs')
+const razorpay = require('razorpay')
+const chatRoom = require('../models/chatRoom')
+
+const razorID_Key = process.env.RAZOR_ID
+const razorSEC_Key = process.env.RAZOR_SECRET
+
+const razorInstance = new razorpay({
+    key_id: razorID_Key,
+    key_secret: razorSEC_Key
+})
 
 const subscribePremium = async (req, res) => {
     try {

@@ -19,7 +19,17 @@ const loadChatmates = async (req, res) => {
                     {
                         $lookup: {
                             from: 'users',
-                            let: { chatUserId: { $cond: { if: { $eq: ["$senderId", userId] }, then: "$recieverId", else: "$senderId" } } },
+                            let: {
+                                chatUserId: {
+                                    $cond:
+                                    {
+                                        if: { $eq: ["$senderId", userId] }, then: "$recieverId", else: {
+                                            $cond:
+                                                { if: { $eq: ["$recieverId", userId] }, then: "$senderId", else:'' }
+                                        }
+                                    }
+                                }
+                            },
                             pipeline: [
                                 {
                                     $match: {

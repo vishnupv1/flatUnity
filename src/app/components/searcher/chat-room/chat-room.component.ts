@@ -14,6 +14,7 @@ export class ChatRoomComponent {
   @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
   senderId!: string
   recieverId!: string
+  chatRoomId!: string
   // name: string
   // gender: string
   text: string = ''
@@ -25,6 +26,7 @@ export class ChatRoomComponent {
   recieverName: string = ''
   isTyping: boolean = false
   typingId!: string
+  isOnline!: string
   constructor(
     private userService: UserServiceService) {
     // this.senderId = this.data.senderId
@@ -33,31 +35,37 @@ export class ChatRoomComponent {
     // this.gender = this.data.recieverGender
 
     this.socket = io(apiUrl)
-    this.socket.on("connect", () => {
-      console.log(this.socket.connected);
+    this.socket.on("connect", (data: any) => {
+      this.isOnline
     });
 
-    this.userService.onNewMessage().subscribe((message) => {
-      this.chats.push(message);
+    this.userService.onNewMessage().subscribe((messageString: any) => {
+      try {
+        if (messageString.chatRoomId == this.chatRoomId) {
+          this.chats.push(messageString);
+        }
 
+      } catch (error) {
+        console.error('Error parsing message:', error);
+      }
     });
-    this.socket.on('typing', () => this.isTyping = true)
-    this.socket.on('stop typing', () => this.isTyping = false)
+    // this.socket.on('typing', () => this.isTyping = true)
 
-    // Add this line to listen for 'typing' and 'stop typing' events specific to the current chat room
-    this.socket.on('typing', (data: any) => {
+    this.socket.on('typing', (data: any): any => {
       this.typingId = data.senderId
-      if (data.chatId === this.chats[0]._id && this.senderId != data.senderId) {
-        this.isTyping = true;
+      if (data.chatId == this.chatRoomId && this.senderId != data.senderId) {
+        return this.isTyping = true;
       }
     });
 
-    this.socket.on('stop typing', (data: any) => {
-      if (data.chatId === this.chats[0]._id && this.senderId != data.senderId) {
-        this.isTyping = false;
+    this.socket.on('stop typing', (data: any): any => {
+      if (data.chatId == this.chatRoomId && this.senderId != data.senderId) {
+        return this.isTyping = false;
       }
-    });
+    })
+
   }
+
   ngOnInit() {
     this.userService.loadChatmates().subscribe((res) => {
       this.chatRooms = res.chatroomToDisplay
@@ -70,6 +78,7 @@ export class ChatRoomComponent {
       senderId: this.senderId,
       recieverId: this.recieverId,
       content: text,
+      chatRoomId: this.chatRoomId,
       date: Date.now()
     }
     this.userService.sendMessage(data).subscribe((res) => {
@@ -87,11 +96,12 @@ export class ChatRoomComponent {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch (err) { }
   }
-  openChatroom(recieverId: string, senderid: string, name: string) {
+  openChatroom(recieverId: string, senderid: string, name: string, chatRoomId: string) {
     this.openRoom = true
     this.recieverName = name
     this.senderId = senderid
     this.recieverId = recieverId
+    this.chatRoomId = chatRoomId
 
     this.userService.loadChats(senderid, recieverId).subscribe((res) => {
       this.chats = res.chats
@@ -101,18 +111,18 @@ export class ChatRoomComponent {
     const data = {
       senderId: this.senderId,
       recieverId: this.recieverId,
-      chatId: this.chats[0]._id, // Assuming _id is the chat ID
+      chatId: this.chatRoomId, // Assuming _id is the chat ID
     };
 
     this.socket.emit('typing', data);
 
     let lastTypingTime = new Date().getTime();
-    var timerLength = 6000;
+    var timerLength = 3000;
     setTimeout(() => {
       var timeNow = new Date().getTime();
       var timeDiff = timeNow - lastTypingTime;
-      if (timeDiff >= timerLength && this.isTyping) {
-        this.socket.emit("stop typing", this.chats[0]._id);
+      if (timeDiff >= timerLength) {
+        this.socket.emit("stop typing", data);
       }
     }, timerLength);
   };

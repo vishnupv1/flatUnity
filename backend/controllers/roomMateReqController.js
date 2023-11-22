@@ -172,7 +172,6 @@ const unBlockOrBlockPost = async (req, res) => {
     try {
         const id = req.query.id;
         const post = await Post.findOne({ _id: id })
-        console.log(post);
         if (post.isBlocked) {
             const postUnblock = await Post.updateOne({ _id: id }, { $set: { isBlocked: false } });
             return res.status(200).json({ message: 'Post unblocked' });

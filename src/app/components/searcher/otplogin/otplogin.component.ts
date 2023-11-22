@@ -116,7 +116,7 @@ export class OtploginComponent {
     }
   }
   resendOtp() {
-    this.userService.resendOtp(this.mobileNumber).subscribe(
+    this.userService.resendOtp(this.mobNUm.value).subscribe(
       (response) => {
         this.toastr.success(response.message, 'Success', {
           timeOut: 2000,

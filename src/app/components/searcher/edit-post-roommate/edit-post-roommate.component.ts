@@ -141,7 +141,7 @@ export class EditPostRoommateComponent {
         this.formData.append('image', this.selectedImages[i].file);
       }
       this.roomMatepost()
-      this.router.navigate(['roommate'])
+      this.router.navigate(['flatmatepostMod'])
     }
 
 

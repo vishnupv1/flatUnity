@@ -100,7 +100,7 @@ const loginWithOtp = async (req, res) => {
                     return res.status(404).json({ message: 'User Blocked' });
                 }
             } else {
-                return res.status(404).json({ message: 'User Verification pending please verify' });
+                return res.status(404).json({ message: 'User Verification pending please verify through mail' });
             }
 
         } else {
@@ -215,7 +215,7 @@ const unBlockOrBlockUser = async (req, res) => {
 }
 const loadProfile = async (req, res) => {
     try {
-        const userNum = req.query.userNum
+        const userNum = req.mobile
         const userData = await User.findOne({ mobile: userNum })
         if (userData) {
             return res.status(200).json({ userData });

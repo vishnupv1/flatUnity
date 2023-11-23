@@ -5,7 +5,8 @@ import { plan } from "../components/admin/plans/plans.component";
 
 //fetch userProfile
 export const fetchProfile = createAction(
-    '[Profile API] fetch profile API'
+    '[Profile API] fetch profile API',
+
 )
 export const fetchProfileSuccess = createAction(
     '[Profile API Success] fetch profile API Success',

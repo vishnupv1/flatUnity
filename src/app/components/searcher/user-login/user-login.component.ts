@@ -66,7 +66,7 @@ export class UserLoginComponent implements OnInit {
       this.submit = true
       this.setUserMobileNumber(phone)
       this.otpSend()
-      this.router.navigate(['otplogin'])
+      // this.router.navigate(['otplogin'])
     }
 
 
@@ -80,7 +80,8 @@ export class UserLoginComponent implements OnInit {
           progressBar: true
         })
         this.router.navigate(['otplogin'])
-      }, (error) => {
+      },
+      (error) => {
         this.toastr.error(error.error.message, 'Error', {
           timeOut: 2000,
           progressAnimation: 'increasing',

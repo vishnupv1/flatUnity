@@ -15,6 +15,10 @@ const chatSchema = mongoose.Schema({
     senderId: {
         type: mongoose.Schema.Types.ObjectId, ref: 'chatRoom',
         required: true
+    },
+    isRead: {
+        type: Boolean,
+        default: false
     }
 
 })

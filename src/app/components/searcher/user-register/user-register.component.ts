@@ -12,17 +12,15 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UserRegisterComponent {
   submit: boolean = false
-  // inCorrect: boolean = false
-  // emailUsed!: string;
-
-
   user: User = {} as User;
+  pattern = "[a-zA-Z][a-zA-Z ]+"
+
   constructor(private fb: FormBuilder, private UserService: UserServiceService, private router: Router, private toastr: ToastrService) {
   }
   ngOnInit(): void { }
   //form decleration and validation criterias
   registerForm = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(2)]],
+    name: ['', [Validators.required, Validators.minLength(2), Validators.pattern(this.pattern)]],
     email: ['', [Validators.email, Validators.required]],
     mobile: ['', [Validators.required, this.mobileNumberValidator]],
     gender: ['male', [Validators.required]],
@@ -82,7 +80,7 @@ export class UserRegisterComponent {
           progressAnimation: 'increasing',
           progressBar: true
         })
-        this.ngOnInit()
+        window.location.reload()
       }, (error) => {
         console.log(error);
 
@@ -103,6 +101,10 @@ export class UserRegisterComponent {
       else if (name?.hasError('minlength')) {
         return 'Minimum length of name should be two'
       }
+      else if (name?.hasError('pattern')) {
+        return 'Type valid name'
+      }
+
     }
 
     return

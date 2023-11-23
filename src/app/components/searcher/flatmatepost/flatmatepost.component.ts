@@ -30,7 +30,9 @@ export class FlatmatepostComponent {
       }
     });
   }
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+    
     this.store.dispatch(fetchRoommateReq())
     this.posts$ = this.store.pipe(select(postSelectorData))
     this.searchPosts$ = this.posts$

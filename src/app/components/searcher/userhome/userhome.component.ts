@@ -33,11 +33,11 @@ export class UserhomeComponent {
 
   ngOnInit(): void {
     this.routeFinder()
-    this.store.dispatch(fetchRoomReq())
-    this.roomposts$ = this.store.pipe(select(roompostSelectorData))
+    // this.store.dispatch(fetchRoomReq())
+    // this.roomposts$ = this.store.pipe(select(roompostSelectorData))
 
-    this.store.dispatch(fetchRoommateReq())
-    this.roomMateposts$ = this.store.pipe(select(postSelectorData))
+    // this.store.dispatch(fetchRoommateReq())
+    // this.roomMateposts$ = this.store.pipe(select(postSelectorData))
   }
 
   private updateBackgroundFlags(currentRoute: string) {
@@ -60,5 +60,8 @@ export class UserhomeComponent {
 
   searchTrigger(value: string) {
 
+  }
+  NavigateTo(route: string) {
+    this.router.navigate([route])
   }
 }

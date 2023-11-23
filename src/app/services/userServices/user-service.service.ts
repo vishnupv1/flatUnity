@@ -51,6 +51,7 @@ export class UserServiceService {
     return this.http.get<any>(flatPostsLoadingEP)
   }
   loadProfile(userNum: string): Observable<any> {
+    console.log(userNum);
     return this.http.get<any>(`${profileLoadingEP}?userNum=${userNum}`)
   }
   verifyUser(mail: string): Observable<any> {

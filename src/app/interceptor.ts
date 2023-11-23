@@ -11,13 +11,16 @@ import { ActivatedRoute } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    constructor(private route: ActivatedRoute) { }
-    user = localStorage.getItem('userToken')
-    admin = localStorage.getItem('adminToken')
+    user: any
+    admin: any
+    constructor(private route: ActivatedRoute) {
+    }
     intercept(
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
+        this.user = localStorage.getItem('userToken')
+        this.admin = localStorage.getItem('adminToken')
         if (window.location.pathname.includes('/admin') && this.admin) {
             const authToken = this.admin
             const authRequest = request.clone({
@@ -25,6 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     Authorization: `Bearer ${authToken}`,
                 },
             });
+
             return next.handle(authRequest);
         }
         else {

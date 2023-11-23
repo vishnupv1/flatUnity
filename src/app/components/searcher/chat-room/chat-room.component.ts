@@ -27,6 +27,8 @@ export class ChatRoomComponent {
   isTyping: boolean = false
   typingId!: string
   isOnline!: string
+  unreadMessages: any[] = []
+  unreadId!: string
   constructor(
     private userService: UserServiceService) {
     // this.senderId = this.data.senderId
@@ -39,12 +41,14 @@ export class ChatRoomComponent {
       this.isOnline
     });
 
-    this.userService.onNewMessage().subscribe((messageString: any) => {
+    this.userService.onNewMessage().subscribe((message: any) => {
       try {
-        if (messageString.chatRoomId == this.chatRoomId) {
-          this.chats.push(messageString);
+        if (message.chatRoomId == this.chatRoomId) {
+          this.chats.push(message);
         }
-
+        else {
+          this.unreadMessages.push(message);
+        }
       } catch (error) {
         console.error('Error parsing message:', error);
       }
@@ -75,7 +79,7 @@ export class ChatRoomComponent {
   }
   sendMessage(text: string) {
     const data = {
-      senderId: this.senderId,
+      senderId: this.userId,
       recieverId: this.recieverId,
       content: text,
       chatRoomId: this.chatRoomId,
@@ -85,7 +89,6 @@ export class ChatRoomComponent {
       this.text = ''
       this.ngOnInit()
       this.scrollToBottom();
-
     })
   }
   ngAfterViewChecked() {
@@ -97,9 +100,14 @@ export class ChatRoomComponent {
     } catch (err) { }
   }
   openChatroom(recieverId: string, senderid: string, name: string, chatRoomId: string) {
+    if (recieverId == this.userId) {
+      this.recieverId == senderid
+    } else {
+      this.recieverId == recieverId
+    }
     this.openRoom = true
     this.recieverName = name
-    this.senderId = senderid
+    this.senderId = this.userId
     this.recieverId = recieverId
     this.chatRoomId = chatRoomId
 
@@ -109,7 +117,7 @@ export class ChatRoomComponent {
   }
   typingHandler(e: Event) {
     const data = {
-      senderId: this.senderId,
+      senderId: this.userId,
       recieverId: this.recieverId,
       chatId: this.chatRoomId, // Assuming _id is the chat ID
     };

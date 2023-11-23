@@ -30,8 +30,6 @@ export class ChatboxInidvidualComponent {
     this.socket = io(apiUrl)
 
     this.socket.on("connect", () => {
-      console.log(this.socket.connected);
-
     });
     this.userService.onNewMessage().subscribe((message) => {
       this.chats.push(message);

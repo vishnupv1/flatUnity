@@ -10,15 +10,10 @@ const userAuth = async (req, res, next) => {
     if (decoded) {
         const userId = decoded.userId;
         const VerifiedUser = await User.findOne({ _id: userId })
-        const mobileNum = VerifiedUser.mobile
         const VerifiedAdmin = await Admin.findOne({ _id: userId })
         if (VerifiedUser || VerifiedAdmin) {
-            if (VerifiedUser) {
-                req.mobile = mobileNum
-            }
             next()
-        }
-        else {
+        } else {
             return res.status(404).json({ message: 'Un Authorised access' })
         }
     } else {

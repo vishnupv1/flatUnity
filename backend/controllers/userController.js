@@ -169,13 +169,13 @@ const verifyOtp = async (req, res) => {
     }
 }
 async function sendOtp(userMobile, otp) {
-    // await client.messages
-    //     .create({
-    //         body: `your flatmate login otp is ${otp}`,
-    //         to: `+91${userMobile}`, // Text your number
-    //         from: '+17409001094', // From a valid Twilio number
-    //     })
-    //     .then((message) => console.log(message.sid));
+    await client.messages
+        .create({
+            body: `your flatmate login otp is ${otp}`,
+            to: `+91${userMobile}`, // Text your number
+            from: '+17409001094', // From a valid Twilio number
+        })
+        .then((message) => console.log(message.sid));
 }
 const verifyUser = async (req, res) => {
     try {
@@ -215,7 +215,7 @@ const unBlockOrBlockUser = async (req, res) => {
 }
 const loadProfile = async (req, res) => {
     try {
-        const userNum = req.mobile
+        const userNum = req.query.userNum
         const userData = await User.findOne({ mobile: userNum })
         if (userData) {
             return res.status(200).json({ userData });

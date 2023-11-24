@@ -87,6 +87,7 @@ const register = async (req, res) => {
     }
 };
 const loginWithOtp = async (req, res) => {
+    console.log('xxxxxxxxxxxxxxxxxx');
     try {
         const user = await User.findOne({ mobile: req.body.mobile })
         if (user) {

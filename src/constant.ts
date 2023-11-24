@@ -1,1 +1,1 @@
-export const apiUrl = 'http://www.flatmate.online'
+export const apiUrl = 'http://flatmate.online'

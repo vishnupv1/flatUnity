@@ -13,7 +13,6 @@ const accountSid = process.env.SID;
 const authToken = process.env.AUTHTOKEN;
 const client = require('twilio')(accountSid, authToken);
 const jwt = require('jsonwebtoken')
-const { async } = require('rxjs')
 const razorpay = require('razorpay')
 const chatRoom = require('../models/chatRoom')
 

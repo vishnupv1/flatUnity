@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 const cors = require('cors')
 
 app.use(cors({
-  origin: 'http://localhost:4200',
+  origin: ['http://flatunity.online', 'http://www.flatunity.online']
 }))
 
 
@@ -53,7 +53,7 @@ app.get('/', function (req, res) {
 const io = new Server(httpServer, {
   pingTimeout: 60000,
   cors: {
-    origin: 'http://localhost:4200',
+    origin: ['http://flatunity.online', 'http://www.flatunity.online']
   }
 });
 httpServer.listen(PORT);
@@ -65,6 +65,3 @@ io.on('connection', (socket) => {
   socket.on('read', (data) => { io.emit('read', data); });
   socket.on('unread', (data) => { io.emit('read', data); });
 });
-
-
-

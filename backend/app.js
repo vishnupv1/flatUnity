@@ -41,6 +41,13 @@ app.use('/plan', plan_route)
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+const dirname = path.join(__dirname, '..', 'dist');
+
+app.use(express.static(path.join(dirname, 'flat-unity'), { 'Content-Type': 'application/javascript' }));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.resolve(dirname, 'flat-unity', 'index.html'));
+});
 
 
 const io = new Server(httpServer, {

@@ -1,1 +1,1 @@
-export const apiUrl = 'http://flatUnity.online'
+export const apiUrl = 'http://flatunity.online'

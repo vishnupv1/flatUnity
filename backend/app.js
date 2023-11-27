@@ -30,13 +30,13 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
 
-app.use('/', user_route)
-app.use('/admin', admin_route)
-app.use('/chat', chat_route)
-app.use('/chatRoom', chatRoom_route)
-app.use('/roomReq', roomReq_route)
-app.use('/roomMateReq', roomMateReq_route)
-app.use('/plan', plan_route)
+app.use('/api', user_route)
+app.use('/api/admin', admin_route)
+app.use('/api/chat', chat_route)
+app.use('/api/chatRoom', chatRoom_route)
+app.use('/api/roomReq', roomReq_route)
+app.use('/api/roomMateReq', roomMateReq_route)
+app.use('/api/plan', plan_route)
 
 
 app.use('/public', express.static(path.join(__dirname, 'public')));

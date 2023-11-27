@@ -52,7 +52,7 @@ export class EditPostRoommateComponent {
         this.postData = { ...initialData };
       }
       const submit: boolean = false
-      const imageBaseUrl = 'http://localhost:3000/public/userImages/'
+      const imageBaseUrl = 'http://flatunity.online/public/userImages/'
 
       for (let i = 0; i < this.postData.images.length; i++) {
         const fileName = this.postData.images[i];

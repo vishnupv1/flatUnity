@@ -11,13 +11,13 @@
       <img
         *ngIf="post.ownerGender == 'female'"
         class="w-24 h-24 mb-3 rounded-full shadow-lg"
-        [src]="'http://localhost:3000/public/userImages/girl.png'"
+        [src]="'http://flatunity.online/public/userImages/girl.png'"
         alt="Bonnie image"
       />
       <img
         *ngIf="post.ownerGender == 'male'"
         class="w-24 h-24 mb-3 rounded-full   shadow-lg"
-        [src]="'http://localhost:3000/public/userImages/boy.png'"
+        [src]="'http://flatunity.online/public/userImages/boy.png'"
         alt="Bonnie image"
       />
       <h5
@@ -122,7 +122,7 @@
     <img
       class="w-96 h-96"
       [src]="
-        'http://localhost:3000/public/userImages/' +
+        'http://flatunity.online/public/userImages/' +
         post.images[currentImageindex]
       "
       alt=""

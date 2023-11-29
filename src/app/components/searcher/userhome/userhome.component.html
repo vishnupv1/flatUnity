@@ -55,49 +55,52 @@
     <p class="text-3xl font-bold">Welcome to FlatUnity</p>
     <p>Find the perfect flat or flatmate today!</p>
   </header>
+
   <div class="container">
-    <div class="flex gap-10">
-      <div class="image-container">
+    <div class="md:flex-row flex flex-col justify-center sm:justify-between md:gap-10 w-full items-center">
+      <div class="image-container w-fit my-2 flex justify-center">
         <img
           class="w-64 h-64 rounded"
           [src]="'../assets/images/room1.jpg'"
           alt="Flat 1"
         />
-        <div class="overlay rounded">
+        <div class="overlay w-full rounded">
           <a href="flatmatepost">Explore Requirements</a>
         </div>
       </div>
-      <div class="image-container">
+      <div class="image-container w-fit my-2 flex justify-center">
         <img
           class="w-64 h-64 rounded"
           [src]="'../assets/images/room2.jpg'"
           alt="Flat 1"
         />
-        <div class="overlay rounded">
+        <div class="overlay w-full rounded">
           <a href="flatmatepost">Explore Requirements</a>
         </div>
       </div>
-      <div class="image-container">
+      <div class="image-container w-fit my-2 flex justify-center">
         <img
           class="w-64 h-64 rounded"
           [src]="'../assets/images/room3.jpg'"
           alt="Flat 1"
         />
-        <div class="overlay rounded">
+        <div class="overlay w-full rounded">
           <a href="flatmatepost">Explore Requirements</a>
         </div>
       </div>
-      <div class="image-container">
+      <div class="image-container w-fit my-2 flex justify-center">
         <img
           class="w-64 h-64 rounded"
           [src]="'../assets/images/room1.jpg'"
           alt="Flat 1"
         />
-        <div class="overlay rounded">
+        <div class="overlay w-64 h-64 rounded">
           <a href="flatmatepost">Explore Requirements</a>
         </div>
       </div>
     </div>
   </div>
+
+
 </div>
 <app-user-footer *ngIf="isHomeRoute"> </app-user-footer>

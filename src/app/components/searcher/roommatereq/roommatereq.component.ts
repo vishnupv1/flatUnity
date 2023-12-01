@@ -91,10 +91,8 @@ export class RoommatereqComponent {
         this.formData.append('image', this.selectedImages[i].file);
       }
       this.roomMatepost()
-      this.router.navigate(['roommate'])
+      window.location.reload()
     }
-
-
   }
   mobileNumberValidator(control: any) {
     const mobileNumberPattern = /^[0-9]{10}$/;

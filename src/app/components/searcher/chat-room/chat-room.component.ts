@@ -30,6 +30,7 @@ export class ChatRoomComponent {
   unreadMessages: any[] = []
   unreadId!: string
   friendList: boolean = true
+  chatList: boolean = false
   constructor(
     private userService: UserServiceService) {
     // this.senderId = this.data.senderId
@@ -116,6 +117,8 @@ export class ChatRoomComponent {
       this.chats = res.chats
     })
     this.friendList = false
+    this.chatList = true
+
   }
   typingHandler(e: Event) {
     const data = {

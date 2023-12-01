@@ -139,4 +139,8 @@ export class ChatRoomComponent {
       }
     }, timerLength);
   };
+  chatClose() {
+    this.friendList = true
+    this.chatList = false
+  }
 }

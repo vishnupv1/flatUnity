@@ -12,7 +12,7 @@
       </div>
     </div>
     <div
-      *ngIf="chatRooms.length > 0 && !(openRoom && isMobile)"
+      *ngIf="chatRooms.length > 0 && friendList"
       class="w-full md:w-1/4 bg-white border-r border-gray-300 overflow-y-auto"
     >
       <div class="p-4" *ngFor="let chatroom of chatRooms">

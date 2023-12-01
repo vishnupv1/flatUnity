@@ -1,9 +1,11 @@
-import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { Component, NgZone, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { UserServiceService } from 'src/app/services/userServices/user-service.service';
 import { io } from 'socket.io-client';
 import { apiUrl } from 'src/constant';
+import { MediaMatcher } from '@angular/cdk/layout';
+
 
 @Component({
   selector: 'app-chat-room',
@@ -29,12 +31,24 @@ export class ChatRoomComponent {
   isOnline!: string
   unreadMessages: any[] = []
   unreadId!: string
+  isMobile: boolean = false;
+  private mobileQuery: MediaQueryList;
+
+
   constructor(
-    private userService: UserServiceService) {
+    private userService: UserServiceService,
+    private mediaMatcher: MediaMatcher, private zone: NgZone) {
     // this.senderId = this.data.senderId
     // this.recieverId = this.data.recieverId
     // this.name = this.data.recieverName
     // this.gender = this.data.recieverGender
+    this.mobileQuery = mediaMatcher.matchMedia('(max-width: 600px)'); // Adjust the max-width based on your md breakpoint
+
+    this.zone.run(() => {
+      this.mobileQuery.addEventListener('change', () => {
+        this.isMobile = this.mobileQuery.matches;
+      });
+    });
 
     this.socket = io(apiUrl)
     this.socket.on("connect", (data: any) => {

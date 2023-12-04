@@ -39,7 +39,7 @@ const sendVerifyMail = async (username, email) => {
             from: config.emailUser,
             to: email,
             subject: 'FlatUnity User verification',
-            html: '<p>Hi ' + username + ' , Plese click here to verify your flatUnity account <a href = "http://flatunity.online/verify?id=' + email + '">Verify</a></p>'
+            html: '<p>Hi ' + username + ' , Plese click here to verify your flatUnity account <a href = "https://flatunity.online/verify?id=' + email + '">Verify</a></p>'
         }
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {

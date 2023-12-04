@@ -2,7 +2,7 @@
     "server": {
       "baseDir": "dist/flat-unity",
       "routes": {
-        "/api": "http://flatunity.online"
+        "/api": "https://flatunity.online"
       }
     },
     "files": ["dist/flat-unity/**/*.{html,htm,css,js}"],

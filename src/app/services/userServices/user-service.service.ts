@@ -16,7 +16,7 @@ export class UserServiceService {
   mobNum = localStorage.getItem('userNum')
 
   constructor(private http: HttpClient) {
-    this.socket = io('http://flatunity.online')
+    this.socket = io('https://flatunity.online')
 
   }
   //api call for

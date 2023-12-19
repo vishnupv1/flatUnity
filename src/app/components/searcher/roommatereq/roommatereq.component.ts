@@ -156,6 +156,8 @@ export class RoommatereqComponent {
     return
   }
   roomMatepost() {
+    console.log(this.formData);
+    
     this.UserService.roomMatepost(this.formData).subscribe(
       (response) => {
         this.toastr.success(response.message, 'Success', {

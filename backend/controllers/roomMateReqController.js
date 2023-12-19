@@ -3,6 +3,7 @@ const Post = require('../models/roomMateReqModel')
 
 const roommateReqPost = async (req, res) => {
     try {
+        console.log(req.body);
         const formData = req.body;
         const arrayimage = []
         for (let i = 0; i < req.files.length; i++) {
